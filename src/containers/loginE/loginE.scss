@@ -1,0 +1,60 @@
+.loginMainE {
+    background-color: var(--pri0);
+    display: flex;
+    justify-content: center;
+
+    .loginCardE {
+        display: flex;
+        flex-direction: column;
+
+        height: 29em;
+        width: 26em;
+        border-radius: 3px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background: var(--pri0);
+        margin-top: 3em;
+    }
+
+    .headerE {
+        display: flex;
+        justify-content: center;
+        height: 15em;
+    }
+
+    .loginCardE .headerE .image {
+        width: 12em;
+        top: 6em;
+        position: absolute;
+    }
+
+    h1 {
+        margin-top: 5em;
+        height: 1em;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .body input {
+        margin-bottom: 0.5em;
+        font-size: 1.5em;
+        background: var(--pri1);
+        border-style: solid;
+        border-width: 0.5px;
+        border-color: var(--pri9);
+    }
+	
+	.error {
+		margin-top: 1em;
+		color: var(--colRojCla);
+	}
+	.success {
+		margin-top: 1em;
+		color: var(--colVer);
+	}
+	
+	
+}
