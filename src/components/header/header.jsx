@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { session, getUrl } from "../../utils/uti";
 import { login } from "../../redux/actions/users";
 import { rdx_productSearchResults } from "../../redux/actions/products";
+import Search from "../search/search";
 
 import "./header.scss";
 
@@ -19,22 +20,19 @@ class Header extends React.Component {
         };
     }
 
-	
-	
     BotonesHeader() {
         // let nCesta = this.props.cart ? Object.keys(this.props.cart).length : 0;
         // let strNCesta = nCesta === 0 ? "" : `(${nCesta})`;
 
         const userType = session.get()?.userType;
-        
+
         if (this.props.isLoggedIn && userType) {
             // si estoy logeado...
-            
-            switch (userType) {
 
+            switch (userType) {
                 case 1:
                     //en el caso de que sea usuario
-                    
+
                     return (
                         <Fragment>
                             <button>
@@ -42,7 +40,7 @@ class Header extends React.Component {
                                     Perfil
                                 </NavLink>
                             </button>
-                            
+
                             <button className="logoutButton" onClick={() => this.pulsaLogout()}>
                                 Logout
                             </button>
@@ -63,7 +61,7 @@ class Header extends React.Component {
                                     Mi inventario
                                 </NavLink>
                             </button>
-                            
+
                             <button className="logoutButton" onClick={() => this.pulsaLogout()}>
                                 Logout
                             </button>
@@ -88,7 +86,7 @@ class Header extends React.Component {
                                     Mi inventario
                                 </NavLink>
                             </button>
-                            
+
                             <button className="logoutButton" onClick={() => this.pulsaLogout()}>
                                 Logout
                             </button>
@@ -96,8 +94,7 @@ class Header extends React.Component {
                     );
 
                 default:
-                    console.log( "USERTYPE ERROR - not buyer, not seller, not admin" );
-                
+                    console.log("USERTYPE ERROR - not buyer, not seller, not admin");
             }
         } else {
             //visito la página de forma anónima..
@@ -113,36 +110,31 @@ class Header extends React.Component {
                             Acceso candidatos
                         </NavLink>
                     </button>
-                    
                 </Fragment>
             );
         }
     }
 
-	
-	
     buscaResultados() {
         let keywords = this.state.keywords;
         let query = keywords !== "" ? `?title=${keywords}` : "";
 
-        axios.get(getUrl(`/product/get${query}`))
-		.then(res => {
-			// Envio a redux
-			rdx_productSearchResults({
-				keywords: keywords,
-				data: res.data
-			});
-		})
-		.catch(err => {
-			console.log(err);
-		});
-    };
-	
-	
-	
+        axios
+            .get(getUrl(`/product/get${query}`))
+            .then(res => {
+                // Envio a redux
+                rdx_productSearchResults({
+                    keywords: keywords,
+                    data: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
     debounce() {
-		
-		// Si ya estoy en un timeout, salgo y cancelo
+        // Si ya estoy en un timeout, salgo y cancelo
         if (this.state.debounce_timeout) {
             clearTimeout(this.state.debounce_timeout); // quito el loop
             this.setState({ debounce_timeout: null }); // y su referencia
@@ -154,12 +146,9 @@ class Header extends React.Component {
         }, 500);
 
         // Guardo la referencia de timeout
-		this.setState({ debounce_timeout: loop });
-		
-    };
-	
-	
-	
+        this.setState({ debounce_timeout: loop });
+    }
+
     pulsaTecla(ev) {
         let busqueda = ev.target.value;
         busqueda = busqueda.trim();
@@ -176,25 +165,21 @@ class Header extends React.Component {
             // Redirijo
             this.props.history.push("/search");
         }
-	};
-	
-	
-	
-	// pulsaBotonBusqueda() {
-		
-	// 	// Guardo resultados
-	// 	this.setState({ keywords: "" });
-		
-	// 	// Busco resultados
-	// 	this.debounce();
-		
-	// 	// Redirijo
-	// 	this.props.history.push("/search");	
-		
-	// };
-	
-	
-	
+    }
+
+    // pulsaBotonBusqueda() {
+
+    // 	// Guardo resultados
+    // 	this.setState({ keywords: "" });
+
+    // 	// Busco resultados
+    // 	this.debounce();
+
+    // 	// Redirijo
+    // 	this.props.history.push("/search");
+
+    // };
+
     pulsaLogout() {
         let token = session.get().token;
 
@@ -211,18 +196,17 @@ class Header extends React.Component {
         this.props.history.push("/");
     }
 
-	
-	
     render() {
         return (
-            <header>
-                <div className="logo">
-                    <NavLink to="/">
-                        <img src="img/logouRelated_1lit.png" alt="logo" />
-                    </NavLink>
-                </div>
+            <Fragment>
+                <header>
+                    <div className="logo ml5 mt1">
+                        <NavLink to="/">
+                            <img src="img/logouRelated_1lit.png" alt="logo" />
+                        </NavLink>
+                    </div>
 
-                {/* <div className="search">
+                    {/* <div className="search">
                     <input
                         type="text"
                         placeholder="Búsqueda"
@@ -238,8 +222,10 @@ class Header extends React.Component {
                     </div>
                 </div> */}
 
-                <div className="nav">{this.BotonesHeader()}</div>
-            </header>
+                    <div className="nav">{this.BotonesHeader()}</div>
+                </header>
+                <Search />
+            </Fragment>
         );
     }
 }

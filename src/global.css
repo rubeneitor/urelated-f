@@ -29,13 +29,19 @@
     --sec1: #B2DFDB;
     --sec0: #E0F2F1;
     
-    /* Colors */
+	/* Colors */
+	--colBla: rgb(255,255,255);
     --colVer: rgb(11, 226, 51);
-    --colRoj: rgb(235, 0, 43);
-    --colRojCla: rgb(255, 55, 55);
-    --colAzu: rgb(30, 30, 255);
-    --colAzuCla: rgb(30, 165, 255);
-    --colAma: rgb(255, 255, 28);
+    --colRoj: rgb(205, 32, 38);
+    --colRojCla: rgb(227, 28, 61);
+    --colAzu: rgb(32, 84, 147);
+    --colAzuDos: rgb(2, 191, 231);
+    --colAzuTre: rgb(4, 107, 153);
+    --colAzuOsc: rgb(17, 46, 81);
+	--colAzuCla: rgb(220, 228, 239);
+	--colGri: rgb(241, 241, 241);
+	--colDarGri: rgb(91, 97, 107);
+	--colAma: rgb(253, 184, 30);
     --colNarCla: rgb(255, 197, 8);
     --colNar: #F9AA33;
     
@@ -161,20 +167,21 @@ button {
 	width: fit-content;
 	height: 2em;
 	
-    font-size: 1.3em;
+	font-size: 1.2em;
+	font-weight: bold;
 	padding: 0.1em 0.5em;
     /* margin-top: 0.5em; */
    
     border-radius: 3px;
-    background: var(--colNar);
+    background: var(--colRoj);
 	
     cursor: pointer;
-	color: var(--pri9);
+	color: var(--colBla);
 	
     transition: background-color 0.3s;
 }
 button:hover {
-    background-color: var(--colNarCla);
+    background-color: var(--colRojCla);
     
 }
 
@@ -187,25 +194,8 @@ button:hover {
 	color: var(--colVer);
 }
 
-
-
-/*
-	Template:
-	
-	<div className="main">
-		<div className="card">
-			<div className="cardHeader">
-				<h1 className="cardTitle"> Titulo </h1>
-			</div>
-			<div className="cardBody">
-				body
-			</div>
-		</div>
-	</div>
-	
-*/
 .main {
-    background-color: var(--pri1);
+    background-color: var(--colGri);
     display: flex;
 	justify-content: center;
 	align-items: center;
@@ -221,7 +211,7 @@ button:hover {
 	padding: 2em;
 	
 	border-radius: 3px;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	/* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 	background: var(--pri0);
 }
 .cardHover {

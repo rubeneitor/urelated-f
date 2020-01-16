@@ -10,7 +10,8 @@ header {
 	padding-bottom: 0.3em;
 	flex: 0;
 	
-    background: var(--pri0);
+    // background: var(--pri0);
+    background: var(--colAzu);
     color: var(--sec6);
 }
 
@@ -26,7 +27,8 @@ header .logo {
 
 header .logo img {
 	height: 5em;
-	
+	border: 0.1em solid;
+	border-color: white;
 	min-height: 5em;
 	min-width: 5em;
 	
@@ -97,6 +99,8 @@ header button {
 	
 	font-size: 1em;
 	margin-right: 0.75em;
+	color: var(--colBla);
+	background-color: var(--colAzu);
     
 } 
 

@@ -20,6 +20,7 @@ import editProduct from "./containers/editProduct/editProduct";
 import Cesta from "./containers/cesta/cesta";
 import Buy from "./containers/buy/buy";
 import Storage from "./containers/inventario/storage";
+import Footer from "./components/footer/footer";
 
 
 // CSS
@@ -54,7 +55,7 @@ export default function App() {
 					<Route path="/addProduct" exact component={AddProduct} />
 					
 				</Switch>
-				
+				<Footer/>
 			</Router>
 		</div>
 	);

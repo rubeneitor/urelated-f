@@ -186,10 +186,10 @@ class LoginE extends React.Component {
 			<div className="loginMainE">
 				<div className="loginCardE">
 					<div className="headerE">
-						<img className="image"
+						{/* <img className="image"
 							src="img/logouRelated_1lit.png"
 							alt="logo"
-						/>
+						/> */}
 						<h1>Acceso a Empresas</h1>
 					</div>
 					<div className="body">
