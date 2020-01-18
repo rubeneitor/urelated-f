@@ -19,7 +19,7 @@ class RegisterC extends React.Component {
             secretA: "",
             birthday: "",
             phone: "",
-            userType: 0,
+            userGenre: 0,
             address: "",
             country: "",
             city: "",
@@ -39,7 +39,6 @@ class RegisterC extends React.Component {
 
     handleChange = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
-        
     };
 
     handleChangeCheck = ev => {
@@ -49,16 +48,23 @@ class RegisterC extends React.Component {
     resetState() {
         this.setState({
             username: "",
+            surname: "",
             email: "",
             password: "",
             password2: "",
             secretQ: "",
             secretA: "",
+            birthday: "",
             phone: "",
-            userType: 1,
+            userGenre: 0,
             address: "",
             country: "",
             city: "",
+            cpostal: "",
+            provincia: "",
+            check1: false,
+            check2: false,
+            check3: false,
 
             message: "",
             errorTime: 0,
@@ -68,96 +74,100 @@ class RegisterC extends React.Component {
 
     async pulsaRegistro() {
 
-        //pre comprobacion de los checkboxes.
-        console.log(this.state.check1);
-        console.log(this.state.check2);
-        console.log(this.state.check3);
-        
         //Comprobamos que todos los campos esten rellenados
 
-        // let arrRegister = ["username", "email", "password", "password2", "secretQ", "secretA", "phone", "userType", "address", "country", "city"];
+        let arrRegister = ["username", "surname", "email", "password", "password2", "secretQ", "secretA", "birthday", 
+        "phone", "userGenre", "address", "country", "city", "cpostal", "provincia", "pais"];
 
-        // for (let _x of arrRegister) {
-        //     if (this.state[_x] === "") {
-        //         this.muestraError("Todos los campos son requeridos.");
-        //         return;
-        //     }
-        // }
+        for (let _x of arrRegister) {
+            if (this.state[_x] === "") {
+                this.muestraError("Por favor, debe rellenar todos los campos.");
+                
+                return;
+            }
+        }
 
-        // if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(this.state.email)) {
-        //     this.muestraError("Introduce un e-mail válido.");
-        //     return;
-        // }
+        //comprobacion e-mail
+        if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(this.state.email)) {
+            this.muestraError("Introduce un e-mail válido.");
+            return;
+        }
 
-        // if (this.state.password.length < 4) {
-        //     this.muestraError("El password debe de tener al menos 4 caracteres.");
-        //     return;
-        // }
+        //comprobacion pregunta secreta
+        if (this.state.secretQ.length < 4) {
+            this.muestraError("La pregunta secreta debe tener al menos 4 caracteres.");
+            return;
+        }
+        if (this.state.secretA.length < 4) {
+            this.muestraError("La respuesta secreta debe tener al menos 4 caracteres.");
+            return;
+        }
 
-        // if (!/[\d()+-]/g.test(this.state.phone)) {
-        //     this.muestraError("El teléfono debe ser válido");
-        //     return;
-        // }
+        //comprobacion password
+        if (this.state.password.length < 4) {
+            this.muestraError("El password debe de tener al menos 4 caracteres.");
+            return;
+        }
 
-        // if (!/[a-z]/gi.test(this.state.address)) {
-        //     this.muestraError("La dirección debe ser válida.");
-        //     return;
-        // }
+        if (this.state.password !== this.state.password2) {
+            this.muestraError("Los dos passwords deben coincidir");
+            return;
+        }
 
-        // if (!/[a-z]/gi.test(this.state.country)) {
-        //     this.muestraError("El país debe ser válido.");
-        //     return;
-        // }
+        //comprobacion nombre
+        if (!/[a-z]/gi.test(this.state.username)) {
+            this.muestraError("El nombre debe de ser válido.");
+            return;
+        }
 
-        // if (!/[a-z]/gi.test(this.state.city)) {
-        //     this.muestraError("La ciudad debe ser válida.");
-        //     return;
-        // }
+        //comprobacion apellido
+        if (!/[a-z]/gi.test(this.state.surname)) {
+            this.muestraError("El apellido debe de ser válido.");
+            return;
+        }
 
-        // if (this.state.secretQ.length < 4) {
-        //     this.muestraError("La pregunta secreta debe tener al menos 4 caracteres.");
-        //     return;
-        // }
-        // if (this.state.secretA.length < 4) {
-        //     this.muestraError("La respuesta secreta debe tener al menos 4 caracteres.");
-        //     return;
-        // }
+        //comprobacion fecha de nacimiento
+        if (!/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gi.test(this.state.birthday)) {
+            this.muestraError("Debes proporcionar una fecha válida en YYYY-MM-DD.");
+            return;
+        }
 
-        // if (this.state.cNumber !== "") {
-        //     if (!/[0-9]/g.test(this.state.cNumber)) {
-        //         this.muestraError("El numero de la tarjeta debe de ser válido.");
-        //         return;
-        //     }
+        //comprobacion telefono
+        if (!/[\d()+-]/g.test(this.state.phone)) {
+            this.muestraError("El teléfono debe ser válido");
+            return;
+        }
 
-        //     if (!/[a-z]/gi.test(this.state.cOwner)) {
-        //         this.muestraError("El titular de la tarjeta debe ser válido.");
-        //         return;
-        //     }
+        //comprobacion direccion
+        if (!/[a-z]/gi.test(this.state.address)) {
+            this.muestraError("La dirección debe ser válida.");
+            return;
+        }
 
-        //     if (!/[0-9]/g.test(this.state.expireM)) {
-        //         this.muestraError("El mes de caducidad debe de ser válido.");
-        //         return;
-        //     }
-        //     if (this.state.expireM.length !== 2) {
-        //         this.muestraError("El mes de caducidad debe tener 2 caracteres.");
-        //         return;
-        //     }
-        //     if (this.state.expireY.length !== 2) {
-        //         this.muestraError("El año de caducidad debe tener 2 caracteres.");
-        //         return;
-        //     }
+        //comprobacion ciudad
+        if (!/[a-z]/gi.test(this.state.city)) {
+            this.muestraError("La ciudad debe ser válida.");
+            return;
+        }
 
-        //     if (!/[0-9]/g.test(this.state.expireY)) {
-        //         this.muestraError("El año de caducidad debe de ser válido.");
-        //         return;
-        //     }
-        // }
+        //comprobacion código postal
+        if (!/[\d()+-]/g.test(this.state.cpostal)) {
+            this.muestraError("El código postal debe ser válido");
+            return;
+        }
 
-        // if (this.state.password !== this.state.password2) {
-        //     this.muestraError("Los dos passwords deben coincidir");
-        //     return;
-        // }
+        //comprobacion provincia
+        if (!/[a-z]/gi.test(this.state.provincia)) {
+            this.muestraError("La provincia debe ser válida.");
+            return;
+        }
 
+        //comprobacion pais
+        if (!/[a-z]/gi.test(this.state.country)) {
+            this.muestraError("El país debe ser válido.");
+            return;
+        }
+        
         // Procedemos a registrar el nuevo usuario en la base de datos
         // try {
         //     let objectBilling = {
@@ -237,7 +247,7 @@ class RegisterC extends React.Component {
 
     render() {
         return (
-            <div className="registerMain">
+            <div className="registerMainC">
                 {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
 
                 <div className="registerCard">
@@ -246,70 +256,70 @@ class RegisterC extends React.Component {
                     <div className="registerCardInfoA">
                         <div>
                             <p className="cabeceraInput">Password</p>
-                            <input className="inputRegister" type="password" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Repite password</p>
-                            <input className="inputRegister" type="password" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Pregunta secreta</p>
-                            <input className="inputRegister" type="text" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Respuesta secreta</p>
-                            <input className="inputRegister" type="text" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">E-mail</p>
-                            <input className="inputRegister" type="text" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
                         </div>
                     </div>
                     <p className="textoRegistro">Datos Personales</p>
                     <div className="registerCardInfoB">
                         <div>
                             <p className="cabeceraInput">Nombre</p>
-                            <input className="inputRegister" type="text" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Primer Apellido</p>
-                            <input className="inputRegister" type="text" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Género</p>
-                            <select className="registerDropdown br" name="userType" onChange={this.handleChange}>
+                            <select className="registerDropdown br" name="userGenre" onChange={this.handleChange}>
                                 <option value="0"></option>
                                 <option value="1">Masculino</option>
                                 <option value="2">Femenino</option>
                             </select>
                         </div>
                         <div>
-                            <p className="cabeceraInput">Fecha de nacimiento</p>
-                            <input className="inputRegister" type="text" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
+                            <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
+                            <input className="inputRegister" type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Dirección</p>
-                            <input className="inputRegister" type="text" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Tfno. móvil</p>
-                            <input className="inputRegister" type="text" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Ciudad</p>
-                            <input className="inputRegister" type="text" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Código postal</p>
-                            <input className="inputRegister" type="text" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
                         </div>
                         <div>
                             <p className="cabeceraInput">Provincia</p>
-                            <input className="inputRegister" type="text" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
                         </div>
                         <div>
-                            <p className="cabeceraInput mt3">País</p>
-                            <input className="inputRegister" type="text" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
+                            <p className="cabeceraInput">País</p>
+                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
                         </div>
                         <div className="checkBoxContainer mt5">
                         <label className="container">

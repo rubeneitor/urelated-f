@@ -124,6 +124,7 @@ html {
 .mt3 { margin-top: 1em;}
 .mt4 { margin-top: 1.5em;}
 .mt5 { margin-top: 2em;}
+.mt8 { margin-top: 8em;}
 
 .mr1 { margin-right: 0.3em;}
 .mr2 { margin-right: 0.5em;}
@@ -142,6 +143,8 @@ html {
 .ml3 { margin-left: 1em;}
 .ml4 { margin-left: 1.5em;}
 .ml5 { margin-left: 2em;}
+.ml6 { margin-left: 4em;}
+.ml8 { margin-left: 8em;}
 
 
 /* Elementos */
