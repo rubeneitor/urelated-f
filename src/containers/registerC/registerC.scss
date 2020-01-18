@@ -8,12 +8,32 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 43em;
-        width: 40em;
+        height: 65em;
+        width: 70em;
         border-radius: 3px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background: var(--pri0);
+        background: var(--colBla);
         margin-top: 1em;
+
+        .cabeceraRegistro {
+            color: var(--pri9);
+            font-weight: bold;
+            font-size: 2em;
+        }
+
+        .textoRegistro {
+            color: var(--pri9);
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .registerButton {
+            background: var(--colAzuDos);
+			transition: 0.3s;
+        }
+
+        .registerButton:hover {
+            background: var(--colAzu);
+        }
     }
 
     .registerCard button {
@@ -24,33 +44,119 @@
     .registerCardInfoA {
         display: flex;
         flex-direction: column;
-        height: 7em;
-        width: 35em;
+        height: 15em;
+        width: 60em;
         border-radius: 3px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background: var(--pri0);
+        
         margin: 1em 0 1em 0;
         display: grid;
 	    grid-template: repeat(3, 1fr) / repeat(2, 1fr);
 	    align-items: center;
         justify-items: center;
         padding: 0.5em;
+
+        .cabeceraInput {
+            color: var(--pri9);
+            // font-weight:bold;
+        }
     }
 
     .registerCardInfoB {
         display: flex;
         flex-direction: column;
-        height: 8em;
-        width: 35em;
+        height: 30em;
+        width: 60em;
         border-radius: 3px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        background: var(--pri0);
+        
         margin: 1em 0 1em 0;
         display: grid;
 	    grid-template: repeat(3, 1fr) / repeat(2, 1fr);
 	    align-items: center;
         justify-items: center;
         padding: 0.5em;
+
+        .cabeceraInput {
+            color: var(--pri9);
+            // font-weight:bold;
+        }
+
+        .checkBoxContainer {
+
+            margin-right: 4em;
+            /* Customize the label (the container) */
+         .container {
+            // display: block;
+            position: relative;
+            // padding-left: 35px;
+            padding-left: 2em;
+            
+            cursor: pointer;
+            font-size: 1em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            }
+      
+            /* Hide the browser's default checkbox */
+            .container input {
+              position: absolute;
+              opacity: 0;
+              cursor: pointer;
+              height: 0;
+              width: 0;
+            }
+    
+            /* Create a custom checkbox */
+            .checkmark {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 1em;
+              width: 1em;
+              background-color: var(--colGri);
+            }
+    
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+              background-color: var(--colDarGri);
+            }
+    
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+              background-color: var(--colAzuDos);
+            }
+    
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+              content: "";
+              position: absolute;
+              display: none;
+            }
+    
+            /* Show the checkmark when checked */
+            .container input:checked ~ .checkmark:after {
+              display: block;
+            }
+    
+            /* Style the checkmark/indicator */
+            .container .checkmark:after {
+              left: 4px;
+              top: 0px;
+              width: 5px;
+              height: 10px;
+              border: solid white;
+              border-width: 0 3px 3px 0;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+            }
+        }
+
+         
+
+        
+  
     }
 
     .header {
@@ -74,14 +180,7 @@
         margin: 0.5em 0 0 0;
         height: 1em;
     }
-
-    h3 {
-        height: 0.75em;
-        margin-top: 0.1em;
-        font-size: 1em;
-        color: var(--colRojCla);
-    }
-
+    
     .body {
         display: flex;
         flex-direction: column;
@@ -89,21 +188,23 @@
     }
 
     .inputRegister {
-        background: var(--pri1);
+        background: var(--colBla);
         border-style: solid;
         font-size: 1em;
-        border-width: 0.5px;
-        border-color: var(--pri9);
+        width: 20em;
+        height: 2em;
+        border-width: 1px;
+        border-color: var(--colAzuDos);
     }
 
     .registerDropdown {
-        background: var(--pri1);
+        background: var(--colBla);
         border-style: solid;
         font-size: 1em;
-        border-width: 0.5px;
-        border-color: var(--pri9);
-        width: 11.6em;
-        height: 1.5em;
+        border-width: 1px;
+        border-color: var(--colAzuDos);
+        width: 20em;
+        height: 2em;
     }
 
     .error {
