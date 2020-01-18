@@ -57,14 +57,14 @@
 
 
 .busqueda .searchButton {
-    background: var(--colRoj);
+    background: var(--colRojCla);
     transition: background-color 0.3s;
     font-size: 1.1em;
 }
 
 
 .busqueda .searchButton:hover {
-    background-color: var(--colRojCla);
+    background-color: var(--colRoj);
     
 }
 

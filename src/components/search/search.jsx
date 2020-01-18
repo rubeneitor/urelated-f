@@ -6,8 +6,8 @@ class Search extends React.Component {
     constructor (props) {
         super(props);
         this.state={
-            ciudad:'',
-            pueblo:''
+            puesto:'',
+            lugar:''
         }
     };
 
@@ -21,6 +21,7 @@ class Search extends React.Component {
     }
 
     render() {
+        
         return (
             <div className="busqueda">
                 <div className="search">
@@ -43,16 +44,16 @@ class Search extends React.Component {
                     <Input
                         placeholder="Puesto, empresa, habilidad o palabra clave"
                         handleChange={this.handleChange}
-                        value={this.state.ciudad}
-                        name="ciudad"
+                        value={this.state.puesto}
+                        name="puesto"
                     />
 
                     <Input
                     
                         placeholder="Ciudad, provincia o país"
                         handleChange={this.handleChange}
-                        value={this.state.pueblo}
-                        name="pueblo"
+                        value={this.state.lugar}
+                        name="lugar"
                     
                     />
 

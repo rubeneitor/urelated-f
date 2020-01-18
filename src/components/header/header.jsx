@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { session, getUrl } from "../../utils/uti";
 import { login } from "../../redux/actions/users";
 import { rdx_productSearchResults } from "../../redux/actions/products";
-import Search from "../search/search";
+// import Search from "../search/search";
 
 import "./header.scss";
 
@@ -206,25 +206,9 @@ class Header extends React.Component {
                         </NavLink>
                     </div>
 
-                    {/* <div className="search">
-                    <input
-                        type="text"
-                        placeholder="Búsqueda"
-                        onChange={ev => {
-                            this.pulsaTecla(ev);
-                        }}
-                    />
-                    <div className="backgroundIcon">
-						<i
-							className="material-icons"
-							onClick={ () => this.pulsaBotonBusqueda() }
-						>search</i>
-                    </div>
-                </div> */}
-
                     <div className="nav">{this.BotonesHeader()}</div>
                 </header>
-                <Search />
+                {/* <Search /> */}
             </Fragment>
         );
     }

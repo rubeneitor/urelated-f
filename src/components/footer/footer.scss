@@ -4,3 +4,28 @@
     height: 7em;
     padding: 0em;
 }
+
+.brand {
+    color: var(--colBla);
+    font-weight: bold;
+    font-size: 2em; 
+}
+
+.policy {
+    display: flex;
+    flex-direction: row;
+    
+    .faq {
+        color: var(--colBla);
+    }
+
+    .privacy {
+        color: var(--colBla);
+    }
+}
+
+.footerInfoContainer {
+    .blank {
+        height: 1em;
+    }
+}
