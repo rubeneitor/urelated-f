@@ -184,10 +184,7 @@ class LoginC extends React.Component {
 			<div className="loginMainC">
 				<div className="loginCardC">
 					<div className="headerC">
-						{/* <img className="image"
-							src="img/logouRelated_1lit.png"
-							alt="logo"
-						/> */}
+						<p className="logoText">uRelated</p>
 						<h1>Acceso Candidatos</h1>
 					</div>
 					<div className="body">
@@ -214,7 +211,8 @@ class LoginC extends React.Component {
 						
 					</div>
 				</div>
-				<div className="loginCardC ml3">
+				<div className="vertical-line"></div>
+				<div className="loginCardC">
 					<button onClick={ () => this.pulsaRegistro() }>Regístrate candidato</button>
 				</div>
 			</div>

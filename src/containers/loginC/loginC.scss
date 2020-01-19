@@ -1,16 +1,16 @@
 .loginMainC {
+    margin-bottom: 6.8em;
     background-color: var(--colGri);
     display: flex;
     justify-content: center;
+    flex-direction: row;
 
     .loginCardC {
         display: flex;
         flex-direction: column;
-
         height: 29em;
         width: 26em;
         border-radius: 3px;
-        // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background: var(--pri0);
         margin-top: 3em;
     }
@@ -54,7 +54,15 @@
 	.success {
 		margin-top: 1em;
 		color: var(--colVer);
-	}
+    }
+    
+    .vertical-line {
+        background: var(--pri5);
+        width: 0.1em;
+        height: 23em;
+        margin-top: 6em;
+        
+    }
 	
 	
 }
