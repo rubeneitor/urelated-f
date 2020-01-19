@@ -91,6 +91,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        .linkPassEmpresa {
+            cursor: pointer;
+
+        }
+
+        .linkPassEmpresa:hover {
+            text-decoration: underline;
+        }
     }
 
     .body input {

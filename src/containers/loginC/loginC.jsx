@@ -1,11 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-
+import { withRouter } from "react-router-dom";
 import { session, getUrl } from "../../utils/uti";
-
+import store from "../../redux/store";
+import { connect } from "react-redux";
 import "./loginC.scss";
 import { login } from "../../redux/actions/users";
+import { rdx_productDetail } from "../../redux/actions/products";
 
 class LoginC extends React.Component {
     constructor(props) {
@@ -135,6 +137,19 @@ class LoginC extends React.Component {
         }, 1000);
     }
 
+    passwordCandidato () {
+
+        //redux para indicar que se trata de un candidato
+        store.dispatch({
+            type: 'PASSWORD',
+            payload: "Candidato"
+        });
+
+
+        //Redirección a registro de Empresas
+        this.props.history.push("/passwordRecovery");
+    }
+
     render() {
         return (
             <div className="loginMainC">
@@ -166,9 +181,7 @@ class LoginC extends React.Component {
                             Entrar
                         </button>
 
-                        <NavLink to="/passwordRecovery">
-                            <p>¿Has olvidado la contraseña?</p>
-                        </NavLink>
+                        <p className="linkPassCandidato" onClick={() => this.passwordCandidato()}>¿Has olvidado la contraseña?</p>
 
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
@@ -204,4 +217,12 @@ class LoginC extends React.Component {
     }
 }
 
-export default LoginC;
+const mapStateToProps = (state) => { // ese state es de redux
+	return ({
+		lostPass: state.lostPass
+	})
+}
+
+
+export default connect(mapStateToProps) (withRouter(LoginC));
+

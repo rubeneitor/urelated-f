@@ -32,6 +32,7 @@ const store = createStoreWithMiddleware(
 			
 			cart:[],
 			totalPrice: 0,
+			lostPass: "",
 			
 		},
 		states: ["cart"] }),

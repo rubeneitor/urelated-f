@@ -5,6 +5,7 @@ const reducer = (
 	state = {
 		isLoggedIn: !!session.get(),
 		cart: [],
+		lostPass: "",
 	},
 	action
 	
@@ -17,6 +18,12 @@ const reducer = (
 			...state,
 			isLoggedIn: action.payload
 		};
+
+		case "PASSWORD":
+		return {
+			...state,
+			lostPass: action.payload
+		}
 		
 		case "PRODUCT_DETAIL":
 		return {

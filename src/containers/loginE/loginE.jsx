@@ -1,11 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-
+import { withRouter } from "react-router-dom";
 import { session, getUrl } from "../../utils/uti";
-
+import store from "../../redux/store";
+import { connect } from "react-redux";
 import "./loginE.scss";
 import { login } from "../../redux/actions/users";
+import { rdx_productDetail } from "../../redux/actions/products";
+
 
 class LoginE extends React.Component {
     constructor(props) {
@@ -135,6 +138,19 @@ class LoginE extends React.Component {
         }, 1000);
     }
 
+    passwordEmpresa () {
+
+        //redux para indicar que se trata de una empresa
+        store.dispatch({
+            type: 'PASSWORD',
+            payload: "Empresa"
+        });
+
+
+        //Redirección a registro de Empresas
+        this.props.history.push("/passwordRecovery");
+    }
+
     render() {
         return (
             <div className="loginMainE">
@@ -166,9 +182,7 @@ class LoginE extends React.Component {
                             Entrar
                         </button>
 
-                        <NavLink to="/passwordRecovery">
-                            <p>¿Has olvidado la contraseña?</p>
-                        </NavLink>
+                        <p className="linkPassEmpresa" onClick={() => this.passwordEmpresa()}>¿Has olvidado la contraseña?</p>
 
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
@@ -205,4 +219,12 @@ class LoginE extends React.Component {
     }
 }
 
-export default LoginE;
+const mapStateToProps = (state) => { // ese state es de redux
+	return ({
+		lostPass: state.lostPass
+	})
+}
+
+
+export default connect(mapStateToProps) (withRouter(LoginE));
+

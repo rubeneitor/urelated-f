@@ -2,9 +2,12 @@
 import React from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
-
+import store from "../../redux/store";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import queryString from 'query-string';
 import { getUrl } from "../../utils/uti";
-
+import { rdx_productDetail } from "../../redux/actions/products";
 
 import "./passwordRecovery.scss";
 
@@ -91,31 +94,34 @@ class PasswordRecovery extends React.Component {
 			this.muestraError("Username / email no puede estar vacio.", 2);
 			return;
 		};
+
+		//comprobamos si se trata de un candidato o de una empresa.
+		console.log("ESOOOOOOO SE TRATA DE -> ", this.props.lostPass);
 		
 		
-		axios.post(
-			getUrl("/user/forgotPassword1"), 
-			{
-				"username": this.state.username
-			}
-		).then( (res) => {
+		// axios.post(
+		// 	getUrl("/user/forgotPassword1"), 
+		// 	{
+		// 		"username": this.state.username
+		// 	}
+		// ).then( (res) => {
 			
-			let data = res.data;
+		// 	let data = res.data;
 			
-			this.setState({
-				secretQuestion: data.secretQuestion
-			});
+		// 	this.setState({
+		// 		secretQuestion: data.secretQuestion
+		// 	});
 			
-		}).catch( (error) => {
+		// }).catch( (error) => {
 			
-			let errData = error.response.data;
+		// 	let errData = error.response.data;
 			
-			if (errData.errorCode === "user_recovery_1") {
-				this.muestraError("No se ha encontrado ningún usuario.", 2);
-				return;
-			};
+		// 	if (errData.errorCode === "user_recovery_1") {
+		// 		this.muestraError("No se ha encontrado ningún usuario.", 2);
+		// 		return;
+		// 	};
 			
-		});
+		// });
 		
 	};
 	
@@ -144,54 +150,55 @@ class PasswordRecovery extends React.Component {
             this.muestraError("La respuesta secreta debe tener al menos 4 caracteres.");
             return;
 		};
+
+		//comprobamos si se trata de un candidato o de una empresa.
 		
 		
-		
-		// Empiezo
-		try {
+		// // Empiezo
+		// try {
 			
-			// Encripto pass
-			const encryptedPass = await bcrypt.hash(this.state.password, 10);
-			
-			
-			// Llamo
-			await axios.post(
-				getUrl("/user/forgotPassword2"), 
-				{
-					"username": this.state.username,
-					"userAnswer": this.state.userAnswer,
-					"newPassword": encryptedPass
-				}
-			);
+		// 	// Encripto pass
+		// 	const encryptedPass = await bcrypt.hash(this.state.password, 10);
 			
 			
-			// Mensaje
-			this.muestraError("Tu contraseña ha sido cambiada. Redireccionando al login...", 2000, false);
+		// 	// Llamo
+		// 	await axios.post(
+		// 		getUrl("/user/forgotPassword2"), 
+		// 		{
+		// 			"username": this.state.username,
+		// 			"userAnswer": this.state.userAnswer,
+		// 			"newPassword": encryptedPass
+		// 		}
+		// 	);
 			
 			
-			// Redirección
-			setTimeout( () => {
-				this.props.history.push("/login");
-			}, 2000);
+		// 	// Mensaje
+		// 	this.muestraError("Tu contraseña ha sido cambiada. Redireccionando al login...", 2000, false);
 			
 			
-		} catch (error) {
+		// 	// Redirección
+		// 	setTimeout( () => {
+		// 		this.props.history.push("/login");
+		// 	}, 2000);
 			
-			if (error.response) {
+			
+		// } catch (error) {
+			
+		// 	if (error.response) {
 				
-				let errData = error.response.data;
+		// 		let errData = error.response.data;
 				
-				if (errData.errorCode === "user_recovery_2") {
-					this.muestraError("La respuesta secreta no era correcta.", 2);
-					return;
-				};
+		// 		if (errData.errorCode === "user_recovery_2") {
+		// 			this.muestraError("La respuesta secreta no era correcta.", 2);
+		// 			return;
+		// 		};
 				
-			};
+		// 	};
 			
 			
-			this.muestraError(error.response.data);
+		// 	this.muestraError(error.response.data);
 			
-		};
+		// };
 		
 	};
 	
@@ -208,7 +215,7 @@ class PasswordRecovery extends React.Component {
 							<h1 className="cardTitle"> Paso 1/2 </h1>
 						</div>
 						<div className="cardBody mt4">
-							<input type="text" placeholder="Usuario / email" onChange={ (ev) => {this.handleChange(ev, "username")} } />
+							<input type="text" placeholder="Email" onChange={ (ev) => {this.handleChange(ev, "username")} } />
 							<button onClick={ () => {this.pulsaContinuar1()} }>Continuar</button>
 							
 							<p className={this.state.messageClassName}> {this.state.message} </p>
@@ -248,5 +255,14 @@ class PasswordRecovery extends React.Component {
 	
 };
 
+const mapStateToProps = (state) => { // ese state es de redux
+	return ({
+		// productData: state.productData,
+		// isLoggedIn: state.isLoggedIn,
+		// cart: state.cart
+		lostPass: state.lostPass
+	})
+}
 
-export default PasswordRecovery;
+
+export default connect(mapStateToProps) (withRouter(PasswordRecovery));
