@@ -184,7 +184,11 @@ class LoginC extends React.Component {
 			<div className="loginMainC">
 				<div className="loginCardC">
 					<div className="headerC">
-						<p className="logoText">uRelated</p>
+						{/* <p className="logoText">uRelated</p> */}
+						<img className="image"
+							src="img/logouRelated_5lit.png"
+							alt="logo2"
+						/>
 						<h1>Acceso Candidatos</h1>
 					</div>
 					<div className="body">

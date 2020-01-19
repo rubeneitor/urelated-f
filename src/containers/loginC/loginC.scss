@@ -17,14 +17,19 @@
 
     .headerC {
         display: flex;
+        flex-direction: column;
         justify-content: center;
+        align-items:center;
         height: 15em;
     }
 
     .loginCardC .headerC .image {
-        width: 12em;
-        top: 6em;
+        width: 7em;
+        border: 0.1em solid;
+	    border-color: white;
+        // top: 6em;
         position: absolute;
+        
     }
 
     h1 {
