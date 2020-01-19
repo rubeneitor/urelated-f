@@ -1,30 +1,85 @@
 .loginMainE {
+    margin-bottom: 6.8em;
     background-color: var(--colGri);
     display: flex;
     justify-content: center;
+    flex-direction: row;
 
     .loginCardE {
         display: flex;
         flex-direction: column;
-
         height: 29em;
         width: 26em;
         border-radius: 3px;
-        // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         background: var(--pri0);
         margin-top: 3em;
     }
 
+    .loginCardE2 {
+        display: flex;
+        flex-direction: column;
+        height: 29em;
+        width: 26em;
+        border-radius: 3px;
+        background: var(--pri0);
+        margin-top: 3em;
+        // align-items: center;
+
+        .userRegInfoCont {
+            margin-top: 5em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .infoText {
+                display: flex;
+                flex-direction: row;
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+    
+            .imageI {
+                height: 2em;
+            }
+    
+            .botonRegistroUsuarios {
+                background: var(--colAzuDos);
+                transition: 0.3s;
+    
+                .textoBoton {
+                    
+                    color: var(--colBla);
+                    // transition: 0.3s;
+                }
+    
+                // .textoBoton:hover {
+                // 	color: var(--colAzuDos);
+                // }
+            }
+    
+            .botonRegistroUsuarios:hover {
+                background: var(--colAzu);
+                
+            }
+        }
+
+    }
+
     .headerE {
         display: flex;
+        flex-direction: column;
         justify-content: center;
+        align-items:center;
         height: 15em;
     }
 
     .loginCardE .headerE .image {
-        width: 12em;
-        top: 6em;
+        width: 7em;
+        border: 0.1em solid;
+	    border-color: white;
+        // top: 6em;
         position: absolute;
+        
     }
 
     h1 {
@@ -54,7 +109,15 @@
 	.success {
 		margin-top: 1em;
 		color: var(--colVer);
-	}
+    }
+    
+    .vertical-line {
+        background: var(--pri5);
+        width: 0.1em;
+        height: 23em;
+        margin-top: 6em;
+        
+    }
 	
 	
 }

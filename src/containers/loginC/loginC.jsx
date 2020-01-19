@@ -48,64 +48,64 @@ class LoginC extends React.Component {
             return;
         }
 
-        try {
-            // Llamada
-            let body = {
-                username: username,
-                password: password
-            };
+        // try {
+        //     // Llamada
+        //     let body = {
+        //         username: username,
+        //         password: password
+        //     };
 
-            let res = await axios.post(getUrl("/user/login"), body);
+        //     let res = await axios.post(getUrl("/user/login"), body);
 
-            let data = res.data;
+        //     let data = res.data;
 
-            // Guardo datos de sesión
-            session.set({
-                username: data.username,
-                userId: data.userId,
-                token: data.token,
-                userType: data.userType
-            });
+        //     // Guardo datos de sesión
+        //     session.set({
+        //         username: data.username,
+        //         userId: data.userId,
+        //         token: data.token,
+        //         userType: data.userType
+        //     });
 
-            // Muestro
-            // this.muestraError("Accediendo...", 2, false);
+        //     // Muestro
+        //     // this.muestraError("Accediendo...", 2, false);
 
-            // Digo que estoy logeado
-            login(true);
+        //     // Digo que estoy logeado
+        //     login(true);
 
-            // Redirección
-            this.props.history.push("/");
-        } catch (err) {
-            let res = err.response.data;
+        //     // Redirección
+        //     this.props.history.push("/");
+        // } catch (err) {
+        //     let res = err.response.data;
 
-            if (res.errorCode === "user_login_1") {
-                this.muestraError("Usuario no encontrado o contraseña incorrecta.");
-                return;
-            }
+        //     if (res.errorCode === "user_login_1") {
+        //         this.muestraError("Usuario no encontrado o contraseña incorrecta.");
+        //         return;
+        //     }
 
-            if (res.errorCode === "user_login_2") {
-                // Guardo datos de sesión
-                session.set({
-                    username: res.username,
-                    userId: res.userId,
-                    token: res.token,
-                    userType: res.userType
-                });
+        //     if (res.errorCode === "user_login_2") {
+        //         // Guardo datos de sesión
+        //         session.set({
+        //             username: res.username,
+        //             userId: res.userId,
+        //             token: res.token,
+        //             userType: res.userType
+        //         });
 
-                // Muestro mensaje
-                this.muestraError("Ya estabas logeado.", 2);
+        //         // Muestro mensaje
+        //         this.muestraError("Ya estabas logeado.", 2);
 
-                // Digo que estoy logeado
-                login(true);
+        //         // Digo que estoy logeado
+        //         login(true);
 
-                // Redirijo
-                setTimeout(() => {
-                    this.props.history.push("/");
-                }, 2000);
+        //         // Redirijo
+        //         setTimeout(() => {
+        //             this.props.history.push("/");
+        //         }, 2000);
 
-                return;
-            }
-        }
+        //         return;
+        //     }
+        // }
     }
 
     muestraError(message, timeout = 3, isError = true) {
