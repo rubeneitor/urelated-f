@@ -10,6 +10,7 @@ class registerE extends React.Component {
         super(props);
 
         this.state = {
+            step2: "",
             username: "",
             name: "",
             surname: "",
@@ -28,7 +29,8 @@ class registerE extends React.Component {
             messageClassName: "error"
         };
 
-        this.pulsaRegistro = this.pulsaRegistro.bind(this);
+        this.pulsaRegistro1 = this.pulsaRegistro1.bind(this);
+        this.pulsaRegistro2 = this.pulsaRegistro2.bind(this);
     }
 
     handleChange = ev => {
@@ -61,6 +63,7 @@ class registerE extends React.Component {
 
     resetState() {
         this.setState({
+            step2: "",
             username: "",
             name: "",
             surname: "",
@@ -80,24 +83,10 @@ class registerE extends React.Component {
         });
     }
 
-    async pulsaRegistro() {
-
+    pulsaRegistro1() {
         //Comprobamos que todos los campos esten rellenados
 
-        let arrRegister = [
-            "username",
-            "name",
-            "surname",
-            "email",
-            "password",
-            "password2",
-            "secretQ",
-            "secretA",
-            "phone",
-            "fiscal",
-            "sector",
-            "description"
-        ];
+        let arrRegister = ["username", "surname", "email", "password", "password2", "secretQ", "secretA"];
 
         for (let _x of arrRegister) {
             if (this.state[_x] === "") {
@@ -140,15 +129,31 @@ class registerE extends React.Component {
             return;
         }
 
-        //comprobacion nombre de la empresa
-        if (!/[a-z]/gi.test(this.state.name)) {
-            this.muestraError("El nombre de la empresa debe ser válido.");
-            return;
-        }
-
         //comprobacion apellido
         if (!/[a-z]/gi.test(this.state.surname)) {
             this.muestraError("El apellido debe ser válido.");
+            return;
+        }
+
+        this.setState({
+            step2: "ok"
+        });
+    }
+
+    async pulsaRegistro2() {
+        let arrRegister2 = ["name", "phone", "fiscal", "sector", "description"];
+
+        for (let _x2 of arrRegister2) {
+            if (this.state[_x2] === "") {
+                this.muestraError("Por favor, debe rellenar todos los campos.");
+
+                return;
+            }
+        }
+
+        //comprobacion nombre de la empresa
+        if (!/[a-z]/gi.test(this.state.name)) {
+            this.muestraError("El nombre de la empresa debe ser válido.");
             return;
         }
 
@@ -174,6 +179,10 @@ class registerE extends React.Component {
             this.muestraError("El identificador fiscal debe ser válido y tener al menos 8 caracteres.");
             return;
         }
+
+        console.log("bieeeeeeen si tio si");
+
+        console.log(this.state);
 
         // Procedemos a registrar el nuevo usuario en la base de datos
         // try {
@@ -253,86 +262,113 @@ class registerE extends React.Component {
     }
 
     render() {
-        return (
-            <div className="registerMainE">
-                {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
+        if (this.state.step2 === "") {
+            return (
+                <div className="registerMainE">
+                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
 
-                <div className="registerCard">
-                    <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
-                    <p className="textoRegistro mt3">Información del registrante por parte de la empresa</p>
-                    <div className="registerCardInfoA">
-                        <div>
-                            <p className="cabeceraInput">Password</p>
-                            <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                    <div className="registerCard">
+                        <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
+                        <p className="textoRegistro mt3">Información del registrante por parte de la empresa</p>
+                        <div className="registerCardInfoA">
+                            <div>
+                                <p className="cabeceraInput">Password</p>
+                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Repite password</p>
+                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Pregunta secreta</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Respuesta secreta</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Nombre</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Primer Apellido</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">E-mail</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                            </div>
                         </div>
-                        <div>
-                            <p className="cabeceraInput">Repite password</p>
-                            <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Pregunta secreta</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Respuesta secreta</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Nombre</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Primer Apellido</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">E-mail</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
-                        </div>
-                    </div>
-                    <p className="textoRegistro">Datos de tu empresa</p>
-                    <div className="registerCardInfoB">
-                        <div>
-                            <p className="cabeceraInput">Nombre</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="name" value={this.state.name} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Teléfono</p>
-                            <input className="inputRegister" type="text" maxLength="100" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Identificación fiscal (C.I.F o N.I.F)</p>
-                            <input className="inputRegister" type="text" maxLength="10" placeholder="C.I.F sin guiones: B12345678" name="fiscal" value={this.state.fiscal} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Sector empresarial</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>
-                        </div>
-                    </div>
+                        <p className="textoRegistro">Datos de tu empresa</p>
 
-                    <div className="descripcionEmpresa">
-                        <p className="cabeceraInput">Descripcion tu empresa</p>
-                        <textarea
-                            className="textAddProduct"
-                            rows="7"
-                            cols="108"
-                            maxLength="2000"
-                            placeholder="Utiliza este espacio para describir a tu empresa tal y como quieres que se muestre
-                                a los candidatos. Sugerencia: Puedes utilizar la descripción de tu web corporativa."
-                            name="description"
-                            value={this.state.description}
-                            onChange={this.handleChange}
-                        ></textarea>
-                        <span id="descriptionRemainingCharacters"></span>
+                        <button className="registerButton" onClick={this.pulsaRegistro1}>
+                            Siguiente
+                        </button>
+                        <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
-
-                    <button className="registerButton" onClick={this.pulsaRegistro}>
-                        Registrar
-                    </button>
-                    <p className={this.state.messageClassName}> {this.state.message} </p>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div className="registerMainE">
+                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
+
+                    <div className="registerCard">
+                        <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
+
+                        <p className="textoRegistro">Datos de tu empresa</p>
+                        <div className="registerCardInfoB">
+                            <div>
+                                <p className="cabeceraInput">Nombre</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="name" value={this.state.name} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Teléfono</p>
+                                <input className="inputRegister" type="text" maxLength="100" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Identificación fiscal (C.I.F o N.I.F)</p>
+                                <input
+                                    className="inputRegister"
+                                    type="text"
+                                    maxLength="10"
+                                    placeholder="C.I.F sin guiones: B12345678"
+                                    name="fiscal"
+                                    value={this.state.fiscal}
+                                    onChange={this.handleChange}
+                                ></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Sector empresarial</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>
+                            </div>
+                        </div>
+
+                        <div className="descripcionEmpresa">
+                            <p className="cabeceraInput">Descripcion tu empresa</p>
+                            <textarea
+                                className="textAddProduct"
+                                rows="5"
+                                cols="108"
+                                maxLength="2000"
+                                placeholder="Utiliza este espacio para describir a tu empresa tal y como quieres que se muestre
+                                    a los candidatos. Sugerencia: Puedes utilizar la descripción de tu web corporativa."
+                                name="description"
+                                value={this.state.description}
+                                onChange={this.handleChange}
+                            ></textarea>
+                            <span id="descriptionRemainingCharacters"></span>
+                        </div>
+
+                        <button className="registerButton" onClick={this.pulsaRegistro2}>
+                            Registrar
+                        </button>
+                        <p className={this.state.messageClassName}> {this.state.message} </p>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 

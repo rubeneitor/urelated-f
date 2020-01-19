@@ -10,6 +10,7 @@ class RegisterC extends React.Component {
         super(props);
 
         this.state = {
+            step2: 0,
             username: "",
             surname: "",
             email: "",
@@ -34,7 +35,9 @@ class RegisterC extends React.Component {
             messageClassName: "error"
         };
 
-        this.pulsaRegistro = this.pulsaRegistro.bind(this);
+        this.pulsaRegistro1 = this.pulsaRegistro1.bind(this);
+        this.pulsaRegistro2 = this.pulsaRegistro2.bind(this);
+        this.pulsaRegistro3 = this.pulsaRegistro3.bind(this);
     }
 
     handleChange = ev => {
@@ -47,6 +50,7 @@ class RegisterC extends React.Component {
 
     resetState() {
         this.setState({
+            step2: 0,
             username: "",
             surname: "",
             email: "",
@@ -72,17 +76,15 @@ class RegisterC extends React.Component {
         });
     }
 
-    async pulsaRegistro() {
-
+    pulsaRegistro1() {
         //Comprobamos que todos los campos esten rellenados
 
-        let arrRegister = ["username", "surname", "email", "password", "password2", "secretQ", "secretA", "birthday", 
-        "phone", "userGenre", "address", "country", "city", "cpostal", "provincia", "pais"];
+        let arrRegister = ["email", "password", "password2", "secretQ", "secretA"];
 
         for (let _x of arrRegister) {
             if (this.state[_x] === "") {
                 this.muestraError("Por favor, debe rellenar todos los campos.");
-                
+
                 return;
             }
         }
@@ -114,6 +116,25 @@ class RegisterC extends React.Component {
             return;
         }
 
+        this.setState({
+            step2: 1
+        });
+
+        
+        
+    }
+
+    async pulsaRegistro2() {
+        let arrRegister2 = ["username", "surname", "birthday", "phone", "userGenre"];
+
+        for (let _x2 of arrRegister2) {
+            if (this.state[_x2] === "") {
+                this.muestraError("Por favor, debe rellenar todos los campos.");
+
+                return;
+            }
+        }
+
         //comprobacion nombre
         if (!/[a-z]/gi.test(this.state.username)) {
             this.muestraError("El nombre debe de ser válido.");
@@ -136,6 +157,26 @@ class RegisterC extends React.Component {
         if (!/[\d()+-]/g.test(this.state.phone)) {
             this.muestraError("El teléfono debe ser válido");
             return;
+        }
+
+        
+        this.setState({
+            step2: 2
+        });
+
+        
+    }
+
+    async pulsaRegistro3() {
+
+        let arrRegister3 = ["address", "country", "city", "cpostal", "provincia", "pais"];
+
+        for (let _x3 of arrRegister3) {
+            if (this.state[_x3] === "") {
+                this.muestraError("Por favor, debe rellenar todos los campos.");
+
+                return;
+            }
         }
 
         //comprobacion direccion
@@ -167,7 +208,9 @@ class RegisterC extends React.Component {
             this.muestraError("El país debe ser válido.");
             return;
         }
+
         
+
         // Procedemos a registrar el nuevo usuario en la base de datos
         // try {
         //     let objectBilling = {
@@ -246,111 +289,149 @@ class RegisterC extends React.Component {
     }
 
     render() {
-        return (
-            <div className="registerMainC">
-                {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
+        if (this.state.step2 === 0) {
+            return (
+                <div className="registerMainC">
+                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
 
-                <div className="registerCard">
-                    <p className="cabeceraRegistro">Crea tu cuenta</p>
-                    <p className="textoRegistro mt3">Información de tu cuenta</p>
-                    <div className="registerCardInfoA">
-                        <div>
-                            <p className="cabeceraInput">Password</p>
-                            <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                    <div className="registerCard">
+                        <p className="cabeceraRegistro">Crea tu cuenta</p>
+                        <p className="textoRegistro mt3">Información de tu cuenta</p>
+                        <div className="registerCardInfoA">
+                            <div>
+                                <p className="cabeceraInput">Password</p>
+                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Repite password</p>
+                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Pregunta secreta</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Respuesta secreta</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">E-mail</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                            </div>
                         </div>
-                        <div>
-                            <p className="cabeceraInput">Repite password</p>
-                            <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Pregunta secreta</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Respuesta secreta</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">E-mail</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
-                        </div>
+                        <button className="registerButton" onClick={this.pulsaRegistro1}>
+                            Continuar
+                        </button>
+                        <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
-                    <p className="textoRegistro">Datos Personales</p>
-                    <div className="registerCardInfoB">
-                        <div>
-                            <p className="cabeceraInput">Nombre</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Primer Apellido</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Género</p>
-                            <select className="registerDropdown br" name="userGenre" onChange={this.handleChange}>
-                                <option value="0"></option>
-                                <option value="1">Masculino</option>
-                                <option value="2">Femenino</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
-                            <input className="inputRegister" type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Dirección</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Tfno. móvil</p>
-                            <input className="inputRegister" type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Ciudad</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Código postal</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">Provincia</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
-                        </div>
-                        <div>
-                            <p className="cabeceraInput">País</p>
-                            <input className="inputRegister" type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
-                        </div>
-                        <div className="checkBoxContainer mt5">
-                        <label className="container">
-                                ¿Estas trabajando actualmente?
-                                <input type="checkbox" name="check1" value={this.state.check1} onChange={this.handleChangeCheck}></input>
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
-                        <div className="checkBoxContainer mt5">
-                        <label className="container">
-                                ¿Has trabajado con anterioridad?
-                                <input type="checkbox" name="check2" value={this.state.check2} onChange={this.handleChangeCheck}></input>
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
-                        <div className="checkBoxContainer mt5">
-                        <label className="container">
-                                ¿Has cursado estudios oficiales?
-                                <input type="checkbox" name="check3" value={this.state.check3} onChange={this.handleChangeCheck}></input>
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
-
-                    </div>
-                    <button className="registerButton" onClick={this.pulsaRegistro}>
-                        Registrar
-                    </button>
-                    <p className={this.state.messageClassName}> {this.state.message} </p>
                 </div>
-            </div>
-        );
+            );
+        }
+
+        if (this.state.step2 === 1) {
+
+            return (
+                <div className="registerMainC">
+                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
+
+                    <div className="registerCard">
+                        <p className="cabeceraRegistro">Crea tu cuenta</p>
+                        <p className="textoRegistro">Datos Personales</p>
+                        <div className="registerCardInfoA">
+                            <div>
+                                <p className="cabeceraInput">Nombre</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Primer Apellido</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Género</p>
+                                <select className="registerDropdown br" name="userGenre" onChange={this.handleChange}>
+                                    <option value="0"></option>
+                                    <option value="1">Masculino</option>
+                                    <option value="2">Femenino</option>
+                                </select>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
+                                <input className="inputRegister" type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Dirección</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Tfno. móvil</p>
+                                <input className="inputRegister" type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                            </div>
+                        </div>
+                        <button className="registerButton" onClick={this.pulsaRegistro2}>
+                            Continuar
+                        </button>
+                        <p className={this.state.messageClassName}> {this.state.message} </p>
+                    </div>
+                </div>
+            );
+        } 
+
+        if (this.state.paso2 !== 0 && this.state.paso2 !== 1) {
+            
+            return (
+                <div className="registerMainC">
+                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
+
+                    <div className="registerCard">
+                        <p className="cabeceraRegistro">Crea tu cuenta</p>
+                        <p className="textoRegistro">Datos Personales</p>
+                        <div className="registerCardInfoB">
+                            <div>
+                                <p className="cabeceraInput">Ciudad</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Código postal</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Provincia</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">País</p>
+                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
+                            </div>
+                            <div className="checkBoxContainer mt5">
+                                <label className="container">
+                                    ¿Estas trabajando actualmente?
+                                    <input type="checkbox" name="check1" value={this.state.check1} onChange={this.handleChangeCheck}></input>
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                            <div className="checkBoxContainer mt5">
+                                <label className="container">
+                                    ¿Has trabajado con anterioridad?
+                                    <input type="checkbox" name="check2" value={this.state.check2} onChange={this.handleChangeCheck}></input>
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                            <div className="checkBoxContainer mt5">
+                                <label className="container">
+                                    ¿Has cursado estudios oficiales?
+                                    <input type="checkbox" name="check3" value={this.state.check3} onChange={this.handleChangeCheck}></input>
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <button className="registerButton" onClick={this.pulsaRegistro3}>
+                            Registrar
+                        </button>
+                        <p className={this.state.messageClassName}> {this.state.message} </p>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 
