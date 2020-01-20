@@ -2,7 +2,7 @@ import React from "react";
 // import { NavLink } from "react-router-dom";
 // import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { session, getUrl } from "../../utils/uti";
+// import { session, getUrl } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginE.scss";

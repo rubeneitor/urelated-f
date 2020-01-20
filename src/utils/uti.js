@@ -119,37 +119,65 @@ export const verify = (userInput, isFilled, validation, min, max) => {
             break;
 
         case "length":
+            //comprobacion longitud
             if (userInput.length < min) {
                 return valid;
             }
 
-			break;
-			
-		case "string":
-			
-			if (!/[a-z]/gi.test(userInput)) {
-				return valid;
-			}
+            break;
 
-			break;
+        case "string":
+            //comprobacion string
+            if (!/[a-z]/gi.test(userInput)) {
+                return valid;
+            }
 
-		case "phone":
+            break;
 
-			
+        case "phone":
             //comprobacion telefono
             if (!/[\d()+-]/g.test(userInput)) {
                 return valid;
             }
 
+            break;
+
+        case "number":
+            //comprobacion numeros
+            if (!/[^[0-9]*$]/g.test(userInput)) {
+                return valid;
+            }
+
+            break;
+
+        case "postalCode":
+            //código postal
+            if (!/^\d+$/g.test(userInput)) {
+                return valid;
+            }
+
+            break;
+
+        case "numLetras":
+
+            if (!/^[A-Za-z0-9]+$/gi.test(userInput)) {
+                return valid;
+            }
+
         break;
 
-		case "birthday":
+        case "date":
+            //comprobacion fechas
+            if (!/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gi.test(userInput)) {
+                return valid;
+            }
 
-			if (!/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gi.test(userInput)) {
-				return valid;
-			}
+            break;
+            
 
-		break;
+        default:
+            return valid = false;
+            
     }
 
     return (valid = true);

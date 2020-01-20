@@ -1,7 +1,8 @@
 import React from "react";
 
 // import axios from "axios";
-import { getUrl, verify } from "../../utils/uti";
+// import { getUrl, verify } from "../../utils/uti";
+import { verify } from "../../utils/uti";
 
 import "./registerE.scss";
 
@@ -10,7 +11,7 @@ class registerE extends React.Component {
         super(props);
 
         this.state = {
-            step2: "",
+            step: 1,
             username: "",
             name: "",
             surname: "",
@@ -29,8 +30,8 @@ class registerE extends React.Component {
             messageClassName: "error"
         };
 
-        this.pulsaRegistro1 = this.pulsaRegistro1.bind(this);
-        this.pulsaRegistro2 = this.pulsaRegistro2.bind(this);
+        this.pulsaRegistro = this.pulsaRegistro.bind(this);
+        
     }
 
     handleChange = ev => {
@@ -63,7 +64,7 @@ class registerE extends React.Component {
 
     resetState() {
         this.setState({
-            step2: "",
+            step: 1,
             username: "",
             name: "",
             surname: "",
@@ -83,106 +84,9 @@ class registerE extends React.Component {
         });
     }
 
-    pulsaRegistro1() {
-        //Comprobamos que todos los campos esten rellenados
-
-        let arrRegister = ["username", "surname", "email", "password", "password2", "secretQ", "secretA"];
-
-        for (let _x of arrRegister) {
-            if (this.state[_x] === "") {
-                this.muestraError("Por favor, debe rellenar todos los campos.");
-
-                return;
-            }
-        }
-
-        //comprobacion e-mail
-        if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(this.state.email)) {
-            this.muestraError("Introduce un e-mail válido.");
-            return;
-        }
-
-        //comprobacion pregunta secreta
-        if (this.state.secretQ.length < 4) {
-            this.muestraError("La pregunta secreta debe tener al menos 4 caracteres.");
-            return;
-        }
-        if (this.state.secretA.length < 4) {
-            this.muestraError("La respuesta secreta debe tener al menos 4 caracteres.");
-            return;
-        }
-
-        //comprobacion password
-        if (this.state.password.length < 4) {
-            this.muestraError("El password debe de tener al menos 4 caracteres.");
-            return;
-        }
-
-        if (this.state.password !== this.state.password2) {
-            this.muestraError("Los dos passwords deben coincidir");
-            return;
-        }
-
-        //comprobacion nombre del registrante
-        if (!/[a-z]/gi.test(this.state.username)) {
-            this.muestraError("El nombre del registrante debe ser válido.");
-            return;
-        }
-
-        //comprobacion apellido
-        if (!/[a-z]/gi.test(this.state.surname)) {
-            this.muestraError("El apellido debe ser válido.");
-            return;
-        }
-
-        this.setState({
-            step2: "ok"
-        });
-    }
-
-    async pulsaRegistro2() {
-        let arrRegister2 = ["name", "phone", "fiscal", "sector", "description"];
-
-        for (let _x2 of arrRegister2) {
-            if (this.state[_x2] === "") {
-                this.muestraError("Por favor, debe rellenar todos los campos.");
-
-                return;
-            }
-        }
-
-        //comprobacion nombre de la empresa
-        if (!/[a-z]/gi.test(this.state.name)) {
-            this.muestraError("El nombre de la empresa debe ser válido.");
-            return;
-        }
-
-        //comprobacion telefono
-        if (!/[\d()+-]/g.test(this.state.phone)) {
-            this.muestraError("El teléfono debe ser válido");
-            return;
-        }
-
-        //comprobacion del sector de la empresa
-        if (!/^[A-Za-z0-9_]+$/gi.test(this.state.sector)) {
-            this.muestraError("El sector de la empresa debe ser válido.");
-            return;
-        }
-
-        if (this.state.fiscal.length < 8) {
-            this.muestraError("La información fiscal debe de tener al menos 8 caracteres.");
-            return;
-        }
-
-        //comprobacion de la identificación fiscal
-        if (!/^[A-Za-z0-9]+$/gi.test(this.state.fiscal)) {
-            this.muestraError("El identificador fiscal debe ser válido y tener al menos 8 caracteres.");
-            return;
-        }
-
-        console.log("bieeeeeeen si tio si");
-
+    async registraDatos () {
         console.log(this.state);
+        //Procedemos a registrar los datos llamando a la API.
 
         // Procedemos a registrar el nuevo usuario en la base de datos
         // try {
@@ -197,9 +101,7 @@ class registerE extends React.Component {
         //             expireDate: [this.state.expireM, this.state.expireY]
         //         }
         //     };
-
         //     let tipoUsuario = parseInt(this.state.userType) + 1;
-
         //     // Construcción del cuerpo del producto.
         //     let body = {
         //         username: this.state.username.trim(),
@@ -211,12 +113,9 @@ class registerE extends React.Component {
         //         userType: tipoUsuario,
         //         billing: objectBilling
         //     };
-
         //     await axios.post(getUrl(`/user/register`), body);
-
         //     // Muestro
         //     this.muestraError("Usuario registrado con éxito.", 2, false);
-
         //     setTimeout(() => {
         //         //reseteamos los valores de los input
         //         this.resetState();
@@ -232,6 +131,113 @@ class registerE extends React.Component {
         //     }
         //     console.log(err);
         // }
+    }
+
+    nextStep(next, actual, isBack) {
+        if (isBack === 1) {
+            this.setState({ step: actual });
+            return;
+        }
+
+        if (next === 3) {
+            //último paso del registro, en este caso llamamos a la función que llama a la API
+            this.registraDatos ();
+        } else {
+            this.setState({ step: next });
+        }
+
+        return;
+    }
+
+    pulsaRegistro(actual) {
+        let verificado = true;
+
+        switch (actual) {
+            case 1:
+                if (!(verificado = verify(this.state.email, 1, "email"))) {
+                    console.log("ERROR email");
+                    break;
+                }
+
+                //password
+                if (this.state.password === this.state.password2) {
+                    if (!(verificado = verify(this.state.password, 1, "password"))) {
+                        console.log("ERROR password");
+                        break;
+                    }
+                } else {
+                    this.muestraError("Los dos passwords deben coincidir");
+                    break;
+                }
+
+                //pregunta y respuesta secreta
+                if (!(verificado = verify(this.state.secretQ, 1, "length", 4))) {
+                    console.log("ERROR secretQ");
+                    break;
+                }
+
+                if (!(verificado = verify(this.state.secretA, 1, "length", 4))) {
+                    console.log("ERROR secretA");
+                    break;
+                }
+
+                //nombre del registrante
+                if (!(verificado = verify(this.state.username, 1, "string"))) {
+                    console.log("ERROR nombre");
+                    break;
+                }
+
+                //apellido del registrante
+                if (!(verificado = verify(this.state.surname, 1, "string"))) {
+                    console.log("ERROR apellido");
+                    break;
+                }
+
+                break;
+
+            case 2:
+                //nombre de la empresa
+                if (!(verificado = verify(this.state.name, 1, "string"))) {
+                    console.log("ERROR nombre");
+                    break;
+                }
+
+                //telefono
+                if (!(verificado = verify(this.state.phone, 1, "phone"))) {
+                    console.log("ERROR teléfono");
+                    break;
+                }
+
+                //sector de la empresa
+                if (!(verificado = verify(this.state.sector, 1, "string"))) {
+                    this.muestraError("El sector de la empresa debe ser válido.");
+                    break;
+                }
+
+                //información fiscal de la empresa
+                if (!(verificado = verify(this.state.fiscal, 1, "length", 8))) {
+                    this.muestraError("La información fiscal debe de tener al menos 8 caracteres.");
+                    break;
+                }
+
+                if (!(verificado = verify(this.state.fiscal, 1, "numLetras"))) {
+                    this.muestraError("El identificador fiscal debe ser válido y tener al menos 8 caracteres.");
+                    break;
+                }
+
+                break;
+
+            default:
+                return;
+        }
+
+        if (verificado === true) {
+            //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
+            let siguiente = actual + 1;
+            this.nextStep(siguiente, actual, 0);
+        }
+
+        return;
     }
 
     muestraError(message, timeout = 3, isError = true) {
@@ -262,14 +268,16 @@ class registerE extends React.Component {
     }
 
     render() {
-        if (this.state.step2 === "") {
+        if (this.state.step === 1) {
             return (
                 <div className="registerMainE">
-                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
-
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
                         <p className="textoRegistro mt3">Información del registrante por parte de la empresa</p>
+                        <div className="stepStatus1 mt5">
+                            <div className="zona1"></div>
+                            <div className="zona2 ml3"></div>
+                        </div>
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Password</p>
@@ -300,24 +308,32 @@ class registerE extends React.Component {
                                 <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
                             </div>
                         </div>
-                        <p className="textoRegistro">Datos de tu empresa</p>
+                        {/* <p className="textoRegistro">Datos de tu empresa</p> */}
 
-                        <button className="registerButton" onClick={this.pulsaRegistro1}>
-                            Siguiente
+                        <button
+                            className="registerButton"
+                            onClick={() => {
+                                this.pulsaRegistro(1);
+                            }}
+                        >
+                            Continuar
                         </button>
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
                 </div>
             );
-        } else {
+        } 
+
+        if (this.state.step === 2) {
             return (
                 <div className="registerMainE">
-                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
-
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
-
                         <p className="textoRegistro">Datos de tu empresa</p>
+                        <div className="stepStatus2 mt5">
+                            <div className="zona3"></div>
+                            <div className="zona4 ml3"></div>
+                        </div>
                         <div className="registerCardInfoB">
                             <div>
                                 <p className="cabeceraInput">Nombre</p>
@@ -361,9 +377,24 @@ class registerE extends React.Component {
                             <span id="descriptionRemainingCharacters"></span>
                         </div>
 
-                        <button className="registerButton" onClick={this.pulsaRegistro2}>
-                            Registrar
-                        </button>
+                        <div className="botones">
+                            <button
+                                className="backButton"
+                                onClick={() => {
+                                    this.nextStep(0, 1, 1);
+                                }}
+                            >
+                                Retroceder
+                            </button>
+                            <button
+                                className="registerButton ml5"
+                                onClick={() => {
+                                    this.pulsaRegistro(2);
+                                }}
+                            >
+                                Registrar
+                            </button>
+                        </div>
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
                 </div>

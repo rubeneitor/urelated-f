@@ -1,7 +1,8 @@
 import React from "react";
 
 // import axios from "axios";
-import { getUrl, verify } from "../../utils/uti";
+// import { getUrl, verify } from "../../utils/uti";
+import { verify } from "../../utils/uti";
 
 import "./registerC.scss";
 
@@ -74,14 +75,21 @@ class RegisterC extends React.Component {
         });
     }
 
+    async registraDatos () {
+        console.log(this.state);
+        //Procedemos a registrar los datos llamando a la API.
+    }
+
     nextStep(next, actual, isBack) {
         if (isBack === 1) {
             this.setState({ step: actual });
             return;
         }
 
-        if (this.pulsaRegistro(actual) === false) {
-            console.log("bien");
+        if (next === 4) {
+            //último paso del registro, en este caso llamamos a la función que llama a la API
+            this.registraDatos ();
+        } else {
             this.setState({ step: next });
         }
 
@@ -89,14 +97,13 @@ class RegisterC extends React.Component {
     }
 
     pulsaRegistro(actual) {
-        let error = false;
-        let clean;
         let verificado = true;
 
         switch (actual) {
+
+            
             case 1:
                 if (!(verificado = verify(this.state.email, 1, "email"))) {
-                    error = true;
                     console.log("ERROR email");
                     break;
                 }
@@ -104,57 +111,48 @@ class RegisterC extends React.Component {
                 //password
                 if (this.state.password === this.state.password2) {
                     if (!(verificado = verify(this.state.password, 1, "password"))) {
-                        error = true;
                         console.log("ERROR password");
                         break;
                     }
                 } else {
                     this.muestraError("Los dos passwords deben coincidir");
-                    error = true;
-
                     break;
                 }
 
                 //pregunta y respuesta secreta
                 if (!(verificado = verify(this.state.secretQ, 1, "length", 4))) {
-                    error = true;
                     console.log("ERROR secretQ");
                     break;
                 }
 
                 if (!(verificado = verify(this.state.secretA, 1, "length", 4))) {
-                    error = true;
                     console.log("ERROR secretA");
                     break;
                 }
 
-                
+                break;
 
             case 2:
                 //nombre
                 if (!(verificado = verify(this.state.name, 1, "string"))) {
-                    clean = false;
                     console.log("ERROR nombre");
                     break;
                 }
 
                 //apellido
                 if (!(verificado = verify(this.state.surname, 1, "string"))) {
-                    clean = false;
                     console.log("ERROR apellido");
                     break;
                 }
 
                 //fecha de nacimiento
-                if (!(verificado = verify(this.state.birthday, 1, "birthday"))) {
-                    clean = false;
+                if (!(verificado = verify(this.state.birthday, 1, "date"))) {
                     console.log("ERROR fecha de nacimiento");
                     break;
                 }
 
                 //telefono
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
-                    clean = false;
                     console.log("ERROR teléfono");
                     break;
                 }
@@ -164,43 +162,74 @@ class RegisterC extends React.Component {
             case 3:
                 //direccion
                 if (!(verificado = verify(this.state.address, 1, "string"))) {
-                    clean = false;
                     console.log("ERROR direccion");
                     break;
                 }
 
                 //ciudad
                 if (!(verificado = verify(this.state.city, 1, "string"))) {
-                    clean = false;
                     console.log("ERROR ciudad");
                     break;
                 }
 
                 //cpostal
-                if (!(verificado = verify(this.state.cpostal, 1, "string"))) {
-                    clean = false;
-                    console.log("ERROR ciudad");
+                if (!(verificado = verify(this.state.cpostal, 1, "postalCode"))) {
+                    console.log("ERROR cpostal");
                     break;
                 }
 
                 //provincia
                 if (!(verificado = verify(this.state.provincia, 1, "string"))) {
-                    clean = false;
                     console.log("ERROR provincia");
                     break;
                 }
 
                 //ciudad
                 if (!(verificado = verify(this.state.pais, 1, "string"))) {
-                    clean = false;
                     console.log("ERROR pais");
                     break;
                 }
 
                 break;
+
+            default:
+                return;
         }
 
-        return error;
+        if (verificado === true) {
+            //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
+            let siguiente = actual + 1;
+            this.nextStep(siguiente, actual, 0);
+        }
+
+        return;
+    }
+
+    muestraError(message, timeout = 3, isError = true) {
+        // Pongo la clase
+        let className = isError ? "error" : "success";
+        this.setState({ messageClassName: className });
+
+        // Pongo el mensaje
+        this.setState({ message: message });
+
+        // Ya estoy en loop
+        if (this.state.errorTime > 0) {
+            this.setState({ errorTime: timeout });
+            return; // y salgo
+        }
+
+        this.setState({ errorTime: timeout }); // Entro por primera vez, pongo tiempo
+
+        // Loop
+        let loop = setInterval(() => {
+            if (this.state.errorTime <= 0) {
+                this.setState({ message: "" });
+                clearInterval(loop); // salgo del loop
+            }
+
+            this.setState(preState => ({ errorTime: preState.errorTime - 1 }));
+        }, 1000);
     }
 
     render() {
@@ -210,6 +239,11 @@ class RegisterC extends React.Component {
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Crea tu cuenta</p>
                         <p className="textoRegistro mt3">Información de tu cuenta</p>
+                        <div className="stepStatus1 mt5">
+                            <div className="zona1"></div>
+                            <div className="zona2 ml3"></div>
+                            <div className="zona3 ml3"></div>
+                        </div>
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Password</p>
@@ -235,7 +269,7 @@ class RegisterC extends React.Component {
                         <button
                             className="registerButton"
                             onClick={() => {
-                                this.nextStep(2, 1, 0);
+                                this.pulsaRegistro(1);
                             }}
                         >
                             Continuar
@@ -251,7 +285,12 @@ class RegisterC extends React.Component {
                 <div className="registerMainC">
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Crea tu cuenta</p>
-                        <p className="textoRegistro">Datos Personales</p>
+                        <p className="textoRegistro mt3">Datos Personales</p>
+                        <div className="stepStatus2 mt5">
+                            <div className="zona1"></div>
+                            <div className="zona2 ml3"></div>
+                            <div className="zona3 ml3"></div>
+                        </div>
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Nombre</p>
@@ -282,22 +321,25 @@ class RegisterC extends React.Component {
                                 <input className="inputRegister" type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                             </div>
                         </div>
-                        <button
-                            className="registerButton"
-                            onClick={() => {
-                                this.nextStep(1, 0, 0);
-                            }}
-                        >
-                            Retroceder
-                        </button>
-                        <button
-                            className="registerButton"
-                            onClick={() => {
-                                this.nextStep(3, 2, 0);
-                            }}
-                        >
-                            Continuar
-                        </button>
+                        <div className="botones">
+                            <button
+                                className="backButton"
+                                onClick={() => {
+                                    this.nextStep(0, 1, 1);
+                                }}
+                            >
+                                Retroceder
+                            </button>
+                            <button
+                                className="registerButton ml5"
+                                onClick={() => {
+                                    this.pulsaRegistro(2);
+                                }}
+                            >
+                                Continuar
+                            </button>
+                        </div>
+
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
                 </div>
@@ -309,7 +351,12 @@ class RegisterC extends React.Component {
                 <div className="registerMainC">
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Crea tu cuenta</p>
-                        <p className="textoRegistro">Datos Personales</p>
+                        <p className="textoRegistro mt3">Datos Personales</p>
+                        <div className="stepStatus3 mt5">
+                            <div className="zona1"></div>
+                            <div className="zona2 ml3"></div>
+                            <div className="zona3 ml3"></div>
+                        </div>
                         <div className="registerCardInfoB">
                             <div>
                                 <p className="cabeceraInput">Ciudad</p>
@@ -349,22 +396,25 @@ class RegisterC extends React.Component {
                                 </label>
                             </div>
                         </div>
-                        <button
-                            className="registerButton"
-                            onClick={() => {
-                                this.nextStep(2, 1, 0);
-                            }}
-                        >
-                            Retroceder
-                        </button>
-                        <button
-                            className="registerButton"
-                            onClick={() => {
-                                this.nextStep(3, 3, 0);
-                            }}
-                        >
-                            Registrar
-                        </button>
+                        <div className="botones">
+                            <button
+                                className="backButton"
+                                onClick={() => {
+                                    this.nextStep(0, 2, 1);
+                                }}
+                            >
+                                Retroceder
+                            </button>
+                            <button
+                                className="registerButton ml5"
+                                onClick={() => {
+                                    this.pulsaRegistro(3);
+                                }}
+                            >
+                                Continuar
+                            </button>
+                        </div>
+
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
                 </div>
