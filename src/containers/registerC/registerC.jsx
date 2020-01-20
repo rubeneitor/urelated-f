@@ -1,7 +1,7 @@
 import React from "react";
 
-import axios from "axios";
-import { getUrl } from "../../utils/uti";
+// import axios from "axios";
+import { getUrl, verify } from "../../utils/uti";
 
 import "./registerC.scss";
 
@@ -10,7 +10,7 @@ class RegisterC extends React.Component {
         super(props);
 
         this.state = {
-            step2: 0,
+            step: 1,
             username: "",
             surname: "",
             email: "",
@@ -35,9 +35,7 @@ class RegisterC extends React.Component {
             messageClassName: "error"
         };
 
-        this.pulsaRegistro1 = this.pulsaRegistro1.bind(this);
-        this.pulsaRegistro2 = this.pulsaRegistro2.bind(this);
-        this.pulsaRegistro3 = this.pulsaRegistro3.bind(this);
+        this.pulsaRegistro = this.pulsaRegistro.bind(this);
     }
 
     handleChange = ev => {
@@ -50,7 +48,7 @@ class RegisterC extends React.Component {
 
     resetState() {
         this.setState({
-            step2: 0,
+            step: 1,
             username: "",
             surname: "",
             email: "",
@@ -76,224 +74,139 @@ class RegisterC extends React.Component {
         });
     }
 
-    pulsaRegistro1() {
-        //Comprobamos que todos los campos esten rellenados
-
-        let arrRegister = ["email", "password", "password2", "secretQ", "secretA"];
-
-        for (let _x of arrRegister) {
-            if (this.state[_x] === "") {
-                this.muestraError("Por favor, debe rellenar todos los campos.");
-
-                return;
-            }
-        }
-
-        //comprobacion e-mail
-        if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(this.state.email)) {
-            this.muestraError("Introduce un e-mail válido.");
+    nextStep(next, actual, isBack) {
+        if (isBack === 1) {
+            this.setState({ step: actual });
             return;
         }
 
-        //comprobacion pregunta secreta
-        if (this.state.secretQ.length < 4) {
-            this.muestraError("La pregunta secreta debe tener al menos 4 caracteres.");
-            return;
-        }
-        if (this.state.secretA.length < 4) {
-            this.muestraError("La respuesta secreta debe tener al menos 4 caracteres.");
-            return;
+        if (this.pulsaRegistro(actual) === false) {
+            console.log("bien");
+            this.setState({ step: next });
         }
 
-        //comprobacion password
-        if (this.state.password.length < 4) {
-            this.muestraError("El password debe de tener al menos 4 caracteres.");
-            return;
-        }
-
-        if (this.state.password !== this.state.password2) {
-            this.muestraError("Los dos passwords deben coincidir");
-            return;
-        }
-
-        this.setState({
-            step2: 1
-        });
-
-        
-        
+        return;
     }
 
-    async pulsaRegistro2() {
-        let arrRegister2 = ["username", "surname", "birthday", "phone", "userGenre"];
+    pulsaRegistro(actual) {
+        let error = false;
+        let clean;
+        let verificado = true;
 
-        for (let _x2 of arrRegister2) {
-            if (this.state[_x2] === "") {
-                this.muestraError("Por favor, debe rellenar todos los campos.");
+        switch (actual) {
+            case 1:
+                if (!(verificado = verify(this.state.email, 1, "email"))) {
+                    error = true;
+                    console.log("ERROR email");
+                    break;
+                }
 
-                return;
-            }
+                //password
+                if (this.state.password === this.state.password2) {
+                    if (!(verificado = verify(this.state.password, 1, "password"))) {
+                        error = true;
+                        console.log("ERROR password");
+                        break;
+                    }
+                } else {
+                    this.muestraError("Los dos passwords deben coincidir");
+                    error = true;
+
+                    break;
+                }
+
+                //pregunta y respuesta secreta
+                if (!(verificado = verify(this.state.secretQ, 1, "length", 4))) {
+                    error = true;
+                    console.log("ERROR secretQ");
+                    break;
+                }
+
+                if (!(verificado = verify(this.state.secretA, 1, "length", 4))) {
+                    error = true;
+                    console.log("ERROR secretA");
+                    break;
+                }
+
+                
+
+            case 2:
+                //nombre
+                if (!(verificado = verify(this.state.name, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR nombre");
+                    break;
+                }
+
+                //apellido
+                if (!(verificado = verify(this.state.surname, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR apellido");
+                    break;
+                }
+
+                //fecha de nacimiento
+                if (!(verificado = verify(this.state.birthday, 1, "birthday"))) {
+                    clean = false;
+                    console.log("ERROR fecha de nacimiento");
+                    break;
+                }
+
+                //telefono
+                if (!(verificado = verify(this.state.phone, 1, "phone"))) {
+                    clean = false;
+                    console.log("ERROR teléfono");
+                    break;
+                }
+
+                break;
+
+            case 3:
+                //direccion
+                if (!(verificado = verify(this.state.address, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR direccion");
+                    break;
+                }
+
+                //ciudad
+                if (!(verificado = verify(this.state.city, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR ciudad");
+                    break;
+                }
+
+                //cpostal
+                if (!(verificado = verify(this.state.cpostal, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR ciudad");
+                    break;
+                }
+
+                //provincia
+                if (!(verificado = verify(this.state.provincia, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR provincia");
+                    break;
+                }
+
+                //ciudad
+                if (!(verificado = verify(this.state.pais, 1, "string"))) {
+                    clean = false;
+                    console.log("ERROR pais");
+                    break;
+                }
+
+                break;
         }
 
-        //comprobacion nombre
-        if (!/[a-z]/gi.test(this.state.username)) {
-            this.muestraError("El nombre debe de ser válido.");
-            return;
-        }
-
-        //comprobacion apellido
-        if (!/[a-z]/gi.test(this.state.surname)) {
-            this.muestraError("El apellido debe de ser válido.");
-            return;
-        }
-
-        //comprobacion fecha de nacimiento
-        if (!/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gi.test(this.state.birthday)) {
-            this.muestraError("Debes proporcionar una fecha válida en YYYY-MM-DD.");
-            return;
-        }
-
-        //comprobacion telefono
-        if (!/[\d()+-]/g.test(this.state.phone)) {
-            this.muestraError("El teléfono debe ser válido");
-            return;
-        }
-
-        
-        this.setState({
-            step2: 2
-        });
-
-        
-    }
-
-    async pulsaRegistro3() {
-
-        let arrRegister3 = ["address", "country", "city", "cpostal", "provincia", "pais"];
-
-        for (let _x3 of arrRegister3) {
-            if (this.state[_x3] === "") {
-                this.muestraError("Por favor, debe rellenar todos los campos.");
-
-                return;
-            }
-        }
-
-        //comprobacion direccion
-        if (!/[a-z]/gi.test(this.state.address)) {
-            this.muestraError("La dirección debe ser válida.");
-            return;
-        }
-
-        //comprobacion ciudad
-        if (!/[a-z]/gi.test(this.state.city)) {
-            this.muestraError("La ciudad debe ser válida.");
-            return;
-        }
-
-        //comprobacion código postal
-        if (!/[\d()+-]/g.test(this.state.cpostal)) {
-            this.muestraError("El código postal debe ser válido");
-            return;
-        }
-
-        //comprobacion provincia
-        if (!/[a-z]/gi.test(this.state.provincia)) {
-            this.muestraError("La provincia debe ser válida.");
-            return;
-        }
-
-        //comprobacion pais
-        if (!/[a-z]/gi.test(this.state.country)) {
-            this.muestraError("El país debe ser válido.");
-            return;
-        }
-
-        
-
-        // Procedemos a registrar el nuevo usuario en la base de datos
-        // try {
-        //     let objectBilling = {
-        //         address: this.state.address.trim(),
-        //         country: this.state.country.trim(),
-        //         city: this.state.city.trim(),
-        //         paypal: this.state.paypal.trim(),
-        //         card: {
-        //             number: this.state.cNumber,
-        //             owner: this.state.cOwner,
-        //             expireDate: [this.state.expireM, this.state.expireY]
-        //         }
-        //     };
-
-        //     let tipoUsuario = parseInt(this.state.userType) + 1;
-
-        //     // Construcción del cuerpo del producto.
-        //     let body = {
-        //         username: this.state.username.trim(),
-        //         email: this.state.email.trim(),
-        //         password: this.state.password,
-        //         secretQuestion: this.state.secretQ.trim(),
-        //         secretAnswer: this.state.secretA.trim(),
-        //         phone: this.state.phone.trim(),
-        //         userType: tipoUsuario,
-        //         billing: objectBilling
-        //     };
-
-        //     await axios.post(getUrl(`/user/register`), body);
-
-        //     // Muestro
-        //     this.muestraError("Usuario registrado con éxito.", 2, false);
-
-        //     setTimeout(() => {
-        //         //reseteamos los valores de los input
-        //         this.resetState();
-        //         //redireccionamos a login
-        //         this.props.history.push("/login");
-        //     }, 1500);
-        // } catch (err) {
-        //     if (err.response) {
-        //         if (err.response.data) {
-        //             this.muestraError("Ha ocurrido un error durante el registro.");
-        //         }
-        //         return;
-        //     }
-        //     console.log(err);
-        // }
-    }
-
-    muestraError(message, timeout = 3, isError = true) {
-        // Pongo la clase
-        let className = isError ? "error" : "success";
-        this.setState({ messageClassName: className });
-
-        // Pongo el mensaje
-        this.setState({ message: message });
-
-        // Ya estoy en loop
-        if (this.state.errorTime > 0) {
-            this.setState({ errorTime: timeout });
-            return; // y salgo
-        }
-
-        this.setState({ errorTime: timeout }); // Entro por primera vez, pongo tiempo
-
-        // Loop
-        let loop = setInterval(() => {
-            if (this.state.errorTime <= 0) {
-                this.setState({ message: "" });
-                clearInterval(loop); // salgo del loop
-            }
-
-            this.setState(preState => ({ errorTime: preState.errorTime - 1 }));
-        }, 1000);
+        return error;
     }
 
     render() {
-        if (this.state.step2 === 0) {
+        if (this.state.step === 1) {
             return (
                 <div className="registerMainC">
-                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
-
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Crea tu cuenta</p>
                         <p className="textoRegistro mt3">Información de tu cuenta</p>
@@ -319,7 +232,12 @@ class RegisterC extends React.Component {
                                 <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
                             </div>
                         </div>
-                        <button className="registerButton" onClick={this.pulsaRegistro1}>
+                        <button
+                            className="registerButton"
+                            onClick={() => {
+                                this.nextStep(2, 1, 0);
+                            }}
+                        >
                             Continuar
                         </button>
                         <p className={this.state.messageClassName}> {this.state.message} </p>
@@ -328,12 +246,9 @@ class RegisterC extends React.Component {
             );
         }
 
-        if (this.state.step2 === 1) {
-
+        if (this.state.step === 2) {
             return (
                 <div className="registerMainC">
-                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
-
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Crea tu cuenta</p>
                         <p className="textoRegistro">Datos Personales</p>
@@ -367,21 +282,31 @@ class RegisterC extends React.Component {
                                 <input className="inputRegister" type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                             </div>
                         </div>
-                        <button className="registerButton" onClick={this.pulsaRegistro2}>
+                        <button
+                            className="registerButton"
+                            onClick={() => {
+                                this.nextStep(1, 0, 0);
+                            }}
+                        >
+                            Retroceder
+                        </button>
+                        <button
+                            className="registerButton"
+                            onClick={() => {
+                                this.nextStep(3, 2, 0);
+                            }}
+                        >
                             Continuar
                         </button>
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
                 </div>
             );
-        } 
+        }
 
-        if (this.state.paso2 !== 0 && this.state.paso2 !== 1) {
-            
+        if (this.state.step === 3) {
             return (
                 <div className="registerMainC">
-                    {/* <pre>{JSON.stringify(this.state, null,2)}</pre> */}
-
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Crea tu cuenta</p>
                         <p className="textoRegistro">Datos Personales</p>
@@ -424,7 +349,20 @@ class RegisterC extends React.Component {
                                 </label>
                             </div>
                         </div>
-                        <button className="registerButton" onClick={this.pulsaRegistro3}>
+                        <button
+                            className="registerButton"
+                            onClick={() => {
+                                this.nextStep(2, 1, 0);
+                            }}
+                        >
+                            Retroceder
+                        </button>
+                        <button
+                            className="registerButton"
+                            onClick={() => {
+                                this.nextStep(3, 3, 0);
+                            }}
+                        >
                             Registrar
                         </button>
                         <p className={this.state.messageClassName}> {this.state.message} </p>

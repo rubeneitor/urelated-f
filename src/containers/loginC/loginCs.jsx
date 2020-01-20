@@ -1,13 +1,13 @@
 import React from "react";
-// import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
-// import { session, getUrl } from "../../utils/uti";
+import { session, getUrl } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginC.scss";
-// import { login } from "../../redux/actions/users";
-// import { rdx_productDetail } from "../../redux/actions/products";
+import { login } from "../../redux/actions/users";
+import { rdx_productDetail } from "../../redux/actions/products";
 
 class LoginC extends React.Component {
     constructor(props) {

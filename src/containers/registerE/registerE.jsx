@@ -1,7 +1,7 @@
 import React from "react";
 
-import axios from "axios";
-import { getUrl } from "../../utils/uti";
+// import axios from "axios";
+import { getUrl, verify } from "../../utils/uti";
 
 import "./registerE.scss";
 

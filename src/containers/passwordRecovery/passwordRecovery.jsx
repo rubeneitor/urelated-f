@@ -1,13 +1,13 @@
 
 import React from "react";
-import axios from "axios";
-import bcrypt from "bcryptjs";
-import store from "../../redux/store";
+// import axios from "axios";
+// import bcrypt from "bcryptjs";
+// import store from "../../redux/store";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import queryString from 'query-string';
-import { getUrl } from "../../utils/uti";
-import { rdx_productDetail } from "../../redux/actions/products";
+// import queryString from 'query-string';
+// import { getUrl } from "../../utils/uti";
+// import { rdx_productDetail } from "../../redux/actions/products";
 
 import "./passwordRecovery.scss";
 
