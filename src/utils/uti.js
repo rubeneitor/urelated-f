@@ -56,16 +56,16 @@ export const session = {
 */
 
 export const getUrl = (route = "", includeToken = false) => {
-    let sessionData = session.get();
+    // let sessionData = session.get();
     let token = "";
 
-    if (includeToken) {
-        if (sessionData) {
-            token = "token=" + sessionData.token;
-        }
-    }
+    // if (includeToken) {
+    //     if (sessionData) {
+    //         token = "token=" + sessionData.token;
+    //     }
+    // }
 
-    return `http://localhost:3000${route}${token}`;
+    return `http://localhost:8000/api${route}${token}`;
 };
 
 /*

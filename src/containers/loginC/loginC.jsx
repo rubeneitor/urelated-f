@@ -1,8 +1,8 @@
 import React from "react";
 // import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
-// import { session, getUrl } from "../../utils/uti";
+import { session, getUrl } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginC.scss";
@@ -50,15 +50,15 @@ class LoginC extends React.Component {
             return;
         }
 
-        // try {
-        //     // Llamada
-        //     let body = {
-        //         username: username,
-        //         password: password
-        //     };
+        try {
+            // Llamada
+            // let body = {
+            //     username: username,
+            //     password: password
+            // };
 
-        //     let res = await axios.post(getUrl("/user/login"), body);
-
+            let res = await axios.get(getUrl("/suscripciones"));
+            console.log(res);
         //     let data = res.data;
 
         //     // Guardo datos de sesión
@@ -77,9 +77,9 @@ class LoginC extends React.Component {
 
         //     // Redirección
         //     this.props.history.push("/");
-        // } catch (err) {
-        //     let res = err.response.data;
-
+        } catch (err) {
+            let res = err.response.data;
+        }
         //     if (res.errorCode === "user_login_1") {
         //         this.muestraError("Usuario no encontrado o contraseña incorrecta.");
         //         return;
