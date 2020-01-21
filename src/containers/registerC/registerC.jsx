@@ -116,6 +116,7 @@ class RegisterC extends React.Component {
                     }
                 } else {
                     this.muestraError("Los dos passwords deben coincidir");
+                    verificado = false;
                     break;
                 }
 

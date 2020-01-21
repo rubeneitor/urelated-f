@@ -25,6 +25,7 @@ class registerE extends React.Component {
             sector: "",
             description: "",
 
+            errores : [],
             message: "",
             errorTime: 0,
             messageClassName: "error"
@@ -151,46 +152,41 @@ class registerE extends React.Component {
 
     pulsaRegistro(actual) {
         let verificado = true;
+        let errors = [];
 
         switch (actual) {
             case 1:
                 if (!(verificado = verify(this.state.email, 1, "email"))) {
-                    console.log("ERROR email");
-                    break;
+                    errors.push("email");
                 }
 
                 //password
                 if (this.state.password === this.state.password2) {
                     if (!(verificado = verify(this.state.password, 1, "password"))) {
-                        console.log("ERROR password");
-                        break;
+                        errors.push("password");
                     }
                 } else {
                     this.muestraError("Los dos passwords deben coincidir");
-                    break;
+                    verificado = false;
                 }
 
                 //pregunta y respuesta secreta
                 if (!(verificado = verify(this.state.secretQ, 1, "length", 4))) {
-                    console.log("ERROR secretQ");
-                    break;
+                    errors.push("secretQ");
                 }
 
                 if (!(verificado = verify(this.state.secretA, 1, "length", 4))) {
-                    console.log("ERROR secretA");
-                    break;
+                    errors.push("secretA");
                 }
 
                 //nombre del registrante
                 if (!(verificado = verify(this.state.username, 1, "string"))) {
-                    console.log("ERROR nombre");
-                    break;
+                    errors.push("username");
                 }
 
                 //apellido del registrante
                 if (!(verificado = verify(this.state.surname, 1, "string"))) {
-                    console.log("ERROR apellido");
-                    break;
+                    errors.push("surname");
                 }
 
                 break;
@@ -231,8 +227,17 @@ class registerE extends React.Component {
                 return;
         }
 
+        
+
+        if(errors.length) {
+            verificado = false;
+            this.setState({errores: errors});
+            return;
+        }
+
         if (verificado === true) {
             //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
+            this.setState({errores: ''});
             let siguiente = actual + 1;
             this.nextStep(siguiente, actual, 0);
         }
@@ -267,9 +272,29 @@ class registerE extends React.Component {
         }, 1000);
     }
 
+    errorCheck(arg){
+        let a = "inputRegister";
+        
+
+        for(let _y of this.state.errores){
+            if(arg == [_y]){
+                a = "inputRegister2";
+                return a;
+            }else {
+                a = "inputRegister";
+                return a;
+            }
+        }
+
+        return a;
+    }
+
     render() {
         if (this.state.step === 1) {
+            
             return (
+
+                
                 <div className="registerMainE">
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
@@ -281,34 +306,34 @@ class registerE extends React.Component {
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Password</p>
-                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("password")}  type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Repite password</p>
-                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("password")} type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Pregunta secreta</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("secretQ")} type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Respuesta secreta</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("secretA")} type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Nombre</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("username")} type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Primer Apellido</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("surname")} type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">E-mail</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("email")} type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
                             </div>
                         </div>
-                        {/* <p className="textoRegistro">Datos de tu empresa</p> */}
+                        
 
                         <button
                             className="registerButton"

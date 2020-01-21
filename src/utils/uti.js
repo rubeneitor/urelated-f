@@ -95,7 +95,7 @@ export const verify = (userInput, isFilled, validation, min, max) => {
     //validamos si el cam(po se ha rellenado.
 
     if (isFilled !== 0 && userInput === "") {
-        console.log("debes de rellenar todos los campos");
+        // console.log("debes de rellenar todos los campos");
         return valid;
     }
 
