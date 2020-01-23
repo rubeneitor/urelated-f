@@ -48,14 +48,14 @@ class Search extends React.Component {
                         name="puesto"
                     />
 
-                    {/* <Input
+                    <Input
                     
                         placeholder="Ciudad, provincia o país"
                         handleChange={this.handleChange}
                         value={this.state.lugar}
                         name="lugar"
                     
-                    /> */}
+                    />
 
                     <div className="backgroundIcon">
                         {/* <i className="material-icons" onClick={() => this.pulsaBotonBusqueda()}>
