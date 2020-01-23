@@ -62,7 +62,7 @@ class LoginC extends React.Component {
 
         if(verificado){
             this.setState({errores: ''});
-            console.log(verificado);
+            
             // try {
             // Llamada
             // let body = {

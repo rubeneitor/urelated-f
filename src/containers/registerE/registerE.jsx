@@ -255,8 +255,9 @@ class registerE extends React.Component {
         
 
         for(let _y of this.state.errores){
-            
+            // eslint-disable-next-line
             if(arg == [_y]){
+                // eslint-disable-next-line
                 if(arg == [_y] && arg == "description"){
                     estiloError = "textAddInfo2";
                     return estiloError;
