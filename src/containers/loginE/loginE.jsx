@@ -2,7 +2,7 @@ import React from "react";
 // import { NavLink } from "react-router-dom";
 // import axios from "axios";
 import { withRouter } from "react-router-dom";
-// import { session, getUrl } from "../../utils/uti";
+import { session, getUrl, verify } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginE.scss";
@@ -15,12 +15,10 @@ class LoginE extends React.Component {
         super(props);
 
         this.state = {
-            username: "",
+            email: "",
             password: "",
 
-            message: "",
-            errorTime: 0,
-            messageClassName: "error"
+            errores: [],
         };
 
         // this.handleChange = this.handleChange.bind(this); // esto es para que el this de la función clásica pille el de la instancia de la clase Login y no otra
@@ -39,27 +37,35 @@ class LoginE extends React.Component {
 
     async pulsaLogin() {
         // Validación
-        let username = this.state.username;
-        let password = this.state.password;
+        let verificado = true;
+        let errors = [];
 
-        if (username === "") {
-            this.muestraError("El email no puede estar vacío.");
-            return;
-        }
-        if (password === "") {
-            this.muestraError("La contraseña no puede estar vacía.");
-            return;
+        if (!(verificado = verify(this.state.email, 1, "email"))) {
+            errors.push("email");
         }
 
-        // try {
-        //     // Llamada
-        //     let body = {
-        //         username: username,
-        //         password: password
-        //     };
+        if (!(verificado = verify(this.state.password, 1, "password"))) {
+            errors.push("password");
+        }
 
-        //     let res = await axios.post(getUrl("/user/login"), body);
+        if(errors.length) {
+            verificado = false;
+            this.setState({errores: errors});
+            
+            return;
+        }
 
+        if(verificado){
+            this.setState({errores: ''});
+            // try {
+            // Llamada
+            // let body = {
+            //     username: username,
+            //     password: password
+            // };
+
+            // let res = await axios.get(getUrl("/suscripciones"));
+            // console.log(res);
         //     let data = res.data;
 
         //     // Guardo datos de sesión
@@ -80,7 +86,7 @@ class LoginE extends React.Component {
         //     this.props.history.push("/");
         // } catch (err) {
         //     let res = err.response.data;
-
+        // }
         //     if (res.errorCode === "user_login_1") {
         //         this.muestraError("Usuario no encontrado o contraseña incorrecta.");
         //         return;
@@ -109,33 +115,9 @@ class LoginE extends React.Component {
         //         return;
         //     }
         // }
-    }
-
-    muestraError(message, timeout = 3, isError = true) {
-        // Pongo la clase
-        let className = isError ? "error" : "success";
-        this.setState({ messageClassName: className });
-
-        // Pongo el mensaje
-        this.setState({ message: message });
-
-        // Ya estoy en loop
-        if (this.state.errorTime > 0) {
-            this.setState({ errorTime: timeout });
-            return; // y salgo
         }
+        return;
 
-        this.setState({ errorTime: timeout }); // Entro por primera vez, pongo tiempo
-
-        // Loop
-        let loop = setInterval(() => {
-            if (this.state.errorTime <= 0) {
-                this.setState({ message: "" });
-                clearInterval(loop); // salgo del loop
-            }
-
-            this.setState(preState => ({ errorTime: preState.errorTime - 1 }));
-        }, 1000);
     }
 
     passwordEmpresa () {
@@ -151,38 +133,53 @@ class LoginE extends React.Component {
         this.props.history.push("/passwordRecovery");
     }
 
+    errorCheck(arg){
+        let estiloError = "inputRegister";
+        
+        for(let _y of this.state.errores){
+            if(arg == [_y]){
+                estiloError = "inputRegister2";
+                return estiloError;
+            }
+        }
+
+        estiloError = "inputRegister";
+        return estiloError;
+    }
+
     render() {
         return (
             <div className="loginMainE">
                 <div className="loginCardE">
                     <div className="headerE">
-                        {/* <p className="logoText">uRelated</p> */}
                         <img className="image" src="img/logouRelated_5lit.png" alt="logo2" />
                         <h1>Acceso Empresas</h1>
                     </div>
-                    <div className="body mt3">
+                    <p className="textInputLogin mt3 ml5">Email</p>
+                    <div className="body">
                         <input
+                            className={this.errorCheck("email")}
                             type="text"
-                            placeholder="Email"
+                            placeholder=""
                             onChange={ev => {
-                                this.handleChange(ev, "username");
+                                this.handleChange(ev, "email");
                             }}
                         ></input>
-
+                        <p className="textInputLogin2 mt1">Password</p>
                         <input
-                            className="mt1"
+                            className={this.errorCheck("password")}
                             type="password"
-                            placeholder="Contraseña"
+                            placeholder=""
                             onChange={ev => {
                                 this.handleChange(ev, "password");
                             }}
                         ></input>
 
-                        <button className="mt1" onClick={() => this.pulsaLogin()}>
+                        <button className="mt3" onClick={() => this.pulsaLogin()}>
                             Entrar
                         </button>
 
-                        <p className="linkPassEmpresa" onClick={() => this.passwordEmpresa()}>¿Has olvidado la contraseña?</p>
+                        <p className="linkPassEmpresa mt1" onClick={() => this.passwordEmpresa()}>Recuperar password.</p>
 
                         <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>

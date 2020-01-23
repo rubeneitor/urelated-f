@@ -8,17 +8,25 @@
     .loginCardE {
         display: flex;
         flex-direction: column;
-        height: 29em;
+        height: 31em;
         width: 26em;
         border-radius: 3px;
         background: var(--pri0);
         margin-top: 3em;
+
+        .textInputLogin {
+            margin-left: 3.2em;
+        }
+
+        .textInputLogin2 {
+            margin-right: 15.5em;
+        }
     }
 
     .loginCardE2 {
         display: flex;
         flex-direction: column;
-        height: 29em;
+        height: 31em;
         width: 26em;
         border-radius: 3px;
         background: var(--pri0);
@@ -70,7 +78,7 @@
         flex-direction: column;
         justify-content: center;
         align-items:center;
-        height: 15em;
+        height: 12em;
     }
 
     .loginCardE .headerE .image {
@@ -102,13 +110,33 @@
         }
     }
 
-    .body input {
-        margin-bottom: 0.5em;
-        font-size: 1.5em;
-        background: var(--pri1);
+    // .body input {
+    //     margin-bottom: 0.5em;
+    //     font-size: 1.5em;
+    //     background: var(--pri1);
+    //     border-style: solid;
+    //     border-width: 0.5px;
+    //     border-color: var(--pri9);
+    // }
+
+    .inputRegister {
+        background: var(--colBla);
         border-style: solid;
-        border-width: 0.5px;
-        border-color: var(--pri9);
+        font-size: 1em;
+        width: 20em;
+        height: 2em;
+        border-width: 1px;
+        border-color: var(--colAzuDos);
+    }
+
+    .inputRegister2 {
+        background: var(--colBla);
+        border-style: solid;
+        font-size: 1em;
+        width: 20em;
+        height: 2em;
+        border-width: 1px;
+        border-color: var(--colRoj);
     }
 	
 	.error {

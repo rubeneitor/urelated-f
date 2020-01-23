@@ -26,9 +26,6 @@ class registerE extends React.Component {
             description: "",
 
             errores : [],
-            message: "",
-            errorTime: 0,
-            messageClassName: "error"
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -49,12 +46,19 @@ class registerE extends React.Component {
     };
 
     updateDescriptionRemainingCharacters() {
-        let ele = document.querySelector(".textAddProduct");
+        let ele = document.querySelector(".textAddInfo");
+        
+        if (!document.querySelector(".textAddInfo")){
+            ele = document.querySelector(".textAddInfo2");
+        };
+
         let lenght = ele.value.length;
         let max = ele.maxLength;
         let remaining = document.querySelector("#descriptionRemainingCharacters");
 
         remaining.innerHTML = `${lenght}/${max}`;
+
+        
 
         if (lenght >= max) {
             remaining.classList.add("error");
@@ -79,9 +83,7 @@ class registerE extends React.Component {
             sector: "",
             description: "",
 
-            message: "",
-            errorTime: 0,
-            messageClassName: "error"
+            errores : [],
         });
     }
 
@@ -166,7 +168,7 @@ class registerE extends React.Component {
                         errors.push("password");
                     }
                 } else {
-                    this.muestraError("Los dos passwords deben coincidir");
+                    errors.push("password");
                     verificado = false;
                 }
 
@@ -194,31 +196,36 @@ class registerE extends React.Component {
             case 2:
                 //nombre de la empresa
                 if (!(verificado = verify(this.state.name, 1, "string"))) {
-                    console.log("ERROR nombre");
-                    break;
+                    errors.push("name");
+                    
                 }
 
                 //telefono
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
-                    console.log("ERROR teléfono");
-                    break;
+                    errors.push("phone");
+                    
                 }
 
                 //sector de la empresa
                 if (!(verificado = verify(this.state.sector, 1, "string"))) {
-                    this.muestraError("El sector de la empresa debe ser válido.");
-                    break;
+                    errors.push("sector");
+                    
                 }
 
                 //información fiscal de la empresa
                 if (!(verificado = verify(this.state.fiscal, 1, "length", 8))) {
-                    this.muestraError("La información fiscal debe de tener al menos 8 caracteres.");
-                    break;
+                    errors.push("fiscal");
+                    
                 }
 
                 if (!(verificado = verify(this.state.fiscal, 1, "numLetras"))) {
-                    this.muestraError("El identificador fiscal debe ser válido y tener al menos 8 caracteres.");
-                    break;
+                    errors.push("fiscal");
+                    
+                }
+
+                if (this.state.description === ''){
+                    errors.push("description");
+                   
                 }
 
                 break;
@@ -227,15 +234,13 @@ class registerE extends React.Component {
                 return;
         }
 
-        
-
         if(errors.length) {
             verificado = false;
             this.setState({errores: errors});
             return;
         }
 
-        if (verificado === true) {
+        if (verificado) {
             //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
             this.setState({errores: ''});
             let siguiente = actual + 1;
@@ -245,48 +250,28 @@ class registerE extends React.Component {
         return;
     }
 
-    muestraError(message, timeout = 3, isError = true) {
-        // Pongo la clase
-        let className = isError ? "error" : "success";
-        this.setState({ messageClassName: className });
-
-        // Pongo el mensaje
-        this.setState({ message: message });
-
-        // Ya estoy en loop
-        if (this.state.errorTime > 0) {
-            this.setState({ errorTime: timeout });
-            return; // y salgo
-        }
-
-        this.setState({ errorTime: timeout }); // Entro por primera vez, pongo tiempo
-
-        // Loop
-        let loop = setInterval(() => {
-            if (this.state.errorTime <= 0) {
-                this.setState({ message: "" });
-                clearInterval(loop); // salgo del loop
-            }
-
-            this.setState(preState => ({ errorTime: preState.errorTime - 1 }));
-        }, 1000);
-    }
-
     errorCheck(arg){
-        let a = "inputRegister";
+        let estiloError = "inputRegister";
         
 
         for(let _y of this.state.errores){
+            
             if(arg == [_y]){
-                a = "inputRegister2";
-                return a;
-            }else {
-                a = "inputRegister";
-                return a;
+                if(arg == [_y] && arg == "description"){
+                    estiloError = "textAddInfo2";
+                    return estiloError;
+                }
+                estiloError = "inputRegister2";
+                return estiloError;
             }
-        }
 
-        return a;
+        }
+        if(arg === "description"){
+            estiloError = "textAddInfo";
+            return estiloError;
+        }
+        estiloError = "inputRegister";
+        return estiloError; 
     }
 
     render() {
@@ -294,7 +279,6 @@ class registerE extends React.Component {
             
             return (
 
-                
                 <div className="registerMainE">
                     <div className="registerCard">
                         <p className="cabeceraRegistro">Inscribe tu Empresa en uRelated</p>
@@ -362,16 +346,16 @@ class registerE extends React.Component {
                         <div className="registerCardInfoB">
                             <div>
                                 <p className="cabeceraInput">Nombre</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="name" value={this.state.name} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("name")} type="text" maxLength="240" placeholder="" name="name" value={this.state.name} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Teléfono</p>
-                                <input className="inputRegister" type="text" maxLength="100" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("phone")} type="text" maxLength="100" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Identificación fiscal (C.I.F o N.I.F)</p>
                                 <input
-                                    className="inputRegister"
+                                    className={this.errorCheck("fiscal")}
                                     type="text"
                                     maxLength="10"
                                     placeholder="C.I.F sin guiones: B12345678"
@@ -382,14 +366,14 @@ class registerE extends React.Component {
                             </div>
                             <div>
                                 <p className="cabeceraInput">Sector empresarial</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("sector")} type="text" maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>
                             </div>
                         </div>
 
                         <div className="descripcionEmpresa">
                             <p className="cabeceraInput">Descripcion tu empresa</p>
                             <textarea
-                                className="textAddProduct"
+                                className={this.errorCheck("description")}
                                 rows="5"
                                 cols="108"
                                 maxLength="2000"

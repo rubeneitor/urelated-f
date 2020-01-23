@@ -8,7 +8,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 37.9em;
+        height: 39.9em;
         width: 70em;
         border-radius: 3px;
         background: var(--colBla);
@@ -57,17 +57,17 @@
 
 
             .zona1 {
-                width: 10em;
+                width: 8em;
                 height: 0.2em;
                 background-color: var(--colRoj);
             }
             .zona2 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
             .zona3 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
@@ -115,17 +115,17 @@
             }
 
             .zona1 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
             .zona2 {
-                width: 10em;
+                width: 8em;
                 height: 0.2em;
                 background-color: var(--colRoj);
             }
             .zona3 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
@@ -172,17 +172,17 @@
             }
 
             .zona1 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
             .zona2 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
             .zona3 {
-                width: 10em;
+                width: 8em;
                 height: 0.2em;
                 background-color: var(--colRoj);
             }
@@ -384,6 +384,16 @@
         height: 2em;
         border-width: 1px;
         border-color: var(--colAzuDos);
+    }
+
+    .inputRegister2 {
+        background: var(--colBla);
+        border-style: solid;
+        font-size: 1em;
+        width: 20em;
+        height: 2em;
+        border-width: 1px;
+        border-color: var(--colRoj);
     }
 
     .registerDropdown {

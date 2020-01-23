@@ -8,7 +8,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 37.9em;
+        height: 39.9em;
         width: 70em;
         border-radius: 3px;
         background: var(--colBla);
@@ -57,12 +57,12 @@
 
 
             .zona1 {
-                width: 10em;
+                width: 8em;
                 height: 3px;
                 background-color: var(--colRoj);
             }
             .zona2 {
-                width: 10em;
+                width: 8em;
                 height: 1px;
                 background-color: var(--colAzu);
             }
@@ -111,12 +111,12 @@
             }
 
             .zona3 {
-                width: 10em;
+                width: 8em;
                 height: 0.1em;
                 background-color: var(--colAzu);
             }
             .zona4 {
-                width: 10em;
+                width: 8em;
                 height: 0.2em;
                 background-color: var(--colRoj);
             }
@@ -269,7 +269,7 @@
         display: flex;
         flex-direction: column;
 
-        .textAddProduct {
+        .textAddInfo {
             
             background: var(--colBla);
             resize: none;
@@ -277,6 +277,16 @@
             border-style: solid;
             border-width: 1px;
             border-color: var(--colAzuDos);
+        }
+
+        .textAddInfo2 {
+            
+            background: var(--colBla);
+            resize: none;
+            font-size: 1em;
+            border-style: solid;
+            border-width: 1px;
+            border-color: var(--colRoj);
         }
     
         .textAddProductTwo {

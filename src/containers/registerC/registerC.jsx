@@ -31,9 +31,7 @@ class RegisterC extends React.Component {
             check2: false,
             check3: false,
 
-            message: "",
-            errorTime: 0,
-            messageClassName: "error"
+            errores : [],
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -69,9 +67,7 @@ class RegisterC extends React.Component {
             check2: false,
             check3: false,
 
-            message: "",
-            errorTime: 0,
-            messageClassName: "error"
+            errores : [],
         });
     }
 
@@ -98,97 +94,84 @@ class RegisterC extends React.Component {
 
     pulsaRegistro(actual) {
         let verificado = true;
+        let errors = [];
 
         switch (actual) {
 
             
             case 1:
                 if (!(verificado = verify(this.state.email, 1, "email"))) {
-                    console.log("ERROR email");
-                    break;
+                    errors.push("email");
                 }
 
                 //password
                 if (this.state.password === this.state.password2) {
                     if (!(verificado = verify(this.state.password, 1, "password"))) {
-                        console.log("ERROR password");
-                        break;
+                        errors.push("password");
                     }
                 } else {
-                    this.muestraError("Los dos passwords deben coincidir");
+                    errors.push("password");
                     verificado = false;
-                    break;
                 }
 
                 //pregunta y respuesta secreta
                 if (!(verificado = verify(this.state.secretQ, 1, "length", 4))) {
-                    console.log("ERROR secretQ");
-                    break;
+                    errors.push("secretQ");
                 }
 
                 if (!(verificado = verify(this.state.secretA, 1, "length", 4))) {
-                    console.log("ERROR secretA");
-                    break;
+                    errors.push("secretA");
                 }
 
                 break;
 
             case 2:
                 //nombre
-                if (!(verificado = verify(this.state.name, 1, "string"))) {
-                    console.log("ERROR nombre");
-                    break;
+                if (!(verificado = verify(this.state.username, 1, "string"))) {
+                    errors.push("username");
                 }
 
                 //apellido
                 if (!(verificado = verify(this.state.surname, 1, "string"))) {
-                    console.log("ERROR apellido");
-                    break;
+                    errors.push("surname");
+                }
+
+                //direccion
+                if (!(verificado = verify(this.state.address, 1, "string"))) {
+                    errors.push("address");
                 }
 
                 //fecha de nacimiento
                 if (!(verificado = verify(this.state.birthday, 1, "date"))) {
-                    console.log("ERROR fecha de nacimiento");
-                    break;
+                    errors.push("birthday");
                 }
 
                 //telefono
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
-                    console.log("ERROR teléfono");
-                    break;
+                    errors.push("phone");
                 }
 
                 break;
 
             case 3:
-                //direccion
-                if (!(verificado = verify(this.state.address, 1, "string"))) {
-                    console.log("ERROR direccion");
-                    break;
-                }
-
                 //ciudad
                 if (!(verificado = verify(this.state.city, 1, "string"))) {
-                    console.log("ERROR ciudad");
-                    break;
+                    errors.push("city");
                 }
 
                 //cpostal
                 if (!(verificado = verify(this.state.cpostal, 1, "postalCode"))) {
-                    console.log("ERROR cpostal");
-                    break;
+                    errors.push("cpostal");
                 }
 
                 //provincia
                 if (!(verificado = verify(this.state.provincia, 1, "string"))) {
-                    console.log("ERROR provincia");
-                    break;
+                    errors.push("provincia");
                 }
 
                 //ciudad
-                if (!(verificado = verify(this.state.pais, 1, "string"))) {
-                    console.log("ERROR pais");
-                    break;
+                if (!(verificado = verify(this.state.country, 1, "string"))) {
+                    errors.push("country");
                 }
 
                 break;
@@ -197,8 +180,15 @@ class RegisterC extends React.Component {
                 return;
         }
 
-        if (verificado === true) {
+        if(errors.length) {
+            verificado = false;
+            this.setState({errores: errors});
+            return;
+        }
+
+        if (verificado) {
             //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
+            this.setState({errores: ''});
             let siguiente = actual + 1;
             this.nextStep(siguiente, actual, 0);
         }
@@ -206,31 +196,18 @@ class RegisterC extends React.Component {
         return;
     }
 
-    muestraError(message, timeout = 3, isError = true) {
-        // Pongo la clase
-        let className = isError ? "error" : "success";
-        this.setState({ messageClassName: className });
-
-        // Pongo el mensaje
-        this.setState({ message: message });
-
-        // Ya estoy en loop
-        if (this.state.errorTime > 0) {
-            this.setState({ errorTime: timeout });
-            return; // y salgo
+    errorCheck(arg){
+        let estiloError = "inputRegister";
+        
+        for(let _y of this.state.errores){
+            if(arg == [_y]){
+                estiloError = "inputRegister2";
+                return estiloError;
+            }
         }
 
-        this.setState({ errorTime: timeout }); // Entro por primera vez, pongo tiempo
-
-        // Loop
-        let loop = setInterval(() => {
-            if (this.state.errorTime <= 0) {
-                this.setState({ message: "" });
-                clearInterval(loop); // salgo del loop
-            }
-
-            this.setState(preState => ({ errorTime: preState.errorTime - 1 }));
-        }, 1000);
+        estiloError = "inputRegister";
+        return estiloError;
     }
 
     render() {
@@ -248,23 +225,23 @@ class RegisterC extends React.Component {
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Password</p>
-                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("password")} type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Repite password</p>
-                                <input className="inputRegister" type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("password")} type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Pregunta secreta</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("secretQ")} type="text" maxLength="240" placeholder="" name="secretQ" value={this.state.secretQ} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Respuesta secreta</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("secretA")} type="text" maxLength="240" placeholder="" name="secretA" value={this.state.secretA} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">E-mail</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("email")} type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
                             </div>
                         </div>
                         <button
@@ -295,11 +272,11 @@ class RegisterC extends React.Component {
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Nombre</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("username")} type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Primer Apellido</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("surname")} type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Género</p>
@@ -311,15 +288,15 @@ class RegisterC extends React.Component {
                             </div>
                             <div>
                                 <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
-                                <input className="inputRegister" type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("birthday")} type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Dirección</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("address")} type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Tfno. móvil</p>
-                                <input className="inputRegister" type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("phone")} type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                             </div>
                         </div>
                         <div className="botones">
@@ -361,19 +338,19 @@ class RegisterC extends React.Component {
                         <div className="registerCardInfoB">
                             <div>
                                 <p className="cabeceraInput">Ciudad</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("city")} type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Código postal</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("cpostal")} type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Provincia</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("provincia")} type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">País</p>
-                                <input className="inputRegister" type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("country")} type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
                             </div>
                             <div className="checkBoxContainer mt5">
                                 <label className="container">

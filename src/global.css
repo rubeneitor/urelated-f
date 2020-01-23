@@ -180,7 +180,7 @@ button {
     /* margin-top: 0.5em; */
    
     border-radius: 3px;
-    background: var(--colRoj);
+    background: var(--colRojCla);
 	
     cursor: pointer;
 	color: var(--colBla);
@@ -188,7 +188,7 @@ button {
     transition: background-color 0.3s;
 }
 button:hover {
-    background-color: var(--colRojCla);
+    background-color: var(--colRoj);
     
 }
 
