@@ -3,9 +3,7 @@ import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
-
 import "./searchResults.scss";
-
 import { rdx_productDetail, rdx_productSearchResults } from "../../redux/actions/products";
 import { getUrl, numToStr } from "../../utils/uti";
 import DropdownCategories from "../../components/dropdownCategories/dropdownCategories";

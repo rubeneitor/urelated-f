@@ -40,13 +40,74 @@ class Home extends Component {
         this.props.history.push("/registerE");
     }
 
+    pulsaImagen(argImg) {
+        //aqui recibiremos y haremos el axios
+        console.log(argImg);
+    }
+
     render() {
         return (
             <Fragment>
                 <Search />
                 <div className="home">
                     <div className="mainHome">
-                        <div className="busquedaOfertas">ofertas</div>
+                        <div className="busquedaOfertas">
+                            <div className="bloqueSelectHome">
+                                <img
+                                    onClick={() => {
+                                        this.pulsaImagen("/salarios/{24000}");
+                                    }}
+                                    className="imgHomeSelect"
+                                    src="img/salary.png"
+                                    alt="salary"
+                                />
+                                <p className="textImageHome">24.000€ o Superior</p>
+                            </div>
+                            <div className="bloqueSelectHome">
+                                <img
+                                    onClick={() => {
+                                        this.pulsaImagen("/puestos/{CEO}");
+                                    }}
+                                    className="imgHomeSelect"
+                                    src="img/ceo.png"
+                                    alt="ceo"
+                                />
+                                <p className="textImageHome">CEO/Directivo</p>
+                            </div>
+                            <div className="bloqueSelectHome">
+                                <img
+                                    onClick={() => {
+                                        this.pulsaImagen("/contratos/{teletrabajo}");
+                                    }}
+                                    className="imgHomeSelect"
+                                    src="img/homeWork.png"
+                                    alt="homework"
+                                />
+                                <p className="textImageHome">Teletrabajo</p>
+                            </div>
+                            <div className="bloqueSelectHome">
+                                <img
+                                    onClick={() => {
+                                        this.pulsaImagen("/ciudades/{Valencia}");
+                                    }}
+                                    className="imgHomeSelect"
+                                    src="img/vlnc.png"
+                                    alt="vlnc"
+                                />
+                                <p className="textImageHome">Valencia</p>
+                            </div>
+                            <div className="bloqueSelectHome">
+                                <img
+                                    onClick={() => {
+                                        this.pulsaImagen("/sectores/{software}");
+                                    }}
+                                    className="imgHomeSelect"
+                                    src="img/coder.png"
+                                    alt="coder"
+                                />
+                                <p className="textImageHome">Software</p>
+                            </div>
+                        </div>
                         <div className="userRegisterHome">
                             <div className="userRegisterContent">
                                 <div className="puzzleContainer">
@@ -55,7 +116,25 @@ class Home extends Component {
                                 <div className="userTextRegistro">
                                     <p className="userRegisterTextOne">DALE FORMA A TU FUTURO</p>
                                     <p className="userRegisterTextTwo mt1">Regístate en uRelated y encuentra las piezas que necesitas.</p>
-                                    <button className="botonRegistroUsuarios mt5">
+                                    <div className="iconsHomeReg mt5">
+                                        <div className="iconBlock">
+                                            <img className="iconH" src="img/sheet2.png" alt="sheet" />
+                                            <p className="mt1">Currículum</p>
+                                        </div>
+                                        <div className="iconBlock">
+                                            <img className="iconH" src="img/resumeSearch.png" alt="resume" />    
+                                            <p className="mt1">Búsquedas</p>
+                                        </div>
+                                        <div className="iconBlock">
+                                            <img className="iconH" src="img/checkIcon.png" alt="check" />
+                                            <p className="mt1">Ofertas</p>
+                                        </div>
+                                        <div className="iconBlock">
+                                            <img className="iconH" src="img/socialIcon.png" alt="social" />
+                                            <p className="mt1">Social</p>
+                                        </div>
+                                    </div>
+                                    <button className="botonRegistroUsuarios">
                                         <p className="textoBoton" onClick={() => this.pulsaRegUser()}>
                                             Regístrate
                                         </p>
@@ -70,8 +149,7 @@ class Home extends Component {
                                 </div>
                                 <div className="empresaTextRegistro">
                                     <p className="empresaTextRegistroOne">No dejes escapar el talento.</p>
-                                    <p className="empresaTextRegistroTwo mt3">Registra tu empresa y publica
-                                    ofertas de empleo de forma rápida y segura.</p>
+                                    <p className="empresaTextRegistroTwo mt3">Registra tu empresa y publica ofertas de empleo de forma rápida y segura.</p>
                                     <button className="botonRegistroEmpresas mt5">
                                         <p className="textoBoton" onClick={() => this.pulsaRegEmpresa()}>
                                             Da de alta tu empresa

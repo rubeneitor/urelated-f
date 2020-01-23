@@ -143,6 +143,7 @@ class LoginC extends React.Component {
         
 
         for(let _y of this.state.errores){
+            // eslint-disable-next-line
             if(arg == [_y]){
                 estiloError = "inputRegister2";
                 return estiloError;

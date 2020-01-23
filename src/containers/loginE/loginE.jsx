@@ -2,7 +2,8 @@ import React from "react";
 // import { NavLink } from "react-router-dom";
 // import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { session, getUrl, verify } from "../../utils/uti";
+// import { session, getUrl, verify } from "../../utils/uti";
+import { verify } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginE.scss";
@@ -137,6 +138,7 @@ class LoginE extends React.Component {
         let estiloError = "inputRegister";
         
         for(let _y of this.state.errores){
+            // eslint-disable-next-line
             if(arg == [_y]){
                 estiloError = "inputRegister2";
                 return estiloError;
@@ -181,7 +183,6 @@ class LoginE extends React.Component {
 
                         <p className="linkPassEmpresa mt1" onClick={() => this.passwordEmpresa()}>Recuperar password.</p>
 
-                        <p className={this.state.messageClassName}> {this.state.message} </p>
                     </div>
                 </div>
                 <div className="vertical-line"></div>
