@@ -19,19 +19,23 @@ class RegisterC extends React.Component {
             password2: "",
             secretQ: "",
             secretA: "",
-            birthday: "",
+            // birthday: "",
             phone: "",
-            userGenre: 0,
+            // userGenre: 0,
             address: "",
             country: "",
             city: "",
-            cpostal: "",
+            // cpostal: "",
             provincia: "",
-            check1: false,
-            check2: false,
-            check3: false,
+            // check1: false,
+            // check2: false,
+            // check3: false,
 
             errores : [],
+
+            email_err: "",
+            password_err: "",
+            phone_err: "",
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -55,17 +59,17 @@ class RegisterC extends React.Component {
             password2: "",
             secretQ: "",
             secretA: "",
-            birthday: "",
+            // birthday: "",
             phone: "",
-            userGenre: 0,
+            // userGenre: 0,
             address: "",
             country: "",
             city: "",
-            cpostal: "",
+            // cpostal: "",
             provincia: "",
-            check1: false,
-            check2: false,
-            check3: false,
+            // check1: false,
+            // check2: false,
+            // check3: false,
 
             errores : [],
         });
@@ -102,24 +106,34 @@ class RegisterC extends React.Component {
             case 1:
                 if (!(verificado = verify(this.state.email, 1, "email"))) {
                     errors.push("email");
+                    this.setState({ email_err: "Introduce un email válido." });
+                }else{
+                    this.setState({ email_err: ""});
                 }
 
                 //password
                 if (this.state.password === this.state.password2) {
+                    this.setState({ password_err: "" });
                     if (!(verificado = verify(this.state.password, 1, "password"))) {
                         errors.push("password");
+                        this.setState({ password_err: "Password de mínimo 4 caracteres." });
+                    }else{
+                        this.setState({ password_err: "" });
                     }
                 } else {
                     errors.push("password");
                     verificado = false;
+                    this.setState({ password_err: "Los dos passwords deben coincidir." });
                 }
 
                 //pregunta y respuesta secreta
-                if (!(verificado = verify(this.state.secretQ, 1, "length", 4))) {
+                if (this.state.secretQ === "" ){
+                    verificado = false;
                     errors.push("secretQ");
                 }
 
-                if (!(verificado = verify(this.state.secretA, 1, "length", 4))) {
+                if (this.state.secretA === "" ){
+                    verificado = false;
                     errors.push("secretA");
                 }
 
@@ -142,13 +156,16 @@ class RegisterC extends React.Component {
                 }
 
                 //fecha de nacimiento
-                if (!(verificado = verify(this.state.birthday, 1, "date"))) {
-                    errors.push("birthday");
-                }
+                // if (!(verificado = verify(this.state.birthday, 1, "date"))) {
+                //     errors.push("birthday");
+                // }
 
                 //telefono
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
                     errors.push("phone");
+                    this.setState({ phone_err: "Introduce un teléfono válido." });
+                }else{
+                    this.setState({ phone_err: ""});
                 }
 
                 break;
@@ -160,9 +177,9 @@ class RegisterC extends React.Component {
                 }
 
                 //cpostal
-                if (!(verificado = verify(this.state.cpostal, 1, "postalCode"))) {
-                    errors.push("cpostal");
-                }
+                // if (!(verificado = verify(this.state.cpostal, 1, "postalCode"))) {
+                //     errors.push("cpostal");
+                // }
 
                 //provincia
                 if (!(verificado = verify(this.state.provincia, 1, "string"))) {
@@ -227,6 +244,7 @@ class RegisterC extends React.Component {
                             <div>
                                 <p className="cabeceraInput">Password</p>
                                 <input className={this.errorCheck("password")} type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                <p className="errorInputText">{this.state.password_err}</p>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Repite password</p>
@@ -243,6 +261,7 @@ class RegisterC extends React.Component {
                             <div>
                                 <p className="cabeceraInput">E-mail</p>
                                 <input className={this.errorCheck("email")} type="text" maxLength="240" placeholder="" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                                <p className="errorInputText">{this.state.email_err}</p>
                             </div>
                         </div>
                         <button
@@ -279,18 +298,18 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">Primer Apellido</p>
                                 <input className={this.errorCheck("surname")} type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
                             </div>
-                            <div>
+                            {/* <div>
                                 <p className="cabeceraInput">Género</p>
                                 <select className="registerDropdown br" name="userGenre" onChange={this.handleChange}>
                                     <option value="0"></option>
                                     <option value="1">Masculino</option>
                                     <option value="2">Femenino</option>
                                 </select>
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div>
                                 <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
                                 <input className={this.errorCheck("birthday")} type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
-                            </div>
+                            </div> */}
                             <div>
                                 <p className="cabeceraInput">Dirección</p>
                                 <input className={this.errorCheck("address")} type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
@@ -298,6 +317,7 @@ class RegisterC extends React.Component {
                             <div>
                                 <p className="cabeceraInput">Tfno. móvil</p>
                                 <input className={this.errorCheck("phone")} type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                                <p className="errorInputText">{this.state.phone_err}</p>
                             </div>
                         </div>
                         <div className="botones">
@@ -341,10 +361,10 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">Ciudad</p>
                                 <input className={this.errorCheck("city")} type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
                             </div>
-                            <div>
+                            {/* <div>
                                 <p className="cabeceraInput">Código postal</p>
                                 <input className={this.errorCheck("cpostal")} type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
-                            </div>
+                            </div> */}
                             <div>
                                 <p className="cabeceraInput">Provincia</p>
                                 <input className={this.errorCheck("provincia")} type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
@@ -353,7 +373,7 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">País</p>
                                 <input className={this.errorCheck("country")} type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
                             </div>
-                            <div className="checkBoxContainer mt5">
+                            {/* <div className="checkBoxContainer mt5">
                                 <label className="container">
                                     ¿Estas trabajando actualmente?
                                     <input type="checkbox" name="check1" value={this.state.check1} onChange={this.handleChangeCheck}></input>
@@ -373,7 +393,7 @@ class RegisterC extends React.Component {
                                     <input type="checkbox" name="check3" value={this.state.check3} onChange={this.handleChangeCheck}></input>
                                     <span className="checkmark"></span>
                                 </label>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="botones">
                             <button

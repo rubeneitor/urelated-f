@@ -271,3 +271,7 @@ button:hover {
 	border-color: var(--pri9);
 }
 
+.errorInputText {
+	color: var(--colRoj);
+	font-size: 0.6em;
+}
