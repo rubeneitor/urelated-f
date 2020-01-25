@@ -1,6 +1,11 @@
 import React from "react";
 import Input from "../input/input";
+import axios from "axios";
+import { getUrl } from "../../utils/uti";
 import "./search.scss";
+import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 class Search extends React.Component {
     constructor (props) {
@@ -16,8 +21,60 @@ class Search extends React.Component {
         this.setState({[event.target.name]:event.target.value})
     }
 
-    pulsaSearch=()=> {
-        console.log("HAS PULSADO SI SEÑOR");
+    async pulsaSearch() {
+        
+        let res = {};
+        
+        
+        //primero concertamos sobre cuantos campos se ha buscado
+        
+        //ninguno 
+        if(this.state.puesto === "" && this.state.lugar === ""){
+            try {
+                res = await axios.get(getUrl(`/allOfertas`));
+            } catch (err) {
+                res = "error";
+            }
+        }
+
+        //palabra clave
+        if(this.state.puesto !== "" && this.state.lugar === ""){
+            
+            try {
+                res = await axios.get(getUrl(`/ofertasOk/${this.state.puesto}`));
+            } catch (err) {
+                res = "error";
+            }
+        }
+        
+        //lugar
+        if(this.state.puesto === "" && this.state.lugar !== ""){
+            
+            try {
+                res = await axios.get(getUrl(`/zonas/${this.state.lugar}`));
+            } catch (err) {
+                res = "error";
+            }
+        }
+
+        //ambos
+        if(this.state.puesto !== "" && this.state.lugar !== ""){
+            
+            console.log("LOS DOS");
+            return;
+        }
+        
+
+        //guardamos los resultados en redux
+        rdx_ofertasResultado({
+			data: res.data
+        });
+
+        this.setState({puesto: ''});
+        this.setState({lugar: ''});
+
+        //redireccion con los resultados
+        this.props.history.push("/searchResults");
     }
 
     render() {
@@ -25,22 +82,6 @@ class Search extends React.Component {
         return (
             <div className="busqueda">
                 <div className="search">
-                    {/* <input
-                        type="text"
-                        placeholder="Puesto, empresa, habilidad o palabra clave"
-                        // onChange={ev => {
-                        //     this.pulsaTecla(ev);
-                        // }}
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Ciudad, provincia o país"
-                        // onChange={ev => {
-                        //     this.pulsaTecla(ev);
-                        // }}
-                    /> */}
-
                     <Input
                         placeholder="Puesto, empresa, habilidad o palabra clave"
                         handleChange={this.handleChange}
@@ -56,16 +97,6 @@ class Search extends React.Component {
                         name="lugar"
                     
                     />
-
-                    <div className="backgroundIcon">
-                        {/* <i className="material-icons" onClick={() => this.pulsaBotonBusqueda()}>
-                            search
-                        </i> */}
-                        {/* <button className="logoutButton" onClick={() => this.pulsaLogout()}>
-                                Logout
-                            </button> */}
-                    </div>
-                    
                 </div>
                 <div className="buttonContainer">
                         <button className="searchButton" onClick={() => this.pulsaSearch()}>
@@ -77,4 +108,12 @@ class Search extends React.Component {
     }
 }
 
-export default Search;
+
+const mapStateToProps = (state) => { // ese state es de redux
+	return ({
+		ofertasResultado: state.ofertasResultado
+    })
+}
+
+
+export default connect(mapStateToProps) (withRouter(Search));

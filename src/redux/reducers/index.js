@@ -1,11 +1,9 @@
-import { session } from "../../utils/uti";
 
 const reducer = (
 	
 	state = {
-		isLoggedIn: !!session.get(),
-		cart: [],
 		lostPass: "",
+		ofertasResultado: "",
 	},
 	action
 	
@@ -24,65 +22,12 @@ const reducer = (
 			...state,
 			lostPass: action.payload
 		}
-		
-		case "PRODUCT_DETAIL":
+
+		case "OFERTA_SEARCH":
 		return {
 			...state,
-			productData: action.payload
-		};
-		
-		case "PRODUCT_SEARCH":
-		return {
-			...state,
-			productSearchResults: action.payload
-		};
-		
-		
-		
-		case "CART_TOTAL_PRICE":
-			return {
-				...state,
-				totalPrice: action.payload
-			};		
-		
-		case "CART_ADD":
-		
-		
-		
-		return {
-			...state,
-			cart: [...state.cart, action.payload]
-		};
-		
-		case "CART_EDIT":
-			
-			let newCart = state.cart.map( (_x) => {
-				
-				if (_x._id === action.payload._id) { // si ya existe
-					_x.cartQuantity = action.payload.newQuantity; // lo modifico
-				};
-				
-				return _x;
-				
-			});
-		
-		return {
-			...state,
-			cart: newCart
-		};
-		
-		case "CART_REMOVE":
-			
-			let newChart = state.cart.filter( (_x, index, arr) => {
-				return _x._id !== action.payload;
-			});
-			
-		return {
-			...state,
-			cart: newChart
-		};
-		
-		
+			ofertasResultado: action.payload
+		}
 		
 		default:
 		return state;

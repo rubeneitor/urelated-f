@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from "react";
-
-import { listaCategorias } from "../../utils/uti";
+import { getUrl } from "../../utils/uti";
+import axios from "axios";
+import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import Search from "../../components/search/search";
 import "./home.scss";
 
@@ -10,26 +13,7 @@ class Home extends Component {
 
         this.state = {
             detail: {},
-            categoriaSugerida: ""
         };
-    }
-
-    UNSAFE_componentWillMount() {
-        //Comprobamos si hay una categoría guardada en el localStorage.
-
-        if (localStorage.getItem("categoriaBuscada")) {
-            this.setState({ categoriaSugerida: localStorage.getItem("categoriaBuscada") });
-        } else {
-            //En caso de no haberla, asignamos una categoría random.
-
-            let arrCategorias = Object.keys(listaCategorias);
-
-            let lengthObj = Object.keys(listaCategorias).length;
-
-            let numRand = Math.floor(Math.random() * (lengthObj + 1 - 0) + 0);
-
-            this.setState({ categoriaSugerida: arrCategorias[numRand] });
-        }
     }
 
     pulsaRegUser() {
@@ -40,9 +24,23 @@ class Home extends Component {
         this.props.history.push("/registerE");
     }
 
-    pulsaImagen(argImg) {
+    async pulsaImagen(argImg) {
+        let res = {};
         //aqui recibiremos y haremos el axios
-        console.log(argImg);
+        try {
+            res = await axios.get(getUrl(argImg));
+        } catch (err) {
+            res = "error";
+        }
+        
+        //guardamos los resultados en redux
+        rdx_ofertasResultado({
+			data: res.data
+        });
+
+        //redireccion con los resultados
+        this.props.history.push("/searchResults");
+        
     }
 
     render() {
@@ -55,7 +53,7 @@ class Home extends Component {
                             <div className="bloqueSelectHome">
                                 <img
                                     onClick={() => {
-                                        this.pulsaImagen("/salarios/{24000}");
+                                        this.pulsaImagen(`/salarios/${"24000"}`);
                                     }}
                                     className="imgHomeSelect"
                                     src="img/salary.png"
@@ -66,7 +64,7 @@ class Home extends Component {
                             <div className="bloqueSelectHome">
                                 <img
                                     onClick={() => {
-                                        this.pulsaImagen("/puestos/{CEO}");
+                                        this.pulsaImagen(`/puestos/${"CEO"}`);
                                     }}
                                     className="imgHomeSelect"
                                     src="img/ceo.png"
@@ -77,7 +75,7 @@ class Home extends Component {
                             <div className="bloqueSelectHome">
                                 <img
                                     onClick={() => {
-                                        this.pulsaImagen("/contratos/{teletrabajo}");
+                                        this.pulsaImagen(`/contratos/${"teletrabajo"}`);
                                     }}
                                     className="imgHomeSelect"
                                     src="img/homeWork.png"
@@ -88,7 +86,7 @@ class Home extends Component {
                             <div className="bloqueSelectHome">
                                 <img
                                     onClick={() => {
-                                        this.pulsaImagen("/ciudades/{Valencia}");
+                                        this.pulsaImagen(`/ciudades/${"Valencia"}`);
                                     }}
                                     className="imgHomeSelect"
                                     src="img/vlnc.png"
@@ -99,7 +97,7 @@ class Home extends Component {
                             <div className="bloqueSelectHome">
                                 <img
                                     onClick={() => {
-                                        this.pulsaImagen("/sectores/{software}");
+                                        this.pulsaImagen(`/sectores/${"software"}`);
                                     }}
                                     className="imgHomeSelect"
                                     src="img/coder.png"
@@ -171,4 +169,11 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => { // ese state es de redux
+	return ({
+		ofertasResultado: state.ofertasResultado
+    })
+}
+
+
+export default connect(mapStateToProps) (withRouter(Home));

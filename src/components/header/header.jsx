@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { session, getUrl } from "../../utils/uti";
 import { login } from "../../redux/actions/users";
-import { rdx_productSearchResults } from "../../redux/actions/products";
+// import { rdx_productSearchResults } from "../../redux/actions/products";
 // import Search from "../search/search";
 
 import "./header.scss";
@@ -115,70 +115,23 @@ class Header extends React.Component {
         }
     }
 
-    buscaResultados() {
-        let keywords = this.state.keywords;
-        let query = keywords !== "" ? `?title=${keywords}` : "";
+    // buscaResultados() {
+    //     let keywords = this.state.keywords;
+    //     let query = keywords !== "" ? `?title=${keywords}` : "";
 
-        axios
-            .get(getUrl(`/product/get${query}`))
-            .then(res => {
-                // Envio a redux
-                rdx_productSearchResults({
-                    keywords: keywords,
-                    data: res.data
-                });
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    debounce() {
-        // Si ya estoy en un timeout, salgo y cancelo
-        if (this.state.debounce_timeout) {
-            clearTimeout(this.state.debounce_timeout); // quito el loop
-            this.setState({ debounce_timeout: null }); // y su referencia
-        }
-
-        // Empiezo un timeout
-        const loop = setTimeout(() => {
-            this.buscaResultados();
-        }, 500);
-
-        // Guardo la referencia de timeout
-        this.setState({ debounce_timeout: loop });
-    }
-
-    pulsaTecla(ev) {
-        let busqueda = ev.target.value;
-        busqueda = busqueda.trim();
-
-        if (busqueda === "") {
-            this.props.history.push("/");
-        } else {
-            // Guardo resultados
-            this.setState({ keywords: busqueda });
-
-            // Busco resultados
-            this.debounce();
-
-            // Redirijo
-            this.props.history.push("/search");
-        }
-    }
-
-    // pulsaBotonBusqueda() {
-
-    // 	// Guardo resultados
-    // 	this.setState({ keywords: "" });
-
-    // 	// Busco resultados
-    // 	this.debounce();
-
-    // 	// Redirijo
-    // 	this.props.history.push("/search");
-
-    // };
+    //     axios
+    //         .get(getUrl(`/product/get${query}`))
+    //         .then(res => {
+    //             // Envio a redux
+    //             rdx_productSearchResults({
+    //                 keywords: keywords,
+    //                 data: res.data
+    //             });
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // }
 
     pulsaLogout() {
         let token = session.get().token;
