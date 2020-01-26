@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { session, getUrl, verify, randomToken32 } from "../../utils/uti";
+import { session, getUrl, verify} from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginC.scss";
@@ -61,7 +61,7 @@ class LoginC extends React.Component {
 
             //comprobamos si ya existe un token de sesion y el usuario ya está logeado
             //if((session.get().candi_Id === data[0].id) && session.get().candi_Token){
-            if(session.get().token){
+            if(session.get()?.token){
                 console.log("ya estabas logeado...");
                 login(true);
 
@@ -70,47 +70,30 @@ class LoginC extends React.Component {
                 }, 1500);
             }else{
                 
-                //no está logeado previamente, generamos el token
-                let token = randomToken32();
-                 
+                //no está logeado previamente
                 try {
 
-                    //llamada para comprobar datos
+                    //llamada para comprobar datos y actualizar token
                     let res = await axios.get(getUrl(`/loginU/${this.state.email}/${this.state.password}`));
                     let data = res.data;
-    
+                    
                     if(data[0]){
-                        //email y password correctos
-
-                        //guardamos el token
-
-                        console.log(token);
-                        console.log("a guardarlo primero....");
-
-                        //una vez se ha guardado.. lo guardamos de nuevo en los datos de sesion
-
-                        // session.set({
-                        //     visitor: data[0].name,
-                        //     visitor_id: data[0].id,
-                        //     token: token,
-                        //     userType: "Candidato",
-                        // });
+                        //email y password correctos, token actualizado, guardamos en session
 
                         session.set({
-                            visitor: "David",
-                            visitor_id: "1",
-                            token: token,
+                            visitor: data[0].name,
+                            visitor_id: data[0].id,
+                            token: data[0].token,
                             userType: "Candidato",
                         });
 
                         //variable login de rdx a true
                         login(true);
 
-                        
                         //redirigimos
                         setTimeout(() => {
                             this.props.history.push("/");
-                        }, 2000);
+                        }, 1000);
 
                     }else{
                         console.log("nombre y password incorrectos");

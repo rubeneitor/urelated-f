@@ -72,12 +72,6 @@ export const getUrl = (route = "", includeToken = false) => {
 	.
 */
 
-export const randomToken32 = () => {
-    let u = new Uint32Array(1);
-    window.crypto.getRandomValues(u);
-    let str = u[0].toString(16).toUpperCase();
-    return '00000000'.slice(str.length) + str;
-};
 
 export const verify = (userInput, isFilled, validation, min, max) => {
     let valid = false;

@@ -103,12 +103,16 @@ class Header extends React.Component {
         }
     }
 
-    pulsaLogout() {
-        let token = session.get().token;
-        console.log(token);
+    async pulsaLogout() {
+        // let token = session.get().token;
+        let id = session.get().visitor_id;
         // Hago la llamada para borrar mi token
-        //axios.get(getUrl(`/user/logout?token=${token}`));
-
+        try {
+            let res = await axios.get(getUrl(`/logOutU/${id}`));
+        }catch (err) {
+            console.log(err);
+        }
+        
         // Borro mis datos de sesión (IMPORTANTISIMO!!!)
         session.del();
 
