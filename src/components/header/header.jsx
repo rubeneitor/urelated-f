@@ -2,42 +2,49 @@ import React, { Fragment } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
-
 import { session, getUrl } from "../../utils/uti";
 import { login } from "../../redux/actions/users";
-// import { rdx_productSearchResults } from "../../redux/actions/products";
-// import Search from "../search/search";
-
 import "./header.scss";
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            keywords: "",
-            debounce_timeout: null
-        };
+        // this.state = {
+        //     keywords: "",
+        //     debounce_timeout: null
+        // };
     }
 
     BotonesHeader() {
-        // let nCesta = this.props.cart ? Object.keys(this.props.cart).length : 0;
-        // let strNCesta = nCesta === 0 ? "" : `(${nCesta})`;
-
+        
         const userType = session.get()?.userType;
+        console.log(userType);
+        console.log(this.props.isLoggedIn);
+        
+        //const isLoggedIn = session.get()?.logged;
 
         if (this.props.isLoggedIn && userType) {
             // si estoy logeado...
 
             switch (userType) {
-                case 1:
+                case "Candidato":
                     //en el caso de que sea usuario
-
                     return (
                         <Fragment>
                             <button>
-                                <NavLink exact to="/profile">
+                                <NavLink exact to="/loginE">
                                     Perfil
+                                </NavLink>
+                            </button>
+                            <button>
+                                <NavLink exact to="/loginC">
+                                    CV
+                                </NavLink>
+                            </button>
+                            <button>
+                                <NavLink exact to="/loginC">
+                                    Candidaturas activas
                                 </NavLink>
                             </button>
 
@@ -47,43 +54,23 @@ class Header extends React.Component {
                         </Fragment>
                     );
 
-                case 2:
+                case "Empresa":
                     //en el caso de que sea empresa
                     return (
                         <Fragment>
                             <button>
-                                <NavLink exact to="/profile">
+                                <NavLink exact to="/loginE">
                                     Perfil
                                 </NavLink>
                             </button>
                             <button>
-                                <NavLink exact to="/storage">
-                                    Mi inventario
-                                </NavLink>
-                            </button>
-
-                            <button className="logoutButton" onClick={() => this.pulsaLogout()}>
-                                Logout
-                            </button>
-                        </Fragment>
-                    );
-
-                case 3:
-                    return (
-                        <Fragment>
-                            <button>
-                                <NavLink exact to="/admin">
-                                    Admin
+                                <NavLink exact to="/loginC">
+                                    Proceso de seleccion
                                 </NavLink>
                             </button>
                             <button>
-                                <NavLink exact to="/profile">
-                                    Perfil
-                                </NavLink>
-                            </button>
-                            <button>
-                                <NavLink exact to="/storage">
-                                    Mi inventario
+                                <NavLink exact to="/loginC">
+                                    Publicar ofertas
                                 </NavLink>
                             </button>
 
@@ -94,10 +81,11 @@ class Header extends React.Component {
                     );
 
                 default:
-                    console.log("USERTYPE ERROR - not buyer, not seller, not admin");
+                    console.log("USERTYPE ERROR - not candidate, not business");
             }
         } else {
             //visito la página de forma anónima..
+
             return (
                 <Fragment>
                     <button>
@@ -115,34 +103,16 @@ class Header extends React.Component {
         }
     }
 
-    // buscaResultados() {
-    //     let keywords = this.state.keywords;
-    //     let query = keywords !== "" ? `?title=${keywords}` : "";
-
-    //     axios
-    //         .get(getUrl(`/product/get${query}`))
-    //         .then(res => {
-    //             // Envio a redux
-    //             rdx_productSearchResults({
-    //                 keywords: keywords,
-    //                 data: res.data
-    //             });
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // }
-
     pulsaLogout() {
         let token = session.get().token;
-
+        console.log(token);
         // Hago la llamada para borrar mi token
-        axios.get(getUrl(`/user/logout?token=${token}`));
+        //axios.get(getUrl(`/user/logout?token=${token}`));
 
-        // Borro mis datos de sesión
+        // Borro mis datos de sesión (IMPORTANTISIMO!!!)
         session.del();
 
-        // Digo que no estoy logeado (con redux)
+        //rdx no logeado
         login(false);
 
         // Redirección
@@ -170,11 +140,11 @@ class Header extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
-        isLoggedIn: state.isLoggedIn, //creamos la prop user a partir de la key user del state
-        cart: state.cart
+        isLoggedIn: state.isLoggedIn, 
+        
     };
 };
 
 export default connect(mapStateToProps)(withRouter(Header));
 
-// withRouter(Header) es para meter Header en el contexto de "Route" para que tenga el history y toa la movida
+

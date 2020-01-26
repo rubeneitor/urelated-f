@@ -38,23 +38,6 @@ export const session = {
     }
 };
 
-/*
-	Forma una URL apuntando a la API.
-	
-	Params:
-		route: STRING - Ruta a la que se quiere llamar.
-		incudeToken: BOOL (opc) - Si es true se añadirá "token={token}" al final del string de route.
-		
-	Import:
-		import { getUrl } from "./utils/uti"
-	
-	Ejemplos:
-		getUrl(); 				// Devuelve http://localhost:3000	
-		getUrl("/user/login"); 	// Devuelve http://localhost:3000/user/login	
-		getUrl("/user/asd?", true); 	// Devuelve http://localhost:3000/asd?token=123h1u8o93uhe
-	
-*/
-
 export const getUrl = (route = "", includeToken = false) => {
     // let sessionData = session.get();
     let token = "";
@@ -88,6 +71,13 @@ export const getUrl = (route = "", includeToken = false) => {
 		.
 	.
 */
+
+export const randomToken32 = () => {
+    let u = new Uint32Array(1);
+    window.crypto.getRandomValues(u);
+    let str = u[0].toString(16).toUpperCase();
+    return '00000000'.slice(str.length) + str;
+};
 
 export const verify = (userInput, isFilled, validation, min, max) => {
     let valid = false;
@@ -227,13 +217,7 @@ export const minMax = (n, min, max) => {
     return Math.max(Math.min(n, max), min);
 };
 
-/*
-	Lista de las categorías. 
-	
-	Import:
-		import { listaCategorias } from "./utils/uti"
-	.
-*/
+
 
 export const listaCategorias = {
     aut: "Automóvil",
@@ -263,25 +247,6 @@ export const listaCategorias = {
 		import { userBillingOptions } from "./utils/uti"
 	.
 */
-
-export const userBillingOptions = (userCard, userPaypal) => {
-    let userBilling = 0;
-
-    if (userCard && !userPaypal) {
-        //Comprobamos si el usuario disponde de tarjeta de crédito pero no de paypal.
-        userBilling = 1;
-    }
-    if (!userCard && userPaypal) {
-        //Comprobamos si el usuario disponde de paypal pero no de tarjeta de crédito.
-        userBilling = 2;
-    }
-    if (userCard && userPaypal) {
-        //Comprobamos si el usuario disponde de ambos sistemas de pago.
-        userBilling = 3;
-    }
-
-    return userBilling;
-};
 
 /*
 	Convierte un número de más de 3 dígitos en un string que separa las centenas con un punto.
@@ -328,3 +293,11 @@ export const numToStr = (numero, separador = ".") => {
 
     return arrNumeros.join("");
 };
+
+/*
+	Lista de las categorías. 
+	
+	Import:
+		import { listaCategorias } from "./utils/uti"
+	.
+*/

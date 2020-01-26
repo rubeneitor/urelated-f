@@ -15,6 +15,7 @@ export default store;
 import { applyMiddleware, createStore } from "redux";
 import reducer from "./reducers";
 import { save, load } from "redux-localstorage-simple";
+import { session } from "../utils/uti";
 
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -25,6 +26,8 @@ const store = createStoreWithMiddleware(
 	reducer,
 	load({
 		preloadedState:{
+
+			isLoggedIn: !!session.get(),
 			
 			lostPass: "",
 			ofertasResultado:"",

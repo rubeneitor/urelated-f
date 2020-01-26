@@ -83,7 +83,7 @@ class Search extends React.Component {
             <div className="busqueda">
                 <div className="search">
                     <Input
-                        placeholder="Puesto, empresa, habilidad o palabra clave"
+                        placeholder="Puesto, empresa o tipo de contrato"
                         handleChange={this.handleChange}
                         value={this.state.puesto}
                         name="puesto"
@@ -91,7 +91,7 @@ class Search extends React.Component {
 
                     <Input
                     
-                        placeholder="Ciudad, provincia o país"
+                        placeholder="Ciudad o provincia"
                         handleChange={this.handleChange}
                         value={this.state.lugar}
                         name="lugar"

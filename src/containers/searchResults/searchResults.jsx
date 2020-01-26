@@ -66,7 +66,6 @@ class SearchResults extends React.Component {
         this.render();
     }
 
-    //pulsaResultado(productData) {
     pulsaResultado(ofertaData) {
         console.log("SI TIO SI HAS PULSADO ESTA CARD ...QUE ES DE: ",ofertaData.titulo);
         // Guardo en redux

@@ -1,13 +1,11 @@
 import React from "react";
-// import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { session, getUrl, verify } from "../../utils/uti";
+import { session, getUrl, verify, randomToken32 } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginC.scss";
-// import { login } from "../../redux/actions/users";
-// import { rdx_productDetail } from "../../redux/actions/products";
+import { login } from "../../redux/actions/users";
 
 class LoginC extends React.Component {
     constructor(props) {
@@ -19,8 +17,6 @@ class LoginC extends React.Component {
 
             errores : [],
         };
-
-        // this.handleChange = this.handleChange.bind(this); // esto es para que el this de la función clásica pille el de la instancia de la clase Login y no otra
     }
 
     handleChange(event, key) {
@@ -62,65 +58,70 @@ class LoginC extends React.Component {
 
         if(verificado){
             this.setState({errores: ''});
-            
-            // try {
-            // Llamada
-            // let body = {
-            //     username: username,
-            //     password: password
-            // };
 
-            // let res = await axios.get(getUrl("/suscripciones"));
-            // console.log(res);
-        //     let data = res.data;
+            //comprobamos si ya existe un token de sesion y el usuario ya está logeado
+            //if((session.get().candi_Id === data[0].id) && session.get().candi_Token){
+            if(session.get().token){
+                console.log("ya estabas logeado...");
+                login(true);
 
-        //     // Guardo datos de sesión
-        //     session.set({
-        //         username: data.username,
-        //         userId: data.userId,
-        //         token: data.token,
-        //         userType: data.userType
-        //     });
+                setTimeout(() => {
+                    this.props.history.push("/");
+                }, 1500);
+            }else{
+                
+                //no está logeado previamente, generamos el token
+                let token = randomToken32();
+                 
+                try {
 
-        //     // Muestro
-        //     // this.muestraError("Accediendo...", 2, false);
+                    //llamada para comprobar datos
+                    let res = await axios.get(getUrl(`/loginU/${this.state.email}/${this.state.password}`));
+                    let data = res.data;
+    
+                    if(data[0]){
+                        //email y password correctos
 
-        //     // Digo que estoy logeado
-        //     login(true);
+                        //guardamos el token
 
-        //     // Redirección
-        //     this.props.history.push("/");
-        // } catch (err) {
-        //     let res = err.response.data;
-        // }
-        //     if (res.errorCode === "user_login_1") {
-        //         this.muestraError("Usuario no encontrado o contraseña incorrecta.");
-        //         return;
-        //     }
+                        console.log(token);
+                        console.log("a guardarlo primero....");
 
-        //     if (res.errorCode === "user_login_2") {
-        //         // Guardo datos de sesión
-        //         session.set({
-        //             username: res.username,
-        //             userId: res.userId,
-        //             token: res.token,
-        //             userType: res.userType
-        //         });
+                        //una vez se ha guardado.. lo guardamos de nuevo en los datos de sesion
 
-        //         // Muestro mensaje
-        //         this.muestraError("Ya estabas logeado.", 2);
+                        // session.set({
+                        //     visitor: data[0].name,
+                        //     visitor_id: data[0].id,
+                        //     token: token,
+                        //     userType: "Candidato",
+                        // });
 
-        //         // Digo que estoy logeado
-        //         login(true);
+                        session.set({
+                            visitor: "David",
+                            visitor_id: "1",
+                            token: token,
+                            userType: "Candidato",
+                        });
 
-        //         // Redirijo
-        //         setTimeout(() => {
-        //             this.props.history.push("/");
-        //         }, 2000);
+                        //variable login de rdx a true
+                        login(true);
 
-        //         return;
-        //     }
-        // }
+                        
+                        //redirigimos
+                        setTimeout(() => {
+                            this.props.history.push("/");
+                        }, 2000);
+
+                    }else{
+                        console.log("nombre y password incorrectos");
+                        return;
+                    }                
+                    
+                } catch (err) {
+                    console.log("equivocacion....");
+                }
+            }
+
         }
 
     }
