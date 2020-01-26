@@ -1,0 +1,40 @@
+.dropMenu {
+
+    
+
+    .profileText {
+        color: var(--colBla);
+        font-size: 1.1em;
+        cursor: pointer;
+        
+    }
+
+    .dd-list{
+        display: none;
+        list-style-type: none;
+        cursor: pointer;
+        //border-radius: 1em;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        width: 9em;
+        position: relative;
+        z-index: 1;
+
+
+        .dd-list-item{
+            display: flex;
+            justify-content: center;
+            width: 9em;
+            height: 2em;
+            background: var(--colBla);
+            color: var(--pri9);
+            opacity: 1;
+            font-weight: bold;
+            
+        }
+        .dd-list-item:hover{
+            background: var(--colGri);
+            
+        }
+    }    
+}
+

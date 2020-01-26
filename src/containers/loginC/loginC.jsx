@@ -78,8 +78,8 @@ class LoginC extends React.Component {
                     let data = res.data;
                     
                     if(data[0]){
+                        
                         //email y password correctos, token actualizado, guardamos en session
-
                         session.set({
                             visitor: data[0].name,
                             visitor_id: data[0].id,
@@ -93,7 +93,7 @@ class LoginC extends React.Component {
                         //redirigimos
                         setTimeout(() => {
                             this.props.history.push("/");
-                        }, 1000);
+                        }, 200);
 
                     }else{
                         console.log("nombre y password incorrectos");

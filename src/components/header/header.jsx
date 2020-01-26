@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { session, getUrl } from "../../utils/uti";
 import { login } from "../../redux/actions/users";
+import Menunav from "../../components/menuNav/menuNav";
 import "./header.scss";
 
 class Header extends React.Component {
@@ -17,11 +18,9 @@ class Header extends React.Component {
     }
 
     BotonesHeader() {
-        
         const userType = session.get()?.userType;
-        console.log(userType);
-        console.log(this.props.isLoggedIn);
-        
+        const visitor = session.get()?.visitor;
+
         //const isLoggedIn = session.get()?.logged;
 
         if (this.props.isLoggedIn && userType) {
@@ -32,7 +31,14 @@ class Header extends React.Component {
                     //en el caso de que sea usuario
                     return (
                         <Fragment>
-                            <button>
+                                <div className="menuHeader mr5">
+                                    {/* <a>{visitor}</a> */}
+                                    <Menunav />
+                                </div>
+                                
+                            
+
+                            {/* <button>
                                 <NavLink exact to="/loginE">
                                     Perfil
                                 </NavLink>
@@ -50,7 +56,7 @@ class Header extends React.Component {
 
                             <button className="logoutButton" onClick={() => this.pulsaLogout()}>
                                 Logout
-                            </button>
+                            </button> */}
                         </Fragment>
                     );
 
@@ -103,25 +109,25 @@ class Header extends React.Component {
         }
     }
 
-    async pulsaLogout() {
-        // let token = session.get().token;
-        let id = session.get().visitor_id;
-        // Hago la llamada para borrar mi token
-        try {
-            let res = await axios.get(getUrl(`/logOutU/${id}`));
-        }catch (err) {
-            console.log(err);
-        }
-        
-        // Borro mis datos de sesión (IMPORTANTISIMO!!!)
-        session.del();
+    // async pulsaLogout() {
+    //     // let token = session.get().token;
+    //     let id = session.get().visitor_id;
+    //     // Hago la llamada para borrar mi token
+    //     try {
+    //         let res = await axios.get(getUrl(`/logOutU/${id}`));
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
 
-        //rdx no logeado
-        login(false);
+    //     // Borro mis datos de sesión (IMPORTANTISIMO!!!)
+    //     session.del();
 
-        // Redirección
-        this.props.history.push("/");
-    }
+    //     //rdx no logeado
+    //     login(false);
+
+    //     // Redirección
+    //     this.props.history.push("/");
+    // }
 
     render() {
         return (
@@ -144,11 +150,8 @@ class Header extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
-        isLoggedIn: state.isLoggedIn, 
-        
+        isLoggedIn: state.isLoggedIn
     };
 };
 
 export default connect(mapStateToProps)(withRouter(Header));
-
-
