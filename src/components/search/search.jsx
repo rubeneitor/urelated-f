@@ -60,8 +60,12 @@ class Search extends React.Component {
         //ambos
         if(this.state.puesto !== "" && this.state.lugar !== ""){
             
-            console.log("LOS DOS");
-            return;
+            try {
+                res = await axios.get(getUrl(`/busquedaFiltro/${this.state.puesto}/${this.state.lugar}`));
+            } catch (err) {
+                res = "error";
+            }
+            
         }
         
 
