@@ -10,10 +10,19 @@ class Menunav extends React.Component {
 
     async pulsaLogout() {
         // let token = session.get().token;
-        let id = session.get().visitor_id;
+        let id = session.get()?.visitor_id;
+        let userType = session.get()?.userType;
+
         // Hago la llamada para borrar mi token
         try {
-            let res = await axios.get(getUrl(`/logOutU/${id}`));
+
+            if(userType === "Candidato"){
+                let res = await axios.get(getUrl(`/logOutU/${id}`));
+            }else{
+                let res = await axios.get(getUrl(`/logOutE/${id}`));
+            }
+
+            
         } catch (err) {
             console.log(err);
         }
