@@ -8,9 +8,10 @@ import Header from "./components/header/header";
 import SearchResults from "./containers/searchResults/searchResults";
 import LoginC from "./containers/loginC/loginC";
 import LoginE from "./containers/loginE/loginE";
-import ProfileC from "./containers/profileC/profileC";
+import Profile from "./containers/profile/profile";
 import Curriculum from "./containers/curriculum/curriculum";
 import Candidaturas from "./containers/candidaturas/candidaturas";
+import Ofertas from "./containers/ofertas/ofertas";
 import RegisterC from "./containers/registerC/registerC";
 import RegisterE from "./containers/registerE/registerE";
 import PasswordRecovery from "./containers/passwordRecovery/passwordRecovery";
@@ -33,9 +34,10 @@ export default function App() {
 					<Route path="/loginE" exact component={LoginE} />
 					<Route path="/registerC" exact component={RegisterC} />
 					<Route path="/registerE" exact component={RegisterE} />
-					<Route path="/profileC" exact component={ProfileC} />
+					<Route path="/profile" exact component={Profile} />
 					<Route path="/curriculum" exact component={Curriculum} />
 					<Route path="/candidaturas" exact component={Candidaturas} />
+					<Route path="/ofertas" exact component={Ofertas} />
 					<Route path="/passwordRecovery" exact component={PasswordRecovery} />
 					<Route path="/searchResults" exact component={SearchResults} />
 				</Switch>

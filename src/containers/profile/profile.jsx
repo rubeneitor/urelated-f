@@ -1,3 +1,29 @@
+
+import React from "react";
+
+
+class Profile extends React.Component {
+    
+    constructor (props) {
+        super(props);
+        
+    };
+    
+    render() {
+        return(
+            <div>
+                El profile para ambos de momento
+            </div>
+        );
+    };
+    
+    
+};
+
+
+export default Profile;
+
+
 // import React from "react";
 
 // import axios from "axios";

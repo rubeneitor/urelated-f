@@ -2,7 +2,7 @@
 import React from "react";
 
 
-class ProfileC extends React.Component {
+class Ofertas extends React.Component {
     
     constructor (props) {
         super(props);
@@ -12,7 +12,7 @@ class ProfileC extends React.Component {
     render() {
         return(
             <div>
-                Soy el perfil del CANDIDATO.
+                OFERTAS --> PARA LAS EMPRESAS EXCLUSIVAMENTE
             </div>
         );
     };
@@ -21,4 +21,4 @@ class ProfileC extends React.Component {
 };
 
 
-export default ProfileC;
+export default Ofertas;
