@@ -49,9 +49,9 @@ class Menunav extends React.Component {
             case "Candidato":
                 return (
                     <div className="dropMenu">
-                        {/* <p className="profileText">{profileName}</p> */}
                         <img src="img/profileIcon.png" alt="logo" />
                         <ul className="dd-list">
+                            <li className="dd-list-item-head">{profileName}</li>
                             <li onClick={() => {this.redirect("profileC")}} className="dd-list-item">Perfil</li>
                             <li onClick={() => {this.redirect("curriculum")}} className="dd-list-item">Currículum</li>
                             <li onClick={() => {this.redirect("candidaturas")}} className="dd-list-item">Candidaturas</li>
@@ -63,13 +63,13 @@ class Menunav extends React.Component {
             case "Empresa":
                 return (
                     <div className="dropMenu">
-                        {/* <p className="profileText">{profileName}</p> */}
                         <img src="img/profileIcon.png" alt="logo" />
-                        <ul className="dd-list">
-                            <li onClick={() => {this.redirect("profileC")}} className="dd-list-item">Perfil</li>
-                            <li onClick={() => {this.redirect("curriculum")}} className="dd-list-item">Ofertas</li>
+                        <ul className="dd-list2">
+                            <li className="dd-list-item-head">{profileName}</li>
+                            <li onClick={() => {this.redirect("profileC")}} className="dd-list-item2">Perfil</li>
+                            <li onClick={() => {this.redirect("curriculum")}} className="dd-list-item2">Ofertas</li>
                             {/* <li onClick={() => {this.redirect("candidaturas")}} className="dd-list-item">Candidaturas</li> */}
-                            <li onClick={() => {this.pulsaLogout()}} className="dd-list-item">Log out</li>
+                            <li onClick={() => {this.pulsaLogout()}} className="dd-list-item2">Log out</li>
                         </ul>
                     </div>
                 );

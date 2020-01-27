@@ -119,20 +119,28 @@ header .logoutButton {
 .menuHeader{
 	
 	img {
-		height: 1.5em;
-		width: 1.5em;
+		height: 2.5em;
 	}
 		
 }
 
 .menuHeader:hover{
 	.dd-list{
-			
 		display:block;
 		opacity: 1;
 		border-radius: 2px;
-		margin-top:  -1em;
-		margin-bottom: -7em;
+		margin-top:  -2.2em;
+		margin-bottom: -7.8em;
+		margin-left: -9em;
+		
+	}
+
+	.dd-list2{
+		display:block;
+		opacity: 1;
+		border-radius: 2px;
+		margin-top:  -2em;
+		margin-bottom: -6em;
 		margin-left: -9em;
 		
 	}
