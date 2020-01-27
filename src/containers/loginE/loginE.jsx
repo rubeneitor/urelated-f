@@ -1,14 +1,11 @@
 import React from "react";
-// import { NavLink } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
-// import { session, getUrl, verify } from "../../utils/uti";
-import { verify } from "../../utils/uti";
+import { session, getUrl, verify } from "../../utils/uti";
 import store from "../../redux/store";
 import { connect } from "react-redux";
 import "./loginE.scss";
-// import { login } from "../../redux/actions/users";
-// import { rdx_productDetail } from "../../redux/actions/products";
+import { login } from "../../redux/actions/users";
 
 
 class LoginE extends React.Component {
@@ -22,7 +19,6 @@ class LoginE extends React.Component {
             errores: [],
         };
 
-        // this.handleChange = this.handleChange.bind(this); // esto es para que el this de la función clásica pille el de la instancia de la clase Login y no otra
     }
 
     handleChange(event, key) {
@@ -58,67 +54,49 @@ class LoginE extends React.Component {
 
         if(verificado){
             this.setState({errores: ''});
-            // try {
-            // Llamada
-            // let body = {
-            //     username: username,
-            //     password: password
-            // };
+            
+            //comprobamos si ya existe un token de sesion y el usuario ya está logeado
+            if(session.get()?.token){
+                console.log("ya estabas logeado...");
+                login(true);
 
-            // let res = await axios.get(getUrl("/suscripciones"));
-            // console.log(res);
-        //     let data = res.data;
+                setTimeout(() => {
+                    this.props.history.push("/");
+                }, 1500);
+            }else{
 
-        //     // Guardo datos de sesión
-        //     session.set({
-        //         username: data.username,
-        //         userId: data.userId,
-        //         token: data.token,
-        //         userType: data.userType
-        //     });
+                //no está logeado previamente
 
-        //     // Muestro
-        //     // this.muestraError("Accediendo...", 2, false);
+                try {
 
-        //     // Digo que estoy logeado
-        //     login(true);
+                    //llamada para comprobar datos y actualizar token
+                    let res = await axios.get(getUrl(`/loginE/${this.state.email}/${this.state.password}}`));
+                    let data = res.data;
 
-        //     // Redirección
-        //     this.props.history.push("/");
-        // } catch (err) {
-        //     let res = err.response.data;
-        // }
-        //     if (res.errorCode === "user_login_1") {
-        //         this.muestraError("Usuario no encontrado o contraseña incorrecta.");
-        //         return;
-        //     }
+                    if(data[0]){
 
-        //     if (res.errorCode === "user_login_2") {
-        //         // Guardo datos de sesión
-        //         session.set({
-        //             username: res.username,
-        //             userId: res.userId,
-        //             token: res.token,
-        //             userType: res.userType
-        //         });
+                        //email y password correctos, token actualizado, guardamos en session
+                        session.set({
+                            visitor: data[0].name,
+                            visitor_id: data[0].id,
+                            token: data[0].token,
+                            userType: "Empresa",
+                        });
 
-        //         // Muestro mensaje
-        //         this.muestraError("Ya estabas logeado.", 2);
+                        //variable login de rdx a true
+                        login(true);
 
-        //         // Digo que estoy logeado
-        //         login(true);
+                        //redirigimos
+                        setTimeout(() => {
+                            this.props.history.push("/");
+                        }, 200);
+                    }
 
-        //         // Redirijo
-        //         setTimeout(() => {
-        //             this.props.history.push("/");
-        //         }, 2000);
-
-        //         return;
-        //     }
-        // }
+                }catch (err){
+                    console.log("equivocacion");
+                }
+            }
         }
-        return;
-
     }
 
     passwordEmpresa () {
