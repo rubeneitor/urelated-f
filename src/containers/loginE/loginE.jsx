@@ -64,17 +64,18 @@ class LoginE extends React.Component {
                     this.props.history.push("/");
                 }, 1500);
             }else{
-
+                
                 //no está logeado previamente
 
                 try {
-
+                    
                     //llamada para comprobar datos y actualizar token
-                    let res = await axios.get(getUrl(`/loginE/${this.state.email}/${this.state.password}}`));
+                    
+                    let res = await axios.get(getUrl(`/loginE/${this.state.email}/${this.state.password}`));
                     let data = res.data;
-
+                    
                     if(data[0]){
-
+                        console.log("AQUI LLEGAMOS");
                         //email y password correctos, token actualizado, guardamos en session
                         session.set({
                             visitor: data[0].name,
@@ -82,7 +83,7 @@ class LoginE extends React.Component {
                             token: data[0].token,
                             userType: "Empresa",
                         });
-
+                        console.log("AQUI TAMBIEN");
                         //variable login de rdx a true
                         login(true);
 
@@ -93,7 +94,7 @@ class LoginE extends React.Component {
                     }
 
                 }catch (err){
-                    console.log("equivocacion");
+                    console.log(err);
                 }
             }
         }

@@ -19,7 +19,7 @@ class Header extends React.Component {
 
     BotonesHeader() {
         const userType = session.get()?.userType;
-        const visitor = session.get()?.visitor;
+        //const visitor = session.get()?.visitor;
 
         //const isLoggedIn = session.get()?.logged;
 
@@ -31,32 +31,10 @@ class Header extends React.Component {
                     //en el caso de que sea usuario
                     return (
                         <Fragment>
-                                <div className="menuHeader mr5">
-                                    {/* <a>{visitor}</a> */}
-                                    <Menunav />
-                                </div>
-                                
-                            
-
-                            {/* <button>
-                                <NavLink exact to="/loginE">
-                                    Perfil
-                                </NavLink>
-                            </button>
-                            <button>
-                                <NavLink exact to="/loginC">
-                                    CV
-                                </NavLink>
-                            </button>
-                            <button>
-                                <NavLink exact to="/loginC">
-                                    Candidaturas activas
-                                </NavLink>
-                            </button>
-
-                            <button className="logoutButton" onClick={() => this.pulsaLogout()}>
-                                Logout
-                            </button> */}
+                            <div className="menuHeader mr5">
+                                {/* <a>{visitor}</a> */}
+                                <Menunav />
+                            </div>
                         </Fragment>
                     );
 
@@ -64,25 +42,10 @@ class Header extends React.Component {
                     //en el caso de que sea empresa
                     return (
                         <Fragment>
-                            <button>
-                                <NavLink exact to="/loginE">
-                                    Perfil
-                                </NavLink>
-                            </button>
-                            <button>
-                                <NavLink exact to="/loginC">
-                                    Proceso de seleccion
-                                </NavLink>
-                            </button>
-                            <button>
-                                <NavLink exact to="/loginC">
-                                    Publicar ofertas
-                                </NavLink>
-                            </button>
-
-                            <button className="logoutButton" onClick={() => this.pulsaLogout()}>
-                                Logout
-                            </button>
+                            <div className="menuHeader mr5">
+                                {/* <a>{visitor}</a> */}
+                                <Menunav />
+                            </div>
                         </Fragment>
                     );
 
@@ -108,26 +71,6 @@ class Header extends React.Component {
             );
         }
     }
-
-    // async pulsaLogout() {
-    //     // let token = session.get().token;
-    //     let id = session.get().visitor_id;
-    //     // Hago la llamada para borrar mi token
-    //     try {
-    //         let res = await axios.get(getUrl(`/logOutU/${id}`));
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-
-    //     // Borro mis datos de sesión (IMPORTANTISIMO!!!)
-    //     session.del();
-
-    //     //rdx no logeado
-    //     login(false);
-
-    //     // Redirección
-    //     this.props.history.push("/");
-    // }
 
     render() {
         return (
