@@ -76,16 +76,22 @@ class ProfileE extends React.Component {
 
         this.resetStates();
 
-        // try {
-        //     let token = session.get()?.token;
-        //     let id = session.get()?.visitor_id;
+        const queries = queryString.parse(this.props.location.search);
 
-        //     //const res = await axios.get(getUrl(`/user/${id}?token=${token}`));
+        try {
+            let token = session.get()?.token;
+            // let id = session.get()?.visitor_id;
 
-        //     //this.setState({ userData: res.data });
-        // } catch (err) {
-        //     console.error(err);
-        // }
+            const res = await axios.get(getUrl(`/perfilE/${queries.id}`));
+
+            this.setState({ userData: res.data[0] });
+
+        } catch (err) {
+            console.error(err);
+        }
+
+        console.log(this.state.userData);
+
     }
 
 
@@ -95,11 +101,6 @@ class ProfileE extends React.Component {
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
         
-        console.log("visitor_id ",visitor_id);
-        console.log("visitor_name ",visitor_name);
-        console.log("queries_id ",queries.id);
-        console.log("queries_name ",queries.name);
-
         if((visitor_id == queries.id) && (visitor_name == queries.name)){
             return (
                 <Fragment>
@@ -222,7 +223,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("name")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder="bangolufsen"
+                                        placeholder={this.state.userData?.name}
                                         name="name"
                                         value={this.state.name}
                                         onChange={this.handleChange}
@@ -233,7 +234,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("email")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder="bangolufsen@gmail.com"
+                                        placeholder={this.state.userData?.email}
                                         name="email"
                                         value={this.state.email}
                                         onChange={this.handleChange}
@@ -244,7 +245,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("phone")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder="963753421"
+                                        placeholder={this.state.userData?.phone}
                                         name="phone"
                                         value={this.state.phone}
                                         onChange={this.handleChange}
@@ -255,7 +256,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("sector")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder="Software"
+                                        placeholder={this.state.userData?.sector}
                                         name="sector"
                                         value={this.state.sector}
                                         onChange={this.handleChange}
@@ -271,8 +272,7 @@ class ProfileE extends React.Component {
                                     rows="7"
                                     cols="50"
                                     maxLength="2000"
-                                    placeholder="Utiliza este espacio para describir a tu empresa tal y como quieres que se muestre
-                                    a los candidatos. Sugerencia: Puedes utilizar la descripción de tu web corporativa."
+                                    placeholder={this.state.userData?.description}
                                     name="description"
                                     value={this.state.description}
                                     onChange={this.handleChange}
@@ -289,7 +289,7 @@ class ProfileE extends React.Component {
                             <div className="editInfoRight">
                                 {/* <p>{this.state.userData?.name}</p>
                                 <p className="mt1">{this.state.userData?.updated_at}</p> */}
-                                <p className="nameMod mt3">Bang Olufsen</p>
+                                <p className="nameMod mt3">{this.state.userData?.name}</p>
                                 <p className="dateMod mt3">27/01/2020</p>
                                 <p className="dateMod2">Última fecha de modificación.</p>
                                 {this.showButton()}
