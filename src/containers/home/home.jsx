@@ -159,7 +159,13 @@ class Home extends Component {
                         <div className="motivationalHome ">
                             <div className="motivationalContent">
                                 <p className="motivationalText">"Sólo existen dos dias al año en los que no se puede hacer nada, ayer y mañana."</p>
-                                <p className="motivationalTextDos">Bienvenido a uRelated, la working community donde miles de usuarios, empresas y blablabla te esperan.</p>
+                                <div className="motivationalRow mt5">
+                                    <img className="imgDown" src="img/logouRelated_6lit.png" alt="logoDown" />
+                                    <div className="motto ml3">
+                                        <p className="motto1">Candidatos.<br/>Empresas.<br/>Bienvenidos a u-Related.</p>
+                                        <p className="motto2">Hiring Time_</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

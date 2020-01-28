@@ -22,7 +22,7 @@ class RegisterC extends React.Component {
             // birthday: "",
             phone: "",
             // userGenre: 0,
-            address: "",
+            //address: "",
             country: "",
             city: "",
             // cpostal: "",
@@ -62,7 +62,7 @@ class RegisterC extends React.Component {
             // birthday: "",
             phone: "",
             // userGenre: 0,
-            address: "",
+            //address: "",
             country: "",
             city: "",
             // cpostal: "",
@@ -151,9 +151,9 @@ class RegisterC extends React.Component {
                 }
 
                 //direccion
-                if (!(verificado = verify(this.state.address, 1, "string"))) {
-                    errors.push("address");
-                }
+                // if (!(verificado = verify(this.state.address, 1, "string"))) {
+                //     errors.push("address");
+                // }
 
                 //fecha de nacimiento
                 // if (!(verificado = verify(this.state.birthday, 1, "date"))) {
@@ -310,10 +310,10 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
                                 <input className={this.errorCheck("birthday")} type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
                             </div> */}
-                            <div>
+                            {/* <div>
                                 <p className="cabeceraInput">Dirección</p>
                                 <input className={this.errorCheck("address")} type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
-                            </div>
+                            </div> */}
                             <div>
                                 <p className="cabeceraInput">Tfno. móvil</p>
                                 <input className={this.errorCheck("phone")} type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
