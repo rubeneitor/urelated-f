@@ -176,11 +176,6 @@ class RegisterC extends React.Component {
                     errors.push("city");
                 }
 
-                //cpostal
-                // if (!(verificado = verify(this.state.cpostal, 1, "postalCode"))) {
-                //     errors.push("cpostal");
-                // }
-
                 //provincia
                 if (!(verificado = verify(this.state.provincia, 1, "string"))) {
                     errors.push("provincia");

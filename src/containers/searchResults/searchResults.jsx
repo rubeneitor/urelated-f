@@ -81,6 +81,7 @@ class SearchResults extends React.Component {
                 <Fragment>
                     <div className="cardOferta mb3">
                         <div className="noResults">
+                            
                             <p>Ups! No hemos encontrado ninguna oferta.</p>
                             <br />
                             <p>Danos otra oportunidad!.</p>

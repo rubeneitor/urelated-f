@@ -175,7 +175,7 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = (state) => { // ese state es de redux
+const mapStateToProps = (state) => {
 	return ({
 		ofertasResultado: state.ofertasResultado
     })
