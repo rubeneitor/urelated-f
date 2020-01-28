@@ -11,13 +11,35 @@ class ProfileE extends React.Component {
         this.state = {
             userData: [],
             button: "blueButton",
-            readOnly: true
+            readOnly: true,
+
+            sector: "",
+            phone: "",
+            name: "",
+            email: "",
+            description: "",
+
+            errores: []
         };
+
+        this.clickEditar = this.clickEditar.bind(this);
     }
 
     resetStates() {
-        this.setState({ userData: "" });
-        this.setState({ button: "blueButton" });
+        this.setState({
+            userData: "",
+            button: "blueButton",
+
+            readOnly: true,
+
+            sector: "",
+            phone: "",
+            name: "",
+            email: "",
+            description: "",
+
+            errores: []
+        });
     }
 
     handleChange = ev => {
@@ -30,10 +52,10 @@ class ProfileE extends React.Component {
     };
 
     updateDescriptionRemainingCharacters() {
-        let ele = document.querySelector(".textAddInfo");
+        let ele = document.querySelector(".textAddInfo2");
 
-        if (!document.querySelector(".textAddInfo")) {
-            ele = document.querySelector(".textAddInfo2");
+        if (!document.querySelector(".textAddInfo2")) {
+            ele = document.querySelector(".textAddInfo3");
         }
 
         let lenght = ele.value.length;
@@ -50,6 +72,9 @@ class ProfileE extends React.Component {
     }
 
     async componentDidMount() {
+
+        this.resetStates();
+        
         try {
             let token = session.get()?.token;
             let id = session.get()?.visitor_id;
@@ -66,9 +91,88 @@ class ProfileE extends React.Component {
         //estilo del boton ... aviso (boton rojo) y edicion habilitada
         if (this.state.button === "blueButton") {
             this.setState({ button: "redButton" });
+            //inputs y cajas de texto editables
             this.setState({ readOnly: false });
         } else {
+            //el boton es de color rojo y se procede a editar
+            let verificado = true;
+            let errors = [];
+
+            if (!(verificado = verify(this.state.email, 1, "email"))) {
+                errors.push("email");
+                this.setState({ email_err: "Introduce un email válido." });
+            } else {
+                this.setState({ email_err: "" });
+            }
+
+            //nombre de la empresa
+            if (!(verificado = verify(this.state.name, 1, "string"))) {
+                errors.push("name");
+            }
+
+            //telefono
+            if (!(verificado = verify(this.state.phone, 1, "phone"))) {
+                errors.push("phone");
+                this.setState({ phone_err: "Introduce un teléfono válido." });
+            } else {
+                this.setState({ phone_err: "" });
+            }
+
+            //sector de la empresa
+            if (!(verificado = verify(this.state.sector, 1, "string"))) {
+                errors.push("sector");
+            }
+
+            if (this.state.description === "") {
+                errors.push("description");
+            }
+
+            if (errors.length) {
+                verificado = false;
+                this.setState({ errores: errors });
+                return;
+            }
+
+            if (verificado) {
+                //no hay errores,...llamamos a la base de datos y actualizamos los datos
+                console.log("LA MADRE QUE NOS PARIO");
+            }
+
+            return;
         }
+    }
+
+    errorCheck(arg) {
+        let estiloError = "";
+
+        if (this.state.button === "blueButton") {
+            estiloError = "inputProfile";
+        } else {
+            estiloError = "inputProfile2";
+        }
+
+        for (let _y of this.state.errores) {
+            // eslint-disable-next-line
+            if (arg == [_y]) {
+                // eslint-disable-next-line
+                if (arg == [_y] && arg == "description") {
+                    estiloError = "textAddInfo3";
+                    return estiloError;
+                }
+
+                estiloError = "inputProfile3";
+                return estiloError;
+            }
+        }
+        if (arg === "description") {
+            if (this.state.button === "redButton") {
+                estiloError = "textAddInfo2";
+                return estiloError;
+            }
+            estiloError = "textAddInfo";
+            return estiloError;
+        }
+        return estiloError;
     }
 
     render() {
@@ -84,26 +188,54 @@ class ProfileE extends React.Component {
                             <div className="profileInfoGrid">
                                 <div className="mt5">
                                     <p className="cabeceraInput ml3">Nombre</p>
-                                    <input className="inputProfile ml3" readOnly={this.state.readOnly} placeholder="bangolufsen"></input>
+                                    <input
+                                        className={`${this.errorCheck("name")} ml3`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="bangolufsen"
+                                        name="name"
+                                        value={this.state.name}
+                                        onChange={this.handleChange}
+                                    ></input>
                                 </div>
                                 <div className="mt5">
                                     <p className="cabeceraInput">E-mail</p>
-                                    <input className="inputProfile" readOnly={this.state.readOnly} placeholder="bangolufsen@gmail.com"></input>
+                                    <input
+                                        className={`${this.errorCheck("email")}`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="bangolufsen@gmail.com"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.handleChange}
+                                    ></input>
                                 </div>
                                 <div className="mt5">
                                     <p className="cabeceraInput ml3">Teléfono</p>
-                                    <input className="inputProfile ml3" readOnly={this.state.readOnly} placeholder="963753421"></input>
+                                    <input
+                                        className={`${this.errorCheck("phone")} ml3`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="963753421"
+                                        name="phone"
+                                        value={this.state.phone}
+                                        onChange={this.handleChange}
+                                    ></input>
                                 </div>
-                                <div>
+                                <div className="mt5">
                                     <p className="cabeceraInput">Sector</p>
-                                    <input className="inputProfile" readOnly={this.state.readOnly} placeholder="Software"></input>
+                                    <input
+                                        className={`${this.errorCheck("sector")}`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="Software"
+                                        name="sector"
+                                        value={this.state.sector}
+                                        onChange={this.handleChange}
+                                    ></input>
                                 </div>
                             </div>
                             <div className="descripcionEmpresa mr5">
                                 <p className="cabeceraInput">Descripcion de tu empresa</p>
                                 <textarea
                                     // className={this.errorCheck("description")}
-                                    className="textAddInfo"
+                                    className={`${this.errorCheck("description")}`}
                                     readOnly={this.state.readOnly}
                                     rows="7"
                                     cols="50"
