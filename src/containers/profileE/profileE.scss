@@ -1,0 +1,198 @@
+.mainProfileE {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 40.9em;
+   
+    .cardProfile {
+        display: flex;
+		flex-direction: column;
+		width: 45em;
+		height: 36em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-top: 3em;
+       
+
+        .cardHeader {
+            height: 5em;
+            margin-left: 2em;
+            display: flex;
+            justify-content: left;
+            
+            .profileText {
+                color: var(--pri9);
+                font-size: 1.2em;
+                font-weight: bold;
+                text-align: left;
+                margin-top: 3em;
+            }
+
+        }
+
+        .line {
+            width: 100%;
+            height: 0.2em;
+            background: var(--colGri);
+        }
+
+        .profileInfo {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .descripcionEmpresa {
+                display: flex;
+                flex-direction: column;
+                
+
+                .textAddInfo {
+                    width: 38em;
+                    background: var(--colBla);
+                    resize: none;
+                    font-size: 1em;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: var(--colGri);
+                    // margin-top: -6em;
+                }
+
+                .textAddInfo:focus {
+                    outline-color: var(--colGri);
+                }
+            }
+
+            
+
+            .profileInfoGrid {
+                margin: 1em 0 1em 0;
+                display: grid;
+                grid-template: repeat(3, 1fr) / repeat(2, 1fr);
+                align-items: center;
+                justify-items: center;
+                padding: 0.5em;
+                height: 12em;
+    
+                // .cabeceraInput {
+                //     color: var(--pri9);
+                //     font-weight:bold;
+                // }
+    
+                .inputProfile {
+                    background: var(--colBla);
+                    //border-style: none;
+                    font-size: 1em;
+                    width: 20em;
+                    height: 2em;
+                    //border-width: 1px;
+                    //border-color: var(--colAzuDos);
+                }
+    
+                .inputProfile:focus{
+                    outline: none;
+                }
+            
+                .inputProfile2 {
+                    background: var(--colBla);
+                    border-style: solid;
+                    font-size: 1em;
+                    width: 20em;
+                    height: 2em;
+                    border-width: 1px;
+                    border-color: var(--colRoj);
+                }
+                
+            }
+
+
+        }
+        
+    }
+
+    .cardEditProfile {
+        display: flex;
+		flex-direction: column;
+		width: 20em;
+		height: 27em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-top: 3em;
+
+        .cardEditProfileHeader {
+            width: 100%;
+            height: 11em;
+            display: flex;
+            justify-content: center;
+
+            img {
+                margin-top: 2em;
+                border-radius: 0.1em;
+                height: 9em;
+                max-width: 12.9em;
+
+                
+            }
+        }
+
+        .cardEditProfileBody {
+            width: 100%;
+
+            .editInfoRight {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                
+                .nameMod {
+                    font-size: 1.2em;
+                    color: var(--pri9);
+                }
+
+                .dateMod {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: var(--pri9);
+                }
+
+                .dateMod2 {
+                    color: var(--pri5);
+                }
+
+                .blueButton {
+                    margin-top: 1em;
+                    background: var(--colAzuDos);
+                }
+
+                .blueButton:hover{
+                    margin-top: 1em;
+                    background: var(--colAzu);
+                }
+
+                .redButton {
+                    margin-top: 1em;
+                    background: var(--colRojCla);
+                }
+
+                .redButton:hover {
+                    margin-top: 1em;
+                    background: var(--colRoj);
+                }
+
+            }
+        }
+
+    }
+
+    .cardEditProfile:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .cabeceraInput {
+        color: var(--pri9);
+        font-weight:bold;
+    }
+
+    
+}

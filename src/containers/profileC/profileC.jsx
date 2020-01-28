@@ -1,28 +1,54 @@
+import React, { Fragment } from "react";
+import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { session, getUrl, verify } from "../../utils/uti";
+import "./profileC.scss";
 
-import React from "react";
-
-
-class Profile extends React.Component {
-    
-    constructor (props) {
+class ProfileC extends React.Component {
+    constructor(props) {
         super(props);
-        
-    };
-    
+    }
+
+    muestraContenido() {
+        let userType = session.get()?.userType;
+
+        if (userType === "Candidato") {
+            return (
+                <Fragment>
+                    <div>CANDIDATO</div>
+                </Fragment>
+            );
+        } else {
+            return (
+                <Fragment>
+                    <div className="cardProfile">
+                        <div className="cardHeader"></div>
+                        <div className="line"></div>
+                        <div className="profileInfo"></div>
+                    </div>
+                    <div className="cardEditProfile ml5">
+                        <div className="cardEditProfileHeader">
+
+                        </div>
+                        <div className="line"></div>
+                    </div>
+                </Fragment>
+            );
+        }
+    }
+
     render() {
-        return(
-            <div>
-                El profile para ambos de momento
-            </div>
+        return (
+            <Fragment>
+                <div className="main">
+                    <div className="mainProfile">{this.muestraContenido()}</div>
+                </div>
+            </Fragment>
         );
-    };
-    
-    
-};
+    }
+}
 
-
-export default Profile;
-
+export default ProfileC;
 
 // import React from "react";
 
@@ -40,14 +66,14 @@ export default Profile;
 //             userType: ""
 //         };
 //     }
-	
+
 //     async componentDidMount() {
 //         try {
 //             let token = session.get().token;
 //             let id = session.get().userId;
-			
+
 //             const res = await axios.get(getUrl(`/user/${id}?token=${token}`));
-			
+
 //             this.setState({ userData: res.data }, () => {
 //                 // this.state.userType = this.state.userData.userType === 0 ? "Cliente" : "Vendedor";
 //             });

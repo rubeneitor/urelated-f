@@ -8,7 +8,8 @@ import Header from "./components/header/header";
 import SearchResults from "./containers/searchResults/searchResults";
 import LoginC from "./containers/loginC/loginC";
 import LoginE from "./containers/loginE/loginE";
-import Profile from "./containers/profile/profile";
+import ProfileC from "./containers/profileC/profileC";
+import ProfileE from "./containers/profileE/profileE";
 import Curriculum from "./containers/curriculum/curriculum";
 import Candidaturas from "./containers/candidaturas/candidaturas";
 import Ofertas from "./containers/ofertas/ofertas";
@@ -34,7 +35,8 @@ export default function App() {
 					<Route path="/loginE" exact component={LoginE} />
 					<Route path="/registerC" exact component={RegisterC} />
 					<Route path="/registerE" exact component={RegisterE} />
-					<Route path="/profile" exact component={Profile} />
+					<Route path="/profileC" exact component={ProfileC} />
+					<Route path="/profileE" exact component={ProfileE} />
 					<Route path="/curriculum" exact component={Curriculum} />
 					<Route path="/candidaturas" exact component={Candidaturas} />
 					<Route path="/ofertas" exact component={Ofertas} />

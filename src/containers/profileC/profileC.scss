@@ -1,0 +1,49 @@
+.mainProfile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 40.9em;
+   
+    .cardProfile {
+        display: flex;
+		flex-direction: column;
+		width: 45em;
+		height: 27em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-top: 5em;
+       
+
+        .cardHeader {
+            height: 5em;
+
+        }
+
+        .line {
+            width: 100%;
+            height: 0.2em;
+            background: var(--colGri);
+        }
+
+        .profileInfo {
+
+        }
+    }
+
+    .cardEditProfile {
+        display: flex;
+		flex-direction: column;
+		width: 20em;
+		height: 27em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-top: 5em;
+
+    }
+
+    .cardEditProfile:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
