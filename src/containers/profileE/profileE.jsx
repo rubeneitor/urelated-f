@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import queryString from 'query-string';
 import { session, getUrl, verify } from "../../utils/uti";
 import "./profileE.scss";
 
@@ -74,17 +75,47 @@ class ProfileE extends React.Component {
     async componentDidMount() {
 
         this.resetStates();
+
+        // try {
+        //     let token = session.get()?.token;
+        //     let id = session.get()?.visitor_id;
+
+        //     //const res = await axios.get(getUrl(`/user/${id}?token=${token}`));
+
+        //     //this.setState({ userData: res.data });
+        // } catch (err) {
+        //     console.error(err);
+        // }
+    }
+
+
+    showButton() {
+
+        let visitor_id = session.get()?.visitor_id;
+        let visitor_name = session.get()?.visitor;
+        const queries = queryString.parse(this.props.location.search);
         
-        try {
-            let token = session.get()?.token;
-            let id = session.get()?.visitor_id;
+        console.log("visitor_id ",visitor_id);
+        console.log("visitor_name ",visitor_name);
+        console.log("queries_id ",queries.id);
+        console.log("queries_name ",queries.name);
 
-            //const res = await axios.get(getUrl(`/user/${id}?token=${token}`));
+        if((visitor_id == queries.id) && (visitor_name == queries.name)){
+            return (
+                <Fragment>
+                    <button
+                        className={this.state.button}
+                        onClick={() => {
+                            this.clickEditar();
+                        }}
+                    >
+                        Editar
+                    </button>
+                </Fragment>
+            );
+        };
 
-            //this.setState({ userData: res.data });
-        } catch (err) {
-            console.error(err);
-        }
+        
     }
 
     clickEditar() {
@@ -261,14 +292,7 @@ class ProfileE extends React.Component {
                                 <p className="nameMod mt3">Bang Olufsen</p>
                                 <p className="dateMod mt3">27/01/2020</p>
                                 <p className="dateMod2">Última fecha de modificación.</p>
-                                <button
-                                    className={this.state.button}
-                                    onClick={() => {
-                                        this.clickEditar();
-                                    }}
-                                >
-                                    Editar
-                                </button>
+                                {this.showButton()}
                             </div>
                         </div>
                     </div>

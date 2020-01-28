@@ -1,170 +1,299 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import queryString from 'query-string';
 import { session, getUrl, verify } from "../../utils/uti";
 import "./profileC.scss";
 
 class ProfileC extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            userData: "",
+            button: "blueButton",
+
+            readOnly: true,
+
+            username: "",
+            surname: "",
+            phone: "",
+            email: "",
+            country: "",
+            provincia: "",
+            ciudad: "",
+
+            errores: []
+        };
+
+        this.clickEditar = this.clickEditar.bind(this);
     }
 
-    muestraContenido() {
-        let userType = session.get()?.userType;
+    resetStates() {
+        this.setState({
+            userData: "",
+            button: "blueButton",
 
-        if (userType === "Candidato") {
+            readOnly: true,
+
+            username: "",
+            surname: "",
+            phone: "",
+            email: "",
+            country: "",
+            provincia: "",
+            ciudad: "",
+
+            errores: []
+        });
+    }
+
+    handleChange = ev => {
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
+    };
+
+    async componentDidMount() {
+        this.resetStates();
+
+        // const queries = queryString.parse(this.props.location.search);
+
+        // try {
+        //     let token = session.get()?.token;
+        //     let id = session.get()?.visitor_id;
+
+        //     //const res = await axios.get(getUrl(`/user/${id}?token=${token}`));
+
+        //     //this.setState({ userData: res.data });
+        // } catch (err) {
+        //     console.error(err);
+        // }
+    }
+
+    showButton() {
+
+        let visitor_id = session.get()?.visitor_id;
+        let visitor_name = session.get()?.visitor;
+        const queries = queryString.parse(this.props.location.search);
+        
+        console.log("visitor_id ",visitor_id);
+        console.log("visitor_name ",visitor_name);
+        console.log("queries_id ",queries.id);
+        console.log("queries_name ",queries.name);
+
+        if((visitor_id == queries.id) && (visitor_name == queries.name)){
             return (
                 <Fragment>
-                    <div>CANDIDATO</div>
+                    <button
+                        className={this.state.button}
+                        onClick={() => {
+                            this.clickEditar();
+                        }}
+                    >
+                        Editar
+                    </button>
                 </Fragment>
             );
+        };
+
+        
+    }
+
+    clickEditar() {
+        //estilo del boton ... aviso (boton rojo) y edicion habilitada
+        if (this.state.button === "blueButton") {
+            this.setState({ button: "redButton" });
+            //inputs y cajas de texto editables
+            this.setState({ readOnly: false });
         } else {
-            return (
-                <Fragment>
-                    <div className="cardProfile">
-                        <div className="cardHeader"></div>
-                        <div className="line"></div>
-                        <div className="profileInfo"></div>
-                    </div>
-                    <div className="cardEditProfile ml5">
-                        <div className="cardEditProfileHeader">
+            //el boton es de color rojo y se procede a editar
+            let verificado = true;
+            let errors = [];
 
-                        </div>
-                        <div className="line"></div>
-                    </div>
-                </Fragment>
-            );
+            if (!(verificado = verify(this.state.email, 1, "email"))) {
+                errors.push("email");
+                this.setState({ email_err: "Introduce un email válido." });
+            } else {
+                this.setState({ email_err: "" });
+            }
+
+            //nombre de usuario
+            if (!(verificado = verify(this.state.username, 1, "string"))) {
+                errors.push("username");
+            }
+
+            //apellido de usuario
+            if (!(verificado = verify(this.state.surname, 1, "string"))) {
+                errors.push("surname");
+            }
+
+            //ciudad del  usuario
+            if (!(verificado = verify(this.state.ciudad, 1, "string"))) {
+                errors.push("ciudad");
+            }
+
+            //provincia del usuario
+            if (!(verificado = verify(this.state.provincia, 1, "string"))) {
+                errors.push("provincia");
+            }
+
+            //pais del usuario
+            if (!(verificado = verify(this.state.country, 1, "string"))) {
+                errors.push("country");
+            }
+
+            //telefono
+            if (!(verificado = verify(this.state.phone, 1, "phone"))) {
+                errors.push("phone");
+                this.setState({ phone_err: "Introduce un teléfono válido." });
+            } else {
+                this.setState({ phone_err: "" });
+            }
+
+            if (errors.length) {
+                verificado = false;
+                this.setState({ errores: errors });
+                return;
+            }
+
+            if (verificado) {
+                //no hay errores,...llamamos a la base de datos y actualizamos los datos
+                console.log("LA MADRE QUE NOS PARIO...CANDIDATO....todo bien! preparado para registrar!");
+            }
+
+            return;
         }
+    }
+
+    errorCheck(arg) {
+        let estiloError = "";
+
+        if (this.state.button === "blueButton") {
+            estiloError = "inputProfile";
+        } else {
+            estiloError = "inputProfile2";
+        }
+
+        for (let _y of this.state.errores) {
+            // eslint-disable-next-line
+            if (arg == [_y]) {
+                estiloError = "inputProfile3";
+                return estiloError;
+            }
+        }
+
+        return estiloError;
     }
 
     render() {
         return (
-            <Fragment>
-                <div className="main">
-                    <div className="mainProfile">{this.muestraContenido()}</div>
+            <div className="main">
+                <div className="mainProfileE">
+                    <div className="cardProfile">
+                        <div className="cardHeader">
+                            <p className="profileText">Datos personales.</p>
+                        </div>
+                        <div className="line"></div>
+                        <div className="profileInfo">
+                            <div className="profileInfoGrid">
+                                <div className="mt5">
+                                    <p className="cabeceraInput ml3">Nombre</p>
+                                    <input
+                                        className={`${this.errorCheck("username")} ml3`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="Richi"
+                                        name="username"
+                                        value={this.state.username}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                                <div className="mt5">
+                                    <p className="cabeceraInput">Apellido</p>
+                                    <input
+                                        className={`${this.errorCheck("surname")}`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="Foxxx"
+                                        name="surname"
+                                        value={this.state.surname}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                                <div className="mt5">
+                                    <p className="cabeceraInput ml3">E-mail</p>
+                                    <input
+                                        className={`${this.errorCheck("email")} ml3`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="richi@gmail.com"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                                <div className="mt5">
+                                    <p className="cabeceraInput">Teléfono</p>
+                                    <input
+                                        className={`${this.errorCheck("phone")}`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="9666699958"
+                                        name="phone"
+                                        value={this.state.phone}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                                <div className="mt5">
+                                    <p className="cabeceraInput ml3">Ciudad</p>
+                                    <input
+                                        className={`${this.errorCheck("ciudad")} ml3`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="Castellon"
+                                        name="ciudad"
+                                        value={this.state.ciudad}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                                <div className="mt5">
+                                    <p className="cabeceraInput">Provincia</p>
+                                    <input
+                                        className={`${this.errorCheck("provincia")}`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="Valencia"
+                                        name="provincia"
+                                        value={this.state.provincia}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                                <div className="mt5">
+                                    <p className="cabeceraInput ml3">País</p>
+                                    <input
+                                        className={`${this.errorCheck("country")} ml3`}
+                                        readOnly={this.state.readOnly}
+                                        placeholder="España"
+                                        name="country"
+                                        value={this.state.country}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="cardEditProfile ml5">
+                        <div className="cardEditProfileHeader">
+                            <img src="https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg" alt="logoEmpresa" />
+                        </div>
+                        <div className="cardEditProfileBody mt3">
+                            <div className="editInfoRight">
+                                {/* <p>{this.state.userData?.name}</p>
+                                <p className="mt1">{this.state.userData?.updated_at}</p> */}
+                                <p className="nameMod mt3">Richi</p>
+                                <p className="dateMod mt3">28/01/2020</p>
+                                <p className="dateMod2">Última fecha de modificación.</p>
+                                {this.showButton()}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </Fragment>
+            </div>
         );
     }
 }
 
 export default ProfileC;
-
-// import React from "react";
-
-// import axios from "axios";
-// import { getUrl, session, userBillingOptions } from "../../utils/uti";
-
-// import "./profile.scss";
-
-// class Profile extends React.Component {
-//     constructor(props) {
-//         super(props);
-
-//         this.state = {
-//             userData: [],
-//             userType: ""
-//         };
-//     }
-
-//     async componentDidMount() {
-//         try {
-//             let token = session.get().token;
-//             let id = session.get().userId;
-
-//             const res = await axios.get(getUrl(`/user/${id}?token=${token}`));
-
-//             this.setState({ userData: res.data }, () => {
-//                 // this.state.userType = this.state.userData.userType === 0 ? "Cliente" : "Vendedor";
-//             });
-//         } catch (err) {
-//             console.error(err);
-//         }
-//     }
-
-//     muestraBilling() {
-//         let userCard = this.state.userData.billing?.card.number;
-//         let userPaypal = this.state.userData.billing?.paypal;
-
-//         let userBilling = userBillingOptions(userCard, userPaypal);
-
-//         switch (userBilling) {
-//             case 1:
-//                 return (
-//                     <div className="userDataField">
-//                         <div className="userDataFieldTitle">Tarjeta de Crédito : </div>
-//                         <div className="userDataFieldContent">{this.state.userData.billing.card.number}</div>
-//                     </div>
-//                 );
-
-//             case 2:
-//                 return (
-//                     <div className="userDataField">
-//                         <div className="userDataFieldTitle">Paypal : </div>
-//                         <div className="userDataFieldContent">{this.state.userData.billing.paypal}</div>
-//                     </div>
-//                 );
-
-//             case 3:
-//                 return (
-//                     <div className="userBothBilling">
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">Tarjeta de Crédito : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.billing.card.number}</div>
-//                         </div>
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">Paypal : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.billing.paypal}</div>
-//                         </div>
-//                     </div>
-//                 );
-
-//             default:
-//                 console.error("default");
-//         }
-//     }
-
-//     render() {
-//         let userType = this.state.userData.userType === 1 ? "Cliente" : "Vendedor";
-
-//         if (this.state.userData.userType === 3){
-//             userType = "Administrador";
-//         };
-
-//         return (
-//             <div className="main mainProfile">
-//                 <div className="card mt3">
-//                     <div className="cardHeader">
-//                         <h1 className="cardTitle"> {this.state.userData.username} </h1>
-
-//                         <div className="userTypeClass">{userType}</div>
-//                     </div>
-//                     <div className="cardBody">
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">E-mail : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.email}</div>
-//                         </div>
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">Teléfono : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.phone}</div>
-//                         </div>
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">Dirección : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.billing?.address}</div>
-//                         </div>
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">Ciudad : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.billing?.city}</div>
-//                         </div>
-//                         <div className="userDataField">
-//                             <div className="userDataFieldTitle">País : </div>
-//                             <div className="userDataFieldContent">{this.state.userData.billing?.country}</div>
-//                         </div>
-//                         {this.muestraBilling()}
-//                     </div>
-//                 </div>
-//             </div>
-//         );
-//     }
-// }
-// export default Profile;

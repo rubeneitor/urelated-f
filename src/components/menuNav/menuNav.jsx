@@ -45,6 +45,7 @@ class Menunav extends React.Component {
     showMenuNav() {
         let userType = session.get()?.userType;
         let profileName = session.get()?.visitor;
+        let id_visitor = session.get()?.visitor_id;
         switch (userType) {
             case "Candidato":
                 return (
@@ -52,7 +53,7 @@ class Menunav extends React.Component {
                         <img src="img/profileIcon.png" alt="logo" />
                         <ul className="dd-list">
                             <li className="dd-list-item-head">{profileName}</li>
-                            <li onClick={() => {this.redirect("profileC")}} className="dd-list-item">Perfil</li>
+                            <li onClick={() => {this.redirect(`profileC?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item">Perfil</li>
                             <li onClick={() => {this.redirect("curriculum")}} className="dd-list-item">Currículum</li>
                             <li onClick={() => {this.redirect("candidaturas")}} className="dd-list-item">Candidaturas</li>
                             <li onClick={() => {this.pulsaLogout()}} className="dd-list-item">Log out</li>
@@ -66,7 +67,7 @@ class Menunav extends React.Component {
                         <img src="img/profileIcon.png" alt="logo" />
                         <ul className="dd-list2">
                             <li className="dd-list-item-head">{profileName}</li>
-                            <li onClick={() => {this.redirect("profileE")}} className="dd-list-item2">Perfil</li>
+                            <li onClick={() => {this.redirect(`profileE?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item2">Perfil</li>
                             <li onClick={() => {this.redirect("ofertas")}} className="dd-list-item2">Ofertas</li>
                             {/* <li onClick={() => {this.redirect("candidaturas")}} className="dd-list-item">Candidaturas</li> */}
                             <li onClick={() => {this.pulsaLogout()}} className="dd-list-item2">Log out</li>
