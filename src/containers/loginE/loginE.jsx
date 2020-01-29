@@ -71,7 +71,13 @@ class LoginE extends React.Component {
                     
                     //llamada para comprobar datos y actualizar token
                     
-                    let res = await axios.get(getUrl(`/loginE/${this.state.email}/${this.state.password}`));
+                    //let res = await axios.get(getUrl(`/loginE/${this.state.email}/${this.state.password}`));
+                    let lBody = {
+                        email: this.state.email,
+                        password: this.state.password
+                    }
+
+                    let res = await axios.post(getUrl(`/loginE`),lBody);
                     let data = res.data;
                     
                     if(data[0]){

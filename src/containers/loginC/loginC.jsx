@@ -74,7 +74,13 @@ class LoginC extends React.Component {
                 try {
 
                     //llamada para comprobar datos y actualizar token
-                    let res = await axios.get(getUrl(`/loginU/${this.state.email}/${this.state.password}`));
+                    //let res = await axios.get(getUrl(`/loginU/${this.state.email}/${this.state.password}`));
+                    let lBody = {
+                        email: this.state.email,
+                        password: this.state.password
+                    }
+
+                    let res = await axios.post(getUrl(`/loginU`),lBody);
                     let data = res.data;
                     
                     if(data[0]){

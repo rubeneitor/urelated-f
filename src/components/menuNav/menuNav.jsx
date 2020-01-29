@@ -12,17 +12,19 @@ class Menunav extends React.Component {
         // let token = session.get().token;
         let id = session.get()?.visitor_id;
         let userType = session.get()?.userType;
+        let lBody = {
+            id: id,
+        }
 
         // Hago la llamada para borrar mi token
         try {
 
             if(userType === "Candidato"){
-                let res = await axios.get(getUrl(`/logOutU/${id}`));
+                let res = await axios.post(getUrl(`/logOutU`),lBody);
             }else{
-                let res = await axios.get(getUrl(`/logOutE/${id}`));
+                let res = await axios.post(getUrl(`/logOutE`),lBody);
             }
 
-            
         } catch (err) {
             console.log(err);
         }

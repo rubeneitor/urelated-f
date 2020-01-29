@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import { connect } from "react-redux";
-import { session, getUrl } from "../../utils/uti";
-import { login } from "../../redux/actions/users";
+// import { session, getUrl } from "../../utils/uti";
+import { session } from "../../utils/uti";
+// import { login } from "../../redux/actions/users";
 import Menunav from "../../components/menuNav/menuNav";
 import "./header.scss";
 

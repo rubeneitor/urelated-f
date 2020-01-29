@@ -46,6 +46,10 @@
     color: grey;
 }
 
+.busqueda .search input:focus{
+	outline: none;
+}
+
 .busqueda .search i {
 	border-radius: 0px 3px 3px 0px;
 	padding: 0 5px;
@@ -67,41 +71,3 @@
     background-color: var(--colRoj);
     
 }
-
-// /* --------------------------
-// 	NAV
-// -------------------------- */
-
-// header .nav {
-	
-// 	display: flex;
-// 	justify-content: flex-end;
-// 	width: 100%;
-// 	padding-right: 1em;
-	
-	
-// }
-
-// header .nav a {
-// 	padding: 0.3em 0.3em;
-	
-// }
-
-// header button {
-	
-// 	font-size: 1em;
-// 	margin-right: 0.75em;
-// 	color: var(--colBla);
-// 	background-color: var(--colAzu);
-    
-// } 
-
-// header a {
-// 	all:unset;
-// }
-
-
-
-// header .logoutButton {
-// 	background-color: var(--colRojCla);
-// }

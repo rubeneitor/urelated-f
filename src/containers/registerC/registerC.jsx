@@ -368,27 +368,7 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">País</p>
                                 <input className={this.errorCheck("country")} type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
                             </div>
-                            {/* <div className="checkBoxContainer mt5">
-                                <label className="container">
-                                    ¿Estas trabajando actualmente?
-                                    <input type="checkbox" name="check1" value={this.state.check1} onChange={this.handleChangeCheck}></input>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </div>
-                            <div className="checkBoxContainer mt5">
-                                <label className="container">
-                                    ¿Has trabajado con anterioridad?
-                                    <input type="checkbox" name="check2" value={this.state.check2} onChange={this.handleChangeCheck}></input>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </div>
-                            <div className="checkBoxContainer mt5">
-                                <label className="container">
-                                    ¿Has cursado estudios oficiales?
-                                    <input type="checkbox" name="check3" value={this.state.check3} onChange={this.handleChangeCheck}></input>
-                                    <span className="checkmark"></span>
-                                </label>
-                            </div> */}
+                            
                         </div>
                         <div className="botones">
                             <button

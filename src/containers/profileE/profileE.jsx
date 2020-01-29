@@ -101,7 +101,7 @@ class ProfileE extends React.Component {
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
         
-        if((visitor_id == queries.id) && (visitor_name == queries.name)){
+        if((visitor_id === queries.id) && (visitor_name === queries.name)){
             return (
                 <Fragment>
                     <button

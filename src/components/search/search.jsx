@@ -41,7 +41,7 @@ class Search extends React.Component {
         if(this.state.puesto !== "" && this.state.lugar === ""){
             
             try {
-                res = await axios.get(getUrl(`/ofertasOk/${this.state.puesto}`));
+                res = await axios.get(getUrl(`/tipoOferta/${this.state.puesto}`));
             } catch (err) {
                 res = "error";
             }
