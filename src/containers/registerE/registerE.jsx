@@ -1,8 +1,6 @@
 import React from "react";
-
-// import axios from "axios";
-// import { getUrl, verify } from "../../utils/uti";
-import { verify } from "../../utils/uti";
+import axios from "axios";
+import { getUrl, verify } from "../../utils/uti";
 
 import "./registerE.scss";
 
@@ -21,7 +19,6 @@ class registerE extends React.Component {
             secretQ: "",
             secretA: "",
             phone: "",
-            // fiscal: "",
             sector: "",
             description: "",
 
@@ -29,7 +26,7 @@ class registerE extends React.Component {
 
             email_err: "",
             password_err: "",
-            phone_err: "",
+            phone_err: ""
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -88,57 +85,39 @@ class registerE extends React.Component {
 
             email_err: "",
             password_err: "",
-            phone_err: "",
+            phone_err: ""
         });
     }
 
     async registraDatos() {
-        console.log(this.state);
-        //Procedemos a registrar los datos llamando a la API.
 
-        // Procedemos a registrar el nuevo usuario en la base de datos
-        // try {
-        //     let objectBilling = {
-        //         address: this.state.address.trim(),
-        //         country: this.state.country.trim(),
-        //         city: this.state.city.trim(),
-        //         paypal: this.state.paypal.trim(),
-        //         card: {
-        //             number: this.state.cNumber,
-        //             owner: this.state.cOwner,
-        //             expireDate: [this.state.expireM, this.state.expireY]
-        //         }
-        //     };
-        //     let tipoUsuario = parseInt(this.state.userType) + 1;
-        //     // Construcción del cuerpo del producto.
-        //     let body = {
-        //         username: this.state.username.trim(),
-        //         email: this.state.email.trim(),
-        //         password: this.state.password,
-        //         secretQuestion: this.state.secretQ.trim(),
-        //         secretAnswer: this.state.secretA.trim(),
-        //         phone: this.state.phone.trim(),
-        //         userType: tipoUsuario,
-        //         billing: objectBilling
-        //     };
-        //     await axios.post(getUrl(`/user/register`), body);
-        //     // Muestro
-        //     this.muestraError("Usuario registrado con éxito.", 2, false);
-        //     setTimeout(() => {
-        //         //reseteamos los valores de los input
-        //         this.resetState();
-        //         //redireccionamos a login
-        //         this.props.history.push("/login");
-        //     }, 1500);
-        // } catch (err) {
-        //     if (err.response) {
-        //         if (err.response.data) {
-        //             this.muestraError("Ha ocurrido un error durante el registro.");
-        //         }
-        //         return;
-        //     }
-        //     console.log(err);
-        // }
+        try {
+            //llamada a la DB para registrar la empresa
+            let lBody = {
+                username: this.state.username,
+                surname: this.state.surname,
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                secretQ: this.state.secretQ,
+                secretA: this.state.secretA,
+                phone: this.state.phone,
+                sector: this.state.sector,
+                description: this.state.description
+            };
+
+            let res = await axios.post(getUrl(`/registerE`), lBody);
+            let data = res.data;
+
+            //redirigimos
+            setTimeout(() => {
+                this.props.history.push("/loginE");
+            }, 500);
+
+
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     nextStep(next, actual, isBack) {
@@ -166,8 +145,8 @@ class registerE extends React.Component {
                 if (!(verificado = verify(this.state.email, 1, "email"))) {
                     errors.push("email");
                     this.setState({ email_err: "Introduce un email válido." });
-                }else{
-                    this.setState({ email_err: ""});
+                } else {
+                    this.setState({ email_err: "" });
                 }
 
                 //password
@@ -176,7 +155,7 @@ class registerE extends React.Component {
                     if (!(verificado = verify(this.state.password, 1, "password"))) {
                         errors.push("password");
                         this.setState({ password_err: "Password de mínimo 4 caracteres." });
-                    }else{
+                    } else {
                         this.setState({ password_err: "" });
                     }
                 } else {
@@ -186,16 +165,16 @@ class registerE extends React.Component {
                 }
 
                 //pregunta y respuesta secreta
-                if (this.state.secretQ === "" ){
+                if (this.state.secretQ === "") {
                     verificado = false;
                     errors.push("secretQ");
                 }
 
-                if (this.state.secretA === "" ){
+                if (this.state.secretA === "") {
                     verificado = false;
                     errors.push("secretA");
                 }
-                
+
                 //nombre del registrante
                 if (!(verificado = verify(this.state.username, 1, "string"))) {
                     errors.push("username");
@@ -218,25 +197,14 @@ class registerE extends React.Component {
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
                     errors.push("phone");
                     this.setState({ phone_err: "Introduce un teléfono válido." });
-                }else{
-                    this.setState({ phone_err: ""});
+                } else {
+                    this.setState({ phone_err: "" });
                 }
 
                 //sector de la empresa
                 if (!(verificado = verify(this.state.sector, 1, "string"))) {
                     errors.push("sector");
                 }
-
-                //información fiscal de la empresa
-                // if (!(verificado = verify(this.state.fiscal, 1, "length", 8))) {
-                //     errors.push("fiscal");
-
-                // }
-
-                // if (!(verificado = verify(this.state.fiscal, 1, "numLetras"))) {
-                //     errors.push("fiscal");
-
-                // }
 
                 if (this.state.description === "") {
                     errors.push("description");
