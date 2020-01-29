@@ -4,6 +4,7 @@ const reducer = (
 	state = {
 		lostPass: "",
 		ofertasResultado: "",
+		ofertasResultadoEmpresa: "",
 	},
 	action
 	
@@ -27,6 +28,12 @@ const reducer = (
 		return {
 			...state,
 			ofertasResultado: action.payload
+		}
+
+		case "OFERTA_SEARCH_EMPRESA":
+		return {
+			...state,
+			ofertasResultadoEmpresa: action.payload
 		}
 		
 		default:

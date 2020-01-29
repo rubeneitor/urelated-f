@@ -165,13 +165,13 @@ class SearchResults extends React.Component {
                                         { value: "4", label: "+ de 5 años" }
                                     ]} />
                             </div>
-                            <div className="sel">
+                            {/* <div className="sel">
                             <select name="userGenre" onChange={this.handleChangeDrop}>
                                     <option value="0"></option>
                                     <option value="1">Masculino</option>
                                     <option value="2">Femenino</option>
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="resultsColumn mr5 mt5">
                             <div>{this.muestraResultados()}</div>
