@@ -80,8 +80,8 @@ class ProfileC extends React.Component {
         let visitor_id = session.get()?.visitor_id;
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
-        
-        if((visitor_id === queries.id) && (visitor_name === queries.name)){
+        // eslint-disable-next-line
+        if((visitor_id == queries.id) && (visitor_name == queries.name)){
             return (
                 <Fragment>
                     <button
@@ -99,7 +99,7 @@ class ProfileC extends React.Component {
         
     }
 
-    clickEditar() {
+    async clickEditar() {
         //estilo del boton ... aviso (boton rojo) y edicion habilitada
         if (this.state.button === "blueButton") {
             this.setState({ button: "redButton" });
@@ -158,7 +158,37 @@ class ProfileC extends React.Component {
 
             if (verificado) {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
-                console.log("LA MADRE QUE NOS PARIO...CANDIDATO....todo bien! preparado para registrar!");
+                try {
+                    //llamada a la DB para registrar la empresa
+                    let id = session.get()?.visitor_id;
+                    
+                    let lBody = {
+                        
+                        id: id,
+                        name: this.state.username,
+                        surname: this.state.surname,
+                        phone: this.state.phone,
+                        email: this.state.email,
+                        ciudad: this.state.ciudad,
+                        provincia: this.state.provincia,
+                        country: this.state.country,
+                    };
+        
+                    let res = await axios.post(getUrl(`/perfilUMod`), lBody);
+                    let data = res.data[0];
+
+                    
+        
+                    //redirigimos
+                    // setTimeout(() => {
+                    //     this.props.history.push("/loginE");
+                    // }, 500);
+        
+                    this.props.history.push(`/`);
+
+                } catch (err) {
+                    console.log(err);
+                }
             }
 
             return;

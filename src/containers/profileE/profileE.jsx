@@ -77,7 +77,7 @@ class ProfileE extends React.Component {
         this.resetStates();
 
         const queries = queryString.parse(this.props.location.search);
-
+        
         try {
             let token = session.get()?.token;
             // let id = session.get()?.visitor_id;
@@ -90,7 +90,7 @@ class ProfileE extends React.Component {
             console.error(err);
         }
 
-        console.log(this.state.userData);
+        
 
     }
 
@@ -100,8 +100,10 @@ class ProfileE extends React.Component {
         let visitor_id = session.get()?.visitor_id;
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
+
         
-        if((visitor_id === queries.id) && (visitor_name === queries.name)){
+        // eslint-disable-next-line
+        if((visitor_id == queries.id) && (visitor_name == queries.name)){
             return (
                 <Fragment>
                     <button
@@ -119,7 +121,7 @@ class ProfileE extends React.Component {
         
     }
 
-    clickEditar() {
+    async clickEditar() {
         //estilo del boton ... aviso (boton rojo) y edicion habilitada
         if (this.state.button === "blueButton") {
             this.setState({ button: "redButton" });
@@ -167,7 +169,35 @@ class ProfileE extends React.Component {
 
             if (verificado) {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
-                console.log("LA MADRE QUE NOS PARIO");
+                try {
+                    //llamada a la DB para registrar la empresa
+                    let id = session.get()?.visitor_id;
+
+                    let lBody = {
+                        
+                        id: id,
+                        name: this.state.name,
+                        email: this.state.email,
+                        phone: this.state.phone,
+                        sector: this.state.sector,
+                        description: this.state.description
+                    };
+        
+                    let res = await axios.post(getUrl(`/perfilEMod`), lBody);
+                    let data = res.data[0];
+
+                    
+        
+                    //redirigimos
+                    // setTimeout(() => {
+                    //     this.props.history.push("/loginE");
+                    // }, 500);
+        
+                    this.props.history.push(`/`);
+
+                } catch (err) {
+                    console.log(err);
+                }
             }
 
             return;
