@@ -358,18 +358,6 @@ class registerE extends React.Component {
                                 <input className={this.errorCheck("phone")} type="text" maxLength="100" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                                 <p className="errorInputText">{this.state.phone_err}</p>
                             </div>
-                            {/* <div>
-                                <p className="cabeceraInput">Identificación fiscal (C.I.F o N.I.F)</p>
-                                <input
-                                    className={this.errorCheck("fiscal")}
-                                    type="text"
-                                    maxLength="10"
-                                    placeholder="C.I.F sin guiones: B12345678"
-                                    name="fiscal"
-                                    value={this.state.fiscal}
-                                    onChange={this.handleChange}
-                                ></input>
-                            </div> */}
                             <div>
                                 <p className="cabeceraInput">Sector empresarial</p>
                                 <input className={this.errorCheck("sector")} type="text" maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>

@@ -171,16 +171,6 @@ class RegisterC extends React.Component {
                     errors.push("surname");
                 }
 
-                //direccion
-                // if (!(verificado = verify(this.state.address, 1, "string"))) {
-                //     errors.push("address");
-                // }
-
-                //fecha de nacimiento
-                // if (!(verificado = verify(this.state.birthday, 1, "date"))) {
-                //     errors.push("birthday");
-                // }
-
                 //telefono
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
                     errors.push("phone");
@@ -338,22 +328,7 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">Primer Apellido</p>
                                 <input className={this.errorCheck("surname")} type="text" maxLength="240" placeholder="" name="surname" value={this.state.surname} onChange={this.handleChange}></input>
                             </div>
-                            {/* <div>
-                                <p className="cabeceraInput">Género</p>
-                                <select className="registerDropdown br" name="userGenre" onChange={this.handleChange}>
-                                    <option value="0"></option>
-                                    <option value="1">Masculino</option>
-                                    <option value="2">Femenino</option>
-                                </select>
-                            </div> */}
-                            {/* <div>
-                                <p className="cabeceraInput">Fecha de nacimiento (YYYY-MM-DD)</p>
-                                <input className={this.errorCheck("birthday")} type="text" maxLength="11" placeholder="" name="birthday" value={this.state.birthday} onChange={this.handleChange}></input>
-                            </div> */}
-                            {/* <div>
-                                <p className="cabeceraInput">Dirección</p>
-                                <input className={this.errorCheck("address")} type="text" maxLength="240" placeholder="" name="address" value={this.state.address} onChange={this.handleChange}></input>
-                            </div> */}
+                            
                             <div>
                                 <p className="cabeceraInput">Tfno. móvil</p>
                                 <input className={this.errorCheck("phone")} type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
@@ -401,10 +376,6 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">Ciudad</p>
                                 <input className={this.errorCheck("city")} type="text" maxLength="240" placeholder="" name="city" value={this.state.city} onChange={this.handleChange}></input>
                             </div>
-                            {/* <div>
-                                <p className="cabeceraInput">Código postal</p>
-                                <input className={this.errorCheck("cpostal")} type="text" maxLength="240" placeholder="" name="cpostal" value={this.state.cpostal} onChange={this.handleChange}></input>
-                            </div> */}
                             <div>
                                 <p className="cabeceraInput">Provincia</p>
                                 <input
