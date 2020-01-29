@@ -19,6 +19,39 @@
 			color: var(--pri9);
 		}
 
+		.estadoText {
+			font-size: 1em;
+			font-weight: bold;
+			color: var(--pri9);
+		}
+
+		.sel {
+			margin-left: 2em;
+			width: 12em;
+		}
+
+		.ofertasDashInput {
+			background: var(--colBla);
+        	border-style: solid;
+        	font-size: 1em;
+        	width: 12em;
+        	height: 2.5em;
+        	border-width: 0.1em;
+        	border-color: var(--colGri);
+		}
+
+		.blueButton {
+			margin-top: 3.6em;
+			margin-left: 4.5em;
+			background: var(--colAzuDos);
+		}
+
+		.blueButton:hover{
+			margin-top: 3.6em;
+			margin-left: 4.5em;
+			background: var(--colAzu);
+		}
+
 		.checkBoxContainer {
 
 			margin-right: 4em;
@@ -31,7 +64,7 @@
             padding-left: 2em;
             
             cursor: pointer;
-            font-size: 1.1em;
+            font-size: 1em;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;

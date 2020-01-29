@@ -19,18 +19,27 @@ class Ofertas extends React.Component {
             maxPrice: "",
             category: "",
             check1: false,
+            check2: false,
+            keyWord: "",
+            ofeSta: "",
 
             productList: [],
             
         };
     }
 
-    handleChangeDrop = ev =>{
-    	// this.setState({[ev.target.name]: ev.target.type === 'number' ? +ev.target.value : ev.target.value}, () => {
-    	// 	console.log("perrerete");
-        // });
-        // console.log(ev.target.name);
-        
+    handleChangeDrop = (ev, action) =>{
+    	this.setState({[action.name]: ev.value}, () => {
+            console.log(this.state.ofeSta);
+        });
+    };
+
+    handleChangeCheck = ev => {
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.checked : ev.target.checked });
+    };
+
+    handleChange = (ev) =>{
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
     };
 
     async componentDidMount() {
@@ -49,9 +58,6 @@ class Ofertas extends React.Component {
             rdx_ofertasResultadoEmpresa({
                 data: res.data
             });
-
-            console.log(this.props.ofertasResultadoEmpresa.data);
-
 
         } catch (error) {
             console.log(error);
@@ -115,6 +121,10 @@ class Ofertas extends React.Component {
         );
     }
 
+    nuevaOferta () {
+        console.log("a crearla!!!!!!!");
+    }
+
     render() {
         return (
             <Fragment>
@@ -137,6 +147,31 @@ class Ofertas extends React.Component {
                                     <span className="checkmark"></span>
                                     </label>
                                 </div>
+                                <p className="estadoText ml5 mt5">Estado</p>
+                                <div className="sel mt1">
+                                <Select name="ofeSta"  onChange={this.handleChangeDrop} options={[
+                                        { value: "1", label: "Revisando" },
+                                        { value: "2", label: "Aceptada" },
+                                        { value: "3", label: "Rechazada" }
+                                    ]} />
+                                </div>
+                                <p className="estadoText ml5 mt5">Palabra clave</p>
+                                <input
+                                    className="ofertasDashInput ml5"
+                                    maxLength="240"
+                                    placeholder=""
+                                    name="keyWord"
+                                    value={this.state.keyWord}
+                                    onChange={this.handleChange}
+                                ></input>
+                                <button
+                            className="blueButton"
+                            onClick={() => {
+                                this.nuevaOferta();
+                            }}
+                        >
+                            Crea una oferta
+                        </button>
                             </div>
                         </div>
                         <div className="resultsColumn mr5">
