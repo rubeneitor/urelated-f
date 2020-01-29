@@ -56,7 +56,7 @@ class Menunav extends React.Component {
                         <ul className="dd-list">
                             <li className="dd-list-item-head">{profileName}</li>
                             <li onClick={() => {this.redirect(`profileC?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item">Perfil</li>
-                            <li onClick={() => {this.redirect("curriculum")}} className="dd-list-item">Currículum</li>
+                            <li onClick={() => {this.redirect(`curriculum?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item">Currículum</li>
                             <li onClick={() => {this.redirect("candidaturas")}} className="dd-list-item">Candidaturas</li>
                             <li onClick={() => {this.pulsaLogout()}} className="dd-list-item">Log out</li>
                         </ul>

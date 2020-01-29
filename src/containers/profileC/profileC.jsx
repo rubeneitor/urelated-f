@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import queryString from 'query-string';
+import queryString from "query-string";
 import { session, getUrl, verify } from "../../utils/uti";
 import "./profileC.scss";
 
@@ -53,7 +53,6 @@ class ProfileC extends React.Component {
     };
 
     async componentDidMount() {
-        
         this.resetStates();
 
         const queries = queryString.parse(this.props.location.search);
@@ -65,23 +64,19 @@ class ProfileC extends React.Component {
             const res = await axios.get(getUrl(`/perfilU/${queries.id}`));
 
             this.setState({ userData: res.data[0] });
-
         } catch (err) {
             console.error(err);
         }
 
         console.log(this.state.userData);
-
-        
     }
 
     showButton() {
-
         let visitor_id = session.get()?.visitor_id;
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
         // eslint-disable-next-line
-        if((visitor_id == queries.id) && (visitor_name == queries.name)){
+        if (visitor_id == queries.id && visitor_name == queries.name) {
             return (
                 <Fragment>
                     <button
@@ -94,9 +89,7 @@ class ProfileC extends React.Component {
                     </button>
                 </Fragment>
             );
-        };
-
-        
+        }
     }
 
     async clickEditar() {
@@ -161,9 +154,8 @@ class ProfileC extends React.Component {
                 try {
                     //llamada a la DB para registrar la empresa
                     let id = session.get()?.visitor_id;
-                    
+
                     let lBody = {
-                        
                         id: id,
                         name: this.state.username,
                         surname: this.state.surname,
@@ -171,21 +163,18 @@ class ProfileC extends React.Component {
                         email: this.state.email,
                         ciudad: this.state.ciudad,
                         provincia: this.state.provincia,
-                        country: this.state.country,
+                        country: this.state.country
                     };
-        
+
                     let res = await axios.post(getUrl(`/perfilUMod`), lBody);
                     let data = res.data[0];
 
-                    
-        
                     //redirigimos
                     // setTimeout(() => {
                     //     this.props.history.push("/loginE");
                     // }, 500);
-        
-                    this.props.history.push(`/`);
 
+                    this.props.history.push(`/`);
                 } catch (err) {
                     console.log(err);
                 }
@@ -218,8 +207,8 @@ class ProfileC extends React.Component {
     render() {
         return (
             <div className="main">
-                <div className="mainProfileE">
-                    <div className="cardProfile">
+                <div className="mainProfileC">
+                    <div className="cardProfileC">
                         <div className="cardHeader">
                             <p className="profileText">Datos personales.</p>
                         </div>
@@ -306,19 +295,30 @@ class ProfileC extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="cardEditProfile ml5">
-                        <div className="cardEditProfileHeader">
-                            <img src="https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg" alt="logoEmpresa" />
-                        </div>
-                        <div className="cardEditProfileBody mt3">
-                            <div className="editInfoRight">
-                                {/* <p>{this.state.userData?.name}</p>
-                                <p className="mt1">{this.state.userData?.updated_at}</p> */}
-                                <p className="nameMod mt3">{this.state.userData?.name}</p>
-                                <p className="dateMod mt3">28/01/2020</p>
-                                <p className="dateMod2">Última fecha de modificación.</p>
-                                {this.showButton()}
+                    <div className="profileRightSide">
+                        <div className="cardEditProfile ml5">
+                            <div className="cardEditProfileHeader">
+                                <img src="https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg" alt="logoEmpresa" />
                             </div>
+                            <div className="cardEditProfileBody mt3">
+                                <div className="editInfoRight">
+                                    {/* <p className="mt1">{this.state.userData?.updated_at}</p>} */}
+                                    <p className="nameMod mt3">{this.state.userData?.name}</p>
+                                    <p className="dateMod mt3">28/01/2020</p>
+                                    <p className="dateMod2">Última fecha de modificación.</p>
+                                    {this.showButton()}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="cardCV ml5">
+                        <button
+                        className="blueButton"
+                        onClick={() => {
+                            this.props.history.push(`/curriculum?id=${this.state.userData?.id}&name=${this.state.userData?.name}`);
+                        }}
+                    >
+                        Currículum
+                    </button>
                         </div>
                     </div>
                 </div>

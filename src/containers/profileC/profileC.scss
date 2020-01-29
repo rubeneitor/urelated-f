@@ -4,7 +4,7 @@
     justify-content: center;
     height: 40.9em;
    
-    .cardProfile {
+    .cardProfileC {
         display: flex;
 		flex-direction: column;
 		width: 45em;
@@ -86,8 +86,6 @@
                 }
             }
 
-            
-
             .profileInfoGrid {
                 margin: 1em 0 1em 0;
                 display: grid;
@@ -96,11 +94,6 @@
                 justify-items: center;
                 padding: 0.5em;
                 height: 12em;
-    
-                // .cabeceraInput {
-                //     color: var(--pri9);
-                //     font-weight:bold;
-                // }
     
                 .inputProfile {
                     background: var(--colBla);
@@ -143,88 +136,127 @@
         
     }
 
-    .cardEditProfile {
+    .profileRightSide {
+
         display: flex;
-		flex-direction: column;
-		width: 20em;
-		height: 27em;
-		background-color: var(--colBla);
-		border-radius: 1em;
-        transition: 0.3s;
-        margin-top: 3em;
+        flex-direction: column;
+        // height: 33em;
 
-        .cardEditProfileHeader {
-            width: 100%;
-            height: 11em;
+        .cardEditProfile {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            width: 20em;
+            height: 27em;
+            background-color: var(--colBla);
+            border-radius: 1em;
+            transition: 0.3s;
+            margin-top: 3em;
 
-            img {
-                margin-top: 2em;
-                border-radius: 0.1em;
-                height: 9em;
-                max-width: 12.9em;
-
-                
-            }
-        }
-
-        .cardEditProfileBody {
-            width: 100%;
-
-            .editInfoRight {
+            .cardEditProfileHeader {
+                width: 100%;
+                height: 11em;
                 display: flex;
-                flex-direction: column;
-                align-items: center;
+                justify-content: center;
+    
+                img {
+                    margin-top: 2em;
+                    border-radius: 0.1em;
+                    height: 9em;
+                    max-width: 12.9em;
+    
+                    
+                }
+            }
+    
+            .cardEditProfileBody {
+                width: 100%;
+    
+                .editInfoRight {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    
+                    .nameMod {
+                        font-size: 1.2em;
+                        color: var(--pri9);
+                    }
+    
+                    .dateMod {
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        color: var(--pri9);
+                    }
+    
+                    .dateMod2 {
+                        color: var(--pri5);
+                    }
+    
+                    .blueButton {
+                        margin-top: 1em;
+                        background: var(--colAzuDos);
+                    }
+    
+                    .blueButton:hover{
+                        margin-top: 1em;
+                        background: var(--colAzu);
+                    }
+    
+                    .redButton {
+                        margin-top: 1em;
+                        background: var(--colRojCla);
+                    }
+    
+                    .redButton:hover {
+                        margin-top: 1em;
+                        background: var(--colRoj);
+                    }
+    
+                }
+            }
+    
+        }
+
+        .cardEditProfile:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .cardCV {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 20em;
+            height: 8em;
+            background-color: var(--colBla);
+            border-radius: 1em;
+            transition: 0.3s;
+           
+            margin-top: 1em;
+
+            .blueButton {
                 
-                .nameMod {
-                    font-size: 1.2em;
-                    color: var(--pri9);
-                }
+                background: var(--colAzuDos);
+            }
 
-                .dateMod {
-                    font-size: 1.2em;
-                    font-weight: bold;
-                    color: var(--pri9);
-                }
-
-                .dateMod2 {
-                    color: var(--pri5);
-                }
-
-                .blueButton {
-                    margin-top: 1em;
-                    background: var(--colAzuDos);
-                }
-
-                .blueButton:hover{
-                    margin-top: 1em;
-                    background: var(--colAzu);
-                }
-
-                .redButton {
-                    margin-top: 1em;
-                    background: var(--colRojCla);
-                }
-
-                .redButton:hover {
-                    margin-top: 1em;
-                    background: var(--colRoj);
-                }
-
+            .blueButton:hover{
+                
+                background: var(--colAzu);
             }
         }
 
-    }
-
-    .cardEditProfile:hover {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        .cardCV:hover{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    
     }
 
     .cabeceraInput {
         color: var(--pri9);
         font-weight:bold;
     }
+
+    
 
     
 }
