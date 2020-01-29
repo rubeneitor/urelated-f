@@ -84,17 +84,19 @@ class RegisterC extends React.Component {
                 password: this.state.password,
                 secretQ: this.state.secretQ,
                 secretA: this.state.secretA,
-                ciudad: this.state.ciudad,
+                ciudad: this.state.city,
                 provincia: this.state.provincia,
-                pais: this.state.pais
+                pais: this.state.country
             };
+
+            console.log(lBody);
 
             let res = await axios.post(getUrl(`/registerU`), lBody);
             let data = res.data;
 
             //redirigimos
             setTimeout(() => {
-                this.props.history.push("/loginU");
+                this.props.history.push("/loginC");
             }, 500);
         } catch (err) {
             console.log(err);
