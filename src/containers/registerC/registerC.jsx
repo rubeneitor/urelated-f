@@ -1,8 +1,6 @@
 import React from "react";
-
-// import axios from "axios";
-// import { getUrl, verify } from "../../utils/uti";
-import { verify } from "../../utils/uti";
+import axios from "axios";
+import { getUrl, verify } from "../../utils/uti";
 
 import "./registerC.scss";
 
@@ -31,11 +29,11 @@ class RegisterC extends React.Component {
             // check2: false,
             // check3: false,
 
-            errores : [],
+            errores: [],
 
             email_err: "",
             password_err: "",
-            phone_err: "",
+            phone_err: ""
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -71,13 +69,36 @@ class RegisterC extends React.Component {
             // check2: false,
             // check3: false,
 
-            errores : [],
+            errores: []
         });
     }
 
-    async registraDatos () {
-        console.log(this.state);
-        //Procedemos a registrar los datos llamando a la API.
+    async registraDatos() {
+        try {
+            //llamada a la DB para registrar la empresa
+            let lBody = {
+                name: this.state.username,
+                surname: this.state.surname,
+                email: this.state.email,
+                phone: this.state.phone,
+                password: this.state.password,
+                secretQ: this.state.secretQ,
+                secretA: this.state.secretA,
+                ciudad: this.state.ciudad,
+                provincia: this.state.provincia,
+                pais: this.state.pais
+            };
+
+            let res = await axios.post(getUrl(`/registerU`), lBody);
+            let data = res.data;
+
+            //redirigimos
+            setTimeout(() => {
+                this.props.history.push("/loginU");
+            }, 500);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     nextStep(next, actual, isBack) {
@@ -88,7 +109,7 @@ class RegisterC extends React.Component {
 
         if (next === 4) {
             //último paso del registro, en este caso llamamos a la función que llama a la API
-            this.registraDatos ();
+            this.registraDatos();
         } else {
             this.setState({ step: next });
         }
@@ -101,14 +122,12 @@ class RegisterC extends React.Component {
         let errors = [];
 
         switch (actual) {
-
-            
             case 1:
                 if (!(verificado = verify(this.state.email, 1, "email"))) {
                     errors.push("email");
                     this.setState({ email_err: "Introduce un email válido." });
-                }else{
-                    this.setState({ email_err: ""});
+                } else {
+                    this.setState({ email_err: "" });
                 }
 
                 //password
@@ -117,7 +136,7 @@ class RegisterC extends React.Component {
                     if (!(verificado = verify(this.state.password, 1, "password"))) {
                         errors.push("password");
                         this.setState({ password_err: "Password de mínimo 4 caracteres." });
-                    }else{
+                    } else {
                         this.setState({ password_err: "" });
                     }
                 } else {
@@ -127,12 +146,12 @@ class RegisterC extends React.Component {
                 }
 
                 //pregunta y respuesta secreta
-                if (this.state.secretQ === "" ){
+                if (this.state.secretQ === "") {
                     verificado = false;
                     errors.push("secretQ");
                 }
 
-                if (this.state.secretA === "" ){
+                if (this.state.secretA === "") {
                     verificado = false;
                     errors.push("secretA");
                 }
@@ -164,8 +183,8 @@ class RegisterC extends React.Component {
                 if (!(verificado = verify(this.state.phone, 1, "phone"))) {
                     errors.push("phone");
                     this.setState({ phone_err: "Introduce un teléfono válido." });
-                }else{
-                    this.setState({ phone_err: ""});
+                } else {
+                    this.setState({ phone_err: "" });
                 }
 
                 break;
@@ -192,15 +211,15 @@ class RegisterC extends React.Component {
                 return;
         }
 
-        if(errors.length) {
+        if (errors.length) {
             verificado = false;
-            this.setState({errores: errors});
+            this.setState({ errores: errors });
             return;
         }
 
         if (verificado) {
             //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
-            this.setState({errores: ''});
+            this.setState({ errores: "" });
             let siguiente = actual + 1;
             this.nextStep(siguiente, actual, 0);
         }
@@ -208,12 +227,12 @@ class RegisterC extends React.Component {
         return;
     }
 
-    errorCheck(arg){
+    errorCheck(arg) {
         let estiloError = "inputRegister";
-        
-        for(let _y of this.state.errores){
+
+        for (let _y of this.state.errores) {
             // eslint-disable-next-line
-            if(arg == [_y]){
+            if (arg == [_y]) {
                 estiloError = "inputRegister2";
                 return estiloError;
             }
@@ -238,12 +257,28 @@ class RegisterC extends React.Component {
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Password</p>
-                                <input className={this.errorCheck("password")} type="password" maxLength="240" placeholder="" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                                <input
+                                    className={this.errorCheck("password")}
+                                    type="password"
+                                    maxLength="240"
+                                    placeholder=""
+                                    name="password"
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                ></input>
                                 <p className="errorInputText">{this.state.password_err}</p>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Repite password</p>
-                                <input className={this.errorCheck("password")} type="password" maxLength="240" placeholder="" name="password2" value={this.state.password2} onChange={this.handleChange}></input>
+                                <input
+                                    className={this.errorCheck("password")}
+                                    type="password"
+                                    maxLength="240"
+                                    placeholder=""
+                                    name="password2"
+                                    value={this.state.password2}
+                                    onChange={this.handleChange}
+                                ></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Pregunta secreta</p>
@@ -287,7 +322,15 @@ class RegisterC extends React.Component {
                         <div className="registerCardInfoA">
                             <div>
                                 <p className="cabeceraInput">Nombre</p>
-                                <input className={this.errorCheck("username")} type="text" maxLength="240" placeholder="" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                                <input
+                                    className={this.errorCheck("username")}
+                                    type="text"
+                                    maxLength="240"
+                                    placeholder=""
+                                    name="username"
+                                    value={this.state.username}
+                                    onChange={this.handleChange}
+                                ></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">Primer Apellido</p>
@@ -362,13 +405,20 @@ class RegisterC extends React.Component {
                             </div> */}
                             <div>
                                 <p className="cabeceraInput">Provincia</p>
-                                <input className={this.errorCheck("provincia")} type="text" maxLength="240" placeholder="" name="provincia" value={this.state.provincia} onChange={this.handleChange}></input>
+                                <input
+                                    className={this.errorCheck("provincia")}
+                                    type="text"
+                                    maxLength="240"
+                                    placeholder=""
+                                    name="provincia"
+                                    value={this.state.provincia}
+                                    onChange={this.handleChange}
+                                ></input>
                             </div>
                             <div>
                                 <p className="cabeceraInput">País</p>
                                 <input className={this.errorCheck("country")} type="text" maxLength="240" placeholder="" name="country" value={this.state.country} onChange={this.handleChange}></input>
                             </div>
-                            
                         </div>
                         <div className="botones">
                             <button
