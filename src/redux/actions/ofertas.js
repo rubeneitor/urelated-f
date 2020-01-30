@@ -7,3 +7,10 @@ export const rdx_ofertasResultado = (ofertasResultado) => {
 	})
 };
 
+export const rdx_ofertasResultadoEmpresa = (ofertasResultadoEmpresa) => {
+	store.dispatch({
+		type: 'OFERTA_SEARCH_EMPRESA',
+		payload: ofertasResultadoEmpresa
+	})
+};
+
