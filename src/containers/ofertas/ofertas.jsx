@@ -14,10 +14,6 @@ class Ofertas extends React.Component {
         super(props);
 
         this.state = {
-            // sort: "ra",
-            // minPrice: "",
-            // maxPrice: "",
-            // category: "",
             check1: false,
             check2: false,
             keyWord: "",
@@ -30,7 +26,6 @@ class Ofertas extends React.Component {
 
     handleChangeDrop = (ev, action) =>{
     	this.setState({[action.name]: ev.value}, () => {
-            // console.log(this.state.ofeSta);
             this.buscaFiltro();
         });
     };
@@ -65,10 +60,12 @@ class Ofertas extends React.Component {
             activas = 1;
         }
 
+        if(this.state.check2 == false) {
+            orden = "";
+        }
+
         //llamada a axios con la query 
         const res = await axios.get(getUrl(`/ofertasPorEmp?id=${id}&activas=${activas}&orden=${orden}&estado=${estado}&keyword=${keyword}`));
-        let data = res.data;
-        console.log(data);
         
         rdx_ofertasResultadoEmpresa({
             data: res.data

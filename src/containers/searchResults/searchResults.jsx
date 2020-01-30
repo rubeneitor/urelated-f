@@ -26,13 +26,11 @@ class SearchResults extends React.Component {
         };
     }
 
-    handleChangeDrop = ev =>{
-    	// this.setState({[ev.target.name]: ev.target.type === 'number' ? +ev.target.value : ev.target.value}, () => {
-    	// 	console.log("perrerete");
-        // });
-        console.log(ev.target.name);
+    handleChangeDrop = (ev, action) =>{
+    	this.setState({[action.name]: ev.value}, () => {
+            this.buscaFiltro();
+    })};
         
-    };
 
     // handleChangePrice = (ev, nombreEstado) => {
     // 	this.setState({[nombreEstado]: ev.target.type === 'number' ? +ev.target.value : ev.target.value}, () => {
@@ -66,6 +64,10 @@ class SearchResults extends React.Component {
     // 	});
 
     // };
+
+    async buscaFiltro(){
+        console.log("holaaaaaa");
+    }
 
     componentDidUpdate() {
         this.render();
