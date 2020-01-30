@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { session, getUrl } from "../../utils/uti";
 import axios from "axios";
 import { login } from "../../redux/actions/users";
-import { NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import "./menuNav.scss";
 
@@ -20,9 +20,12 @@ class Menunav extends React.Component {
         try {
 
             if(userType === "Candidato"){
-                let res = await axios.post(getUrl(`/logOutU`),lBody);
+
+                // let res = await axios.post(getUrl(`/logOutU`),lBody);
+                await axios.post(getUrl(`/logOutU`),lBody);
             }else{
-                let res = await axios.post(getUrl(`/logOutE`),lBody);
+                // let res = await axios.post(getUrl(`/logOutE`),lBody);
+                await axios.post(getUrl(`/logOutE`),lBody);
             }
 
         } catch (err) {
@@ -76,6 +79,10 @@ class Menunav extends React.Component {
                         </ul>
                     </div>
                 );
+
+            default:
+                console.log("strange error");
+             
         }
     }
 

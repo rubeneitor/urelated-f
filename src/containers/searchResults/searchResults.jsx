@@ -14,15 +14,9 @@ class SearchResults extends React.Component {
         super(props);
 
         this.state = {
-            sort: "ra",
-            minPrice: "",
-            maxPrice: "",
-            category: "",
-
-            productList: [],
-            selExp: "",
             selSal: "",
-            selVac: "",
+            selExp: "",
+            selJor: "",
         };
     }
 
@@ -31,40 +25,6 @@ class SearchResults extends React.Component {
             this.buscaFiltro();
     })};
         
-
-    // handleChangePrice = (ev, nombreEstado) => {
-    // 	this.setState({[nombreEstado]: ev.target.type === 'number' ? +ev.target.value : ev.target.value}, () => {
-    // 		this.llamaAxios();
-    // 	});
-    // };
-
-    // pulsaSort(tipo) {
-    // 	this.setState({ sort: tipo }, () => {
-    // 		this.llamaAxios();
-    // 	});
-    // };
-
-    // llamaAxios() {
-
-    // 	let queryTitle = `title=${this.props.productSearchResults?.keywords}`;
-    // 	let querySort = `sort=${this.state.sort}`;
-    // 	let queryCategory = `category=${this.state.category}`;
-    // 	let queryMinPrice = `minPrice=${this.state.minPrice}`;
-    // 	let queryMaxPrice = `maxPrice=${this.state.maxPrice}`;
-
-    // 	axios.get( getUrl(`/product/get?${queryTitle}&${querySort}&${queryCategory}&${queryMinPrice}&${queryMaxPrice}`) ).then( (res) => {
-
-    // 		// rdx_productSearchResults({
-    // 		// 	keywords: this.props.productSearchResults.keywords,
-    // 		// 	data: res.data
-    // 		// });
-
-    // 	}).catch( (err) => {
-    // 		console.log( err );
-    // 	});
-
-    // };
-
     async buscaFiltro(){
         console.log("holaaaaaa");
     }
@@ -141,39 +101,41 @@ class SearchResults extends React.Component {
                 <div className="main">
                     <div className="mainSearch">
                         <div className="searchColumn mt5 mr5">
-                            <div className="radios"></div>
+                        <p className="estadoText ml5">Palabra clave</p>
+                                <input
+                                    className="ofertasDashInput ml5"
+                                    maxLength="240"
+                                    placeholder=""
+                                    name="keyWord"
+                                    value={this.state.keyWord}
+                                    onChange={this.handleChange}
+                                ></input>
+                            <p className="estadoText ml5 mt5">Rango salarial</p>
                             <div className="sel">
-                                <Select name="selSal" onChange={this.handleChangeDrop}
+                                <Select placeholder="" name="selSal" onChange={this.handleChangeDrop}
                                 options={[
                                         { value: "1", label: ">12.000€" },
                                         { value: "2", label: ">24.000€" },
                                         { value: "3", label: ">38.000€" },
                                     ]} />
                             </div>
+                            <p className="estadoText ml5 mt5">Años de experiencia</p>
                             <div className="sel">
-                                <Select name="selVac" onChange={this.handleChangeDrop}
-                                    options={[
-                                        { value: "1", label: "Menos de 10" },
-                                        { value: "2", label: "Menos de 100" },
-                                        { value: "3", label: "Menos de 1000" },
-                                    ]}
-                                />
-                            </div>
-                            <div className="sel">
-                                <Select name="selExp"  onChange={this.handleChangeDrop} options={[
+                                <Select placeholder="" name="selExp" onChange={this.handleChangeDrop} options={[
                                         { value: "1", label: "1 año" },
                                         { value: "2", label: "2 años" },
                                         { value: "3", label: "5 años" },
                                         { value: "4", label: "+ de 5 años" }
                                     ]} />
                             </div>
-                            {/* <div className="sel">
-                            <select name="userGenre" onChange={this.handleChangeDrop}>
-                                    <option value="0"></option>
-                                    <option value="1">Masculino</option>
-                                    <option value="2">Femenino</option>
-                                </select>
-                            </div> */}
+                            <p className="estadoText ml5 mt5">Jornada</p>
+                            <div className="sel">
+                                <Select placeholder="" name="selJor" onChange={this.handleChangeDrop} options={[
+                                        { value: "1", label: "Completa" },
+                                        { value: "2", label: "Media Jornada" },
+                                        { value: "3", label: "Teletrabajo" },
+                                     ]} />
+                            </div>
                         </div>
                         <div className="resultsColumn mr5 mt5">
                             <div>{this.muestraResultados()}</div>

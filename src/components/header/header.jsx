@@ -9,14 +9,14 @@ import Menunav from "../../components/menuNav/menuNav";
 import "./header.scss";
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
+    // constructor(props) {
+    //     super(props);
 
-        // this.state = {
-        //     keywords: "",
-        //     debounce_timeout: null
-        // };
-    }
+    //     // this.state = {
+    //     //     keywords: "",
+    //     //     debounce_timeout: null
+    //     // };
+    // }
 
     BotonesHeader() {
         const userType = session.get()?.userType;

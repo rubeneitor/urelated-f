@@ -3,9 +3,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 import "./ofertas.scss";
-import Search from "../../components/search/search";
+// import Search from "../../components/search/search";
 import { rdx_ofertasResultadoEmpresa } from "../../redux/actions/ofertas";
-import { session, getUrl, numToStr } from "../../utils/uti";
+// import { session, getUrl, numToStr } from "../../utils/uti";
+import { session, getUrl } from "../../utils/uti";
 import Select from "react-select";
 
 
@@ -18,9 +19,6 @@ class Ofertas extends React.Component {
             check2: false,
             keyWord: "",
             ofeSta: "",
-
-            //productList: [],
-            
         };
     }
 
@@ -51,18 +49,22 @@ class Ofertas extends React.Component {
         let activas = this.state.check1;
         let orden = this.state.check2;
         let estado = this.state.ofeSta;
-        let keyword = this.state.keyword;
+        let keyword = this.state.keyWord;
         let id = session.get()?.visitor_id;
 
+        // eslint-disable-next-line
         if (this.state.check1 == false) {
             activas = "";
         }else{
             activas = 1;
         }
-
+        
+        // eslint-disable-next-line
         if(this.state.check2 == false) {
             orden = "";
         }
+
+        
 
         //llamada a axios con la query 
         const res = await axios.get(getUrl(`/ofertasPorEmp?id=${id}&activas=${activas}&orden=${orden}&estado=${estado}&keyword=${keyword}`));
@@ -112,7 +114,7 @@ class Ofertas extends React.Component {
         if (!this.props.ofertasResultadoEmpresa?.data || this.props.ofertasResultadoEmpresa?.data?.length === 0) {
             return (
                 <Fragment>
-                    <div className="cardOfertaNr mb3">
+                    <div className="cardOfertaNr mb3 mt5 ml5">
                         <div className="noResults">
                             <img className="imgNoResults" src="img/magnifier.png" alt="logo2" />
                             <p className="mt3">Vaya! Aun no has publicado ninguna oferta.</p>
@@ -180,7 +182,7 @@ class Ofertas extends React.Component {
                                 </div>
                                 <p className="estadoText ml5 mt5">Estado</p>
                                 <div className="sel mt1">
-                                <Select name="ofeSta"  onChange={this.handleChangeDrop} options={[
+                                <Select placeholder="" name="ofeSta" onChange={this.handleChangeDrop} options={[
                                         { value: "1", label: "Revisando" },
                                         { value: "2", label: "Aceptada" },
                                         { value: "3", label: "Rechazada" }

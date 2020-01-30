@@ -106,8 +106,9 @@ class registerE extends React.Component {
                 description: this.state.description
             };
 
-            let res = await axios.post(getUrl(`/registerE`), lBody);
-            let data = res.data;
+            //let res = await axios.post(getUrl(`/registerE`), lBody);
+            await axios.post(getUrl(`/registerE`), lBody);
+            //let data = res.data;
 
             //redirigimos
             setTimeout(() => {
