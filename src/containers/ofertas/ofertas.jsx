@@ -14,33 +14,67 @@ class Ofertas extends React.Component {
         super(props);
 
         this.state = {
-            sort: "ra",
-            minPrice: "",
-            maxPrice: "",
-            category: "",
+            // sort: "ra",
+            // minPrice: "",
+            // maxPrice: "",
+            // category: "",
             check1: false,
             check2: false,
             keyWord: "",
             ofeSta: "",
 
-            productList: [],
+            //productList: [],
             
         };
     }
 
     handleChangeDrop = (ev, action) =>{
     	this.setState({[action.name]: ev.value}, () => {
-            console.log(this.state.ofeSta);
+            // console.log(this.state.ofeSta);
+            this.buscaFiltro();
         });
     };
 
     handleChangeCheck = ev => {
-        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.checked : ev.target.checked });
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.checked : ev.target.checked },() => {
+
+            this.buscaFiltro();
+        });
+
     };
 
     handleChange = (ev) =>{
-        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value },() => {
+
+            this.buscaFiltro();
+        });
+
     };
+
+    async buscaFiltro() {
+        //activas orden estado palabra clave
+        let activas = this.state.check1;
+        let orden = this.state.check2;
+        let estado = this.state.ofeSta;
+        let keyword = this.state.keyword;
+        let id = session.get()?.visitor_id;
+
+        if (this.state.check1 == false) {
+            activas = "";
+        }else{
+            activas = 1;
+        }
+
+        //llamada a axios con la query 
+        const res = await axios.get(getUrl(`/ofertasPorEmp?id=${id}&activas=${activas}&orden=${orden}&estado=${estado}&keyword=${keyword}`));
+        let data = res.data;
+        console.log(data);
+        
+        rdx_ofertasResultadoEmpresa({
+            data: res.data
+        });
+    
+    }
 
     async componentDidMount() {
         //buscamos las ofertas según id de empresa y guardamos en redux
