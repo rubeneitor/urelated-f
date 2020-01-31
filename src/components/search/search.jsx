@@ -3,9 +3,10 @@ import Input from "../input/input";
 import axios from "axios";
 import { getUrl } from "../../utils/uti";
 import "./search.scss";
-import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
+import { rdx_ofertasResultado, rdx_homeSearch, getOfertasFiltradas } from "../../redux/actions/ofertas";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import store from "../../redux/store";
 
 class Search extends React.Component {
     constructor (props) {
@@ -21,64 +22,59 @@ class Search extends React.Component {
         this.setState({[event.target.name]:event.target.value})
     }
 
-    async pulsaSearch() {
-        
-        let res = {};
-        
-        
-        //primero concertamos sobre cuantos campos se ha buscado
-        
-        //ninguno 
-        if(this.state.puesto === "" && this.state.lugar === ""){
-            try {
-                res = await axios.get(getUrl(`/allOfertas`));
-            } catch (err) {
-                res = "error";
-            }
-        }
+    pulsaSearch() {
 
-        //palabra clave
-        if(this.state.puesto !== "" && this.state.lugar === ""){
-            
-            try {
-                res = await axios.get(getUrl(`/tipoOferta/${this.state.puesto}`));
-            } catch (err) {
-                res = "error";
-            }
-        }
+        // let filtrosHome = {
+        //     puesto: this.state.puesto,
+        //     lugar: this.state.lugar
+        // };
+
+        // let res = await axios.get(getUrl(`/searchHome?puesto=${this.props.filtrosHome?.puesto}&lugar=${this.props.filtrosHome?.lugar}`));
+        getOfertasFiltradas(this.state.puesto, this.state.lugar).catch(error =>console.error(error));
         
-        //lugar
-        if(this.state.puesto === "" && this.state.lugar !== ""){
-            
-            try {
-                res = await axios.get(getUrl(`/zonas/${this.state.lugar}`));
-            } catch (err) {
-                res = "error";
-            }
-        }
+        // rdx_ofertasResultado({
+        //     // data: res.data
+        // });
 
-        //ambos
-        if(this.state.puesto !== "" && this.state.lugar !== ""){
-            
-            try {
-                res = await axios.get(getUrl(`/busquedaFiltro/${this.state.puesto}/${this.state.lugar}`));
-            } catch (err) {
-                res = "error";
-            }
-            
-        }
+        this.props.history.push("/searchResults");
+        // rdx_homeSearch({
+        //     filtros: filtrosHome,
+        // });
+
+        // this.busquedaFiltrada();
+
+
         
+    }
 
-        //guardamos los resultados en redux
-        rdx_ofertasResultado({
-			data: res.data
-        });
+    busquedaFiltrada =async() =>{
 
-        this.setState({puesto: ''});
-        this.setState({lugar: ''});
+        // let res = {};
+        // console.log(this.props.filtros);
+        // console.log(this.props.filtrosHome.filtros.puesto);
+        // console.log(this.props.filtrosHome.filtros.lugar);
+        
+    //     try {
+
+    //         // res = await axios.get(getUrl(`/searchHome?puesto=${this.state.puesto}&lugar=${this.state.lugar}`));
+    //         res = await axios.get(getUrl(`/searchHome?puesto=${this.props.filtrosHome?.puesto}&lugar=${this.props.filtrosHome?.lugar}`));
+
+    //     } catch (err) {
+    //         res = err;
+    //     }
+
+
+        
+    //     //guardamos los resultados en redux
+    //     rdx_ofertasResultado({
+	// 		data: res.data
+    //     });
+
+    //     this.setState({puesto: ''});
+    //     this.setState({lugar: ''});
 
         //redireccion con los resultados
-        this.props.history.push("/searchResults");
+        // this.props.history.push("/searchResults");
     }
 
     render() {
@@ -115,7 +111,8 @@ class Search extends React.Component {
 
 const mapStateToProps = (state) => { // ese state es de redux
 	return ({
-		ofertasResultado: state.ofertasResultado
+        ofertasResultado: state.ofertasResultado,
+        filtros: state.homeSearch?.filtros
     })
 }
 

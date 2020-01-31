@@ -19,6 +19,8 @@ const store = createStoreWithMiddleware(
 			lostPass: "",
 			ofertasResultado:"",
 			ofertasResultadoEmpresa:"",
+			homeSearch:"",
+			ofertas:"",
 			
 		},
 		states: ["ofertas"] }),

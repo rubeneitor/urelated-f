@@ -5,6 +5,8 @@ const reducer = (
 		lostPass: "",
 		ofertasResultado: "",
 		ofertasResultadoEmpresa: "",
+		filtrosHome: "",
+		ofertas: ""
 	},
 	action
 	
@@ -22,6 +24,12 @@ const reducer = (
 		return {
 			...state,
 			lostPass: action.payload
+		}
+
+		case "GET_OFERTAS_FILTRADAS":
+		return {
+			...state,
+			ofertas: action.payload
 		}
 
 		case "OFERTA_SEARCH":

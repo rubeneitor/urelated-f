@@ -33,6 +33,10 @@ class SearchResults extends React.Component {
         this.render();
     }
 
+    componentDidMount(){
+        console.log(this.props.ofertasResultado);
+    }
+
     pulsaResultado(ofertaData) {
         console.log("SI TIO SI HAS PULSADO ESTA CARD ...QUE ES DE: ", ofertaData.titulo);
         // Guardo en redux
@@ -43,7 +47,7 @@ class SearchResults extends React.Component {
     }
 
     muestraResultados() {
-        if (!this.props.ofertasResultado?.data || this.props.ofertasResultado?.data?.length === 0) {
+        if (!this.props.ofertasResultado[0]) {
             return (
                 <Fragment>
                     <div className="cardOfertaNr mb3">
@@ -60,11 +64,11 @@ class SearchResults extends React.Component {
 
         return (
             <Fragment>
-                {this.props.ofertasResultado?.data?.map(_x => {
+                {this.props?.ofertasResultado.map(_x => {
                     return (
                         <div
                             className="cardOferta mb5"
-                            key={_x.id + "," + _x.titulo}
+                            key={_x.id + Math.random() * (1000 - 1) + 1}
                             onClick={() => {
                                 this.pulsaResultado(_x);
                             }}
@@ -150,7 +154,7 @@ class SearchResults extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
-        ofertasResultado: state.ofertasResultado
+        ofertasResultado: state.ofertas
     };
 };
 
