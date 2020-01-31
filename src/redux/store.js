@@ -19,7 +19,7 @@ const store = createStoreWithMiddleware(
 			lostPass: "",
 			ofertasResultado:"",
 			ofertasResultadoEmpresa:"",
-			homeSearch:"",
+			filtros:"",
 			ofertas:"",
 			
 		},

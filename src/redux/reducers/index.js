@@ -32,6 +32,12 @@ const reducer = (
 			ofertas: action.payload
 		}
 
+		case "SEARCH_BARRA":
+		return {
+			...state,
+			filtros: action.payload
+		}
+
 		case "OFERTA_SEARCH":
 		return {
 			...state,

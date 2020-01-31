@@ -1,12 +1,14 @@
 import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "axios";
+// import axios from "axios";
 import "./searchResults.scss";
 import Search from "../../components/search/search";
-import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
-import { getUrl, numToStr } from "../../utils/uti";
+import { getOfertasFiltradas } from "../../redux/actions/ofertas";
+// import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
+// import { getUrl, numToStr } from "../../utils/uti";
 import Select from "react-select";
+import store from "../../redux/store";
 
 
 class SearchResults extends React.Component {
@@ -26,15 +28,28 @@ class SearchResults extends React.Component {
     })};
         
     async buscaFiltro(){
-        console.log("holaaaaaa");
+
+
+        //obtenemos los dos parámetros de la última búsqueda realizada
+
+        //aplicamos los filtros 
+        let salario = this.state.selSal;
+        let puesto = this.props.filtros?.puesto;
+        let lugar = this.props.filtros?.lugar;
+
+        getOfertasFiltradas(puesto,lugar,salario).catch(error =>console.error(error));
+        
     }
 
     componentDidUpdate() {
+        
         this.render();
+        
     }
 
     componentDidMount(){
-        console.log(this.props.ofertasResultado);
+        // this.setState({selSal.value: ""});
+        
     }
 
     pulsaResultado(ofertaData) {
@@ -118,9 +133,9 @@ class SearchResults extends React.Component {
                             <div className="sel">
                                 <Select placeholder="" name="selSal" onChange={this.handleChangeDrop}
                                 options={[
-                                        { value: "1", label: ">12.000€" },
-                                        { value: "2", label: ">24.000€" },
-                                        { value: "3", label: ">38.000€" },
+                                        { value: "12000", label: ">12.000€" },
+                                        { value: "24000", label: ">24.000€" },
+                                        { value: "38000", label: ">38.000€" },
                                     ]} />
                             </div>
                             <p className="estadoText ml5 mt5">Años de experiencia</p>
@@ -154,7 +169,8 @@ class SearchResults extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
-        ofertasResultado: state.ofertas
+        ofertasResultado: state.ofertas,
+        filtros: state.filtros,
     };
 };
 

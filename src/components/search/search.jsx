@@ -1,9 +1,10 @@
 import React from "react";
 import Input from "../input/input";
-import axios from "axios";
-import { getUrl } from "../../utils/uti";
+// import axios from "axios";
+// import { getUrl } from "../../utils/uti";
 import "./search.scss";
-import { rdx_ofertasResultado, rdx_homeSearch, getOfertasFiltradas } from "../../redux/actions/ofertas";
+// import { rdx_ofertasResultado, rdx_homeSearch, getOfertasFiltradas } from "../../redux/actions/ofertas";
+import { getOfertasFiltradas } from "../../redux/actions/ofertas";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import store from "../../redux/store";
@@ -24,58 +25,52 @@ class Search extends React.Component {
 
     pulsaSearch() {
 
-        // let filtrosHome = {
-        //     puesto: this.state.puesto,
-        //     lugar: this.state.lugar
-        // };
+        let filtroBusca = {
+            puesto: this.state.puesto,
+            lugar: this.state.lugar
+        }
 
-        // let res = await axios.get(getUrl(`/searchHome?puesto=${this.props.filtrosHome?.puesto}&lugar=${this.props.filtrosHome?.lugar}`));
+        //guardamos en redux la última búsqueda desde la barra
+        store.dispatch({
+            type: 'SEARCH_BARRA',
+            payload: filtroBusca
+        });
+
         getOfertasFiltradas(this.state.puesto, this.state.lugar).catch(error =>console.error(error));
         
-        // rdx_ofertasResultado({
-        //     // data: res.data
-        // });
-
         this.props.history.push("/searchResults");
-        // rdx_homeSearch({
-        //     filtros: filtrosHome,
-        // });
 
-        // this.busquedaFiltrada();
-
-
-        
     }
 
-    busquedaFiltrada =async() =>{
+    // busquedaFiltrada =async() =>{
 
-        // let res = {};
-        // console.log(this.props.filtros);
-        // console.log(this.props.filtrosHome.filtros.puesto);
-        // console.log(this.props.filtrosHome.filtros.lugar);
+    //     // let res = {};
+    //     // console.log(this.props.filtros);
+    //     // console.log(this.props.filtrosHome.filtros.puesto);
+    //     // console.log(this.props.filtrosHome.filtros.lugar);
         
-    //     try {
+    // //     try {
 
-    //         // res = await axios.get(getUrl(`/searchHome?puesto=${this.state.puesto}&lugar=${this.state.lugar}`));
-    //         res = await axios.get(getUrl(`/searchHome?puesto=${this.props.filtrosHome?.puesto}&lugar=${this.props.filtrosHome?.lugar}`));
+    // //         // res = await axios.get(getUrl(`/searchHome?puesto=${this.state.puesto}&lugar=${this.state.lugar}`));
+    // //         res = await axios.get(getUrl(`/searchHome?puesto=${this.props.filtrosHome?.puesto}&lugar=${this.props.filtrosHome?.lugar}`));
 
-    //     } catch (err) {
-    //         res = err;
-    //     }
+    // //     } catch (err) {
+    // //         res = err;
+    // //     }
 
 
         
-    //     //guardamos los resultados en redux
-    //     rdx_ofertasResultado({
-	// 		data: res.data
-    //     });
+    // //     //guardamos los resultados en redux
+    // //     rdx_ofertasResultado({
+	// // 		data: res.data
+    // //     });
 
-    //     this.setState({puesto: ''});
-    //     this.setState({lugar: ''});
+    // //     this.setState({puesto: ''});
+    // //     this.setState({lugar: ''});
 
-        //redireccion con los resultados
-        // this.props.history.push("/searchResults");
-    }
+    //     //redireccion con los resultados
+    //     // this.props.history.push("/searchResults");
+    // }
 
     render() {
         
@@ -83,7 +78,7 @@ class Search extends React.Component {
             <div className="busqueda">
                 <div className="search">
                     <Input
-                        placeholder="Puesto, empresa o tipo de contrato"
+                        placeholder="Dime que profesión estás buscando"
                         handleChange={this.handleChange}
                         value={this.state.puesto}
                         name="puesto"
@@ -91,7 +86,7 @@ class Search extends React.Component {
 
                     <Input
                     
-                        placeholder="Ciudad o provincia"
+                        placeholder="¿En que ciudad?"
                         handleChange={this.handleChange}
                         value={this.state.lugar}
                         name="lugar"
@@ -112,7 +107,7 @@ class Search extends React.Component {
 const mapStateToProps = (state) => { // ese state es de redux
 	return ({
         ofertasResultado: state.ofertasResultado,
-        filtros: state.homeSearch?.filtros
+        //filtros: state.homeSearch?.filtros
     })
 }
 
