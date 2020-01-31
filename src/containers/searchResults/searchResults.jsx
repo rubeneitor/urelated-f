@@ -36,19 +36,16 @@ class SearchResults extends React.Component {
         let salario = this.state.selSal;
         let puesto = this.props.filtros?.puesto;
         let lugar = this.props.filtros?.lugar;
+        let experiencia = this.state.selExp;
+        let jornada = this.state.selJor;
 
-        getOfertasFiltradas(puesto,lugar,salario).catch(error =>console.error(error));
+        getOfertasFiltradas(puesto,lugar,salario,experiencia,jornada).catch(error =>console.error(error));
         
     }
 
     componentDidUpdate() {
         
         this.render();
-        
-    }
-
-    componentDidMount(){
-        // this.setState({selSal.value: ""});
         
     }
 
@@ -141,6 +138,7 @@ class SearchResults extends React.Component {
                             <p className="estadoText ml5 mt5">Años de experiencia</p>
                             <div className="sel">
                                 <Select placeholder="" name="selExp" onChange={this.handleChangeDrop} options={[
+                                        { value: "", label: "" },
                                         { value: "1", label: "1 año" },
                                         { value: "2", label: "2 años" },
                                         { value: "3", label: "5 años" },
@@ -150,9 +148,9 @@ class SearchResults extends React.Component {
                             <p className="estadoText ml5 mt5">Jornada</p>
                             <div className="sel">
                                 <Select placeholder="" name="selJor" onChange={this.handleChangeDrop} options={[
-                                        { value: "1", label: "Completa" },
-                                        { value: "2", label: "Media Jornada" },
-                                        { value: "3", label: "Teletrabajo" },
+                                        { value: "Completa", label: "Completa" },
+                                        { value: "Media Jornada", label: "Media Jornada" },
+                                        { value: "Teletrabajo", label: "Teletrabajo" },
                                      ]} />
                             </div>
                         </div>

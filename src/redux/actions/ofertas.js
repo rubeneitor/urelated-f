@@ -16,15 +16,10 @@ export const rdx_ofertasResultadoEmpresa = (ofertasResultadoEmpresa) => {
 	})
 };
 
-// export const rdx_homeSearch = (homeSearch) => {
-// 	store.dispatch({
-// 		type: 'HOME_SEARCH',
-// 		payload: homeSearch
-// 	})
-// };
 
-export const getOfertasFiltradas = async (puesto="",lugar="",salario="") =>{
-	const res = await axios.get(getUrl(`/searchHome?puesto=${puesto}&lugar=${lugar}&salario=${salario}`));
+
+export const getOfertasFiltradas = async (puesto="",lugar="",salario="",experiencia="",jornada="") =>{
+	const res = await axios.get(getUrl(`/searchHome?puesto=${puesto}&lugar=${lugar}&salario=${salario}&experiencia=${experiencia}&jornada=${jornada}`));
 	store.dispatch({
 		type:'GET_OFERTAS_FILTRADAS',
 		payload: res.data
