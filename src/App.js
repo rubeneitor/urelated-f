@@ -13,6 +13,7 @@ import ProfileE from "./containers/profileE/profileE";
 import Curriculum from "./containers/curriculum/curriculum";
 import Candidaturas from "./containers/candidaturas/candidaturas";
 import Ofertas from "./containers/ofertas/ofertas";
+import OfertaDetail from "./containers/ofertaDetail/ofertaDetail";
 import addOferta from "./containers/addOferta/addOferta";
 import RegisterC from "./containers/registerC/registerC";
 import RegisterE from "./containers/registerE/registerE";
@@ -41,6 +42,7 @@ export default function App() {
 					<Route path="/curriculum" exact component={Curriculum} />
 					<Route path="/candidaturas" exact component={Candidaturas} />
 					<Route path="/ofertas" exact component={Ofertas} />
+					<Route path="/ofertaDetail" exact component={OfertaDetail} />
 					<Route path="/addOferta" exact component={addOferta}/>
 					<Route path="/passwordRecovery" exact component={PasswordRecovery} />
 					<Route path="/searchResults" exact component={SearchResults} />

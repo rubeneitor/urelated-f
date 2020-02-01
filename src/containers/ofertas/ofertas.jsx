@@ -102,7 +102,7 @@ class Ofertas extends React.Component {
     }
 
     pulsaResultado(ofertaData) {
-        console.log("SI TIO SI HAS PULSADO ESTA CARD ...QUE ES DE: ", ofertaData.titulo);
+        console.log(ofertaData);
         // Guardo en redux
         //rdx_productDetail(productData);
 

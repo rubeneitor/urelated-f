@@ -6,7 +6,8 @@ const reducer = (
 		ofertasResultado: "",
 		ofertasResultadoEmpresa: "",
 		filtrosHome: "",
-		ofertas: ""
+		ofertas: "",
+		ofertaDetail: "",
 	},
 	action
 	
@@ -49,6 +50,13 @@ const reducer = (
 			...state,
 			ofertasResultadoEmpresa: action.payload
 		}
+
+		case "OFERTA_DETAIL":
+		return {
+			...state,
+			ofertaDetail: action.payload
+		}
+
 		
 		default:
 		return state;

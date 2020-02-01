@@ -68,7 +68,7 @@ class ProfileC extends React.Component {
             console.error(err);
         }
 
-        console.log(this.state.userData);
+        // console.log(this.state.userData);
     }
 
     showButton() {

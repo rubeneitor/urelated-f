@@ -42,36 +42,6 @@ class Search extends React.Component {
 
     }
 
-    // busquedaFiltrada =async() =>{
-
-    //     // let res = {};
-    //     // console.log(this.props.filtros);
-    //     // console.log(this.props.filtrosHome.filtros.puesto);
-    //     // console.log(this.props.filtrosHome.filtros.lugar);
-        
-    // //     try {
-
-    // //         // res = await axios.get(getUrl(`/searchHome?puesto=${this.state.puesto}&lugar=${this.state.lugar}`));
-    // //         res = await axios.get(getUrl(`/searchHome?puesto=${this.props.filtrosHome?.puesto}&lugar=${this.props.filtrosHome?.lugar}`));
-
-    // //     } catch (err) {
-    // //         res = err;
-    // //     }
-
-
-        
-    // //     //guardamos los resultados en redux
-    // //     rdx_ofertasResultado({
-	// // 		data: res.data
-    // //     });
-
-    // //     this.setState({puesto: ''});
-    // //     this.setState({lugar: ''});
-
-    //     //redireccion con los resultados
-    //     // this.props.history.push("/searchResults");
-    // }
-
     render() {
         
         return (

@@ -6,7 +6,7 @@ import "./searchResults.scss";
 import Search from "../../components/search/search";
 import { getOfertasFiltradas } from "../../redux/actions/ofertas";
 // import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
-// import { getUrl, numToStr } from "../../utils/uti";
+import { session } from "../../utils/uti";
 import Select from "react-select";
 import store from "../../redux/store";
 
@@ -50,12 +50,19 @@ class SearchResults extends React.Component {
     }
 
     pulsaResultado(ofertaData) {
-        console.log("SI TIO SI HAS PULSADO ESTA CARD ...QUE ES DE: ", ofertaData.titulo);
+
         // Guardo en redux
-        //rdx_productDetail(productData);
+        store.dispatch({
+            type: 'OFERTA_DETAIL',
+            payload: ofertaData
+        });
 
         // Redirijo
-        // this.props.history.push(`/detail?id=${productData._id}`);
+        
+        let id_visitor = session.get()?.visitor_id;
+        let profileName = session.get()?.visitor;
+
+        this.props.history.push(`/ofertaDetail?id=${id_visitor}&name=${profileName}`);
     }
 
     muestraResultados() {
@@ -94,7 +101,7 @@ class SearchResults extends React.Component {
                                 <h2 className="cardTitulo2">{_x.sector}</h2>
                                 <div className="placeDate">
                                     <p className="placeDateText mr3">{_x.ciudad}</p>
-                                    <p className="placeDateText mr3">{_x.provincia}</p>
+                                    {/* <p className="placeDateText mr3">{_x.provincia}</p> */}
                                     <p className="placeDateText mr3">{_x.fecha_publi}</p>
                                 </div>
                                 <p className="cardDescription mt3 mr5">{_x.desc_general}</p>

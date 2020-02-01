@@ -21,6 +21,7 @@ const store = createStoreWithMiddleware(
 			ofertasResultadoEmpresa:"",
 			filtros:"",
 			ofertas:"",
+			ofertaDetail:"",
 			
 		},
 		states: ["ofertas"] }),
