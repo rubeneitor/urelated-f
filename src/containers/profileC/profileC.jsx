@@ -59,11 +59,11 @@ class ProfileC extends React.Component {
 
         try {
             let token = session.get()?.token;
-            // let id = session.get()?.visitor_id;
+            let id = session.get()?.visitor_id;
 
             const res = await axios.get(getUrl(`/perfilU/${queries.id}`));
-
-            this.setState({ userData: res.data[0] });
+            
+            this.setState({ userData: res.data[id] });
         } catch (err) {
             console.error(err);
         }

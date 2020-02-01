@@ -50,7 +50,7 @@ class SearchResults extends React.Component {
     }
 
     pulsaResultado(ofertaData) {
-
+        
         // Guardo en redux
         store.dispatch({
             type: 'OFERTA_DETAIL',

@@ -71,7 +71,6 @@ class LoginE extends React.Component {
                     
                     //llamada para comprobar datos y actualizar token
                     
-                    //let res = await axios.get(getUrl(`/loginE/${this.state.email}/${this.state.password}`));
                     let lBody = {
                         email: this.state.email,
                         password: this.state.password
@@ -81,7 +80,7 @@ class LoginE extends React.Component {
                     let data = res.data;
                     
                     if(data[0]){
-                        console.log("AQUI LLEGAMOS");
+                        
                         //email y password correctos, token actualizado, guardamos en session
                         session.set({
                             visitor: data[0].name,
@@ -89,7 +88,7 @@ class LoginE extends React.Component {
                             token: data[0].token,
                             userType: "Empresa",
                         });
-                        console.log("AQUI TAMBIEN");
+                        
                         //variable login de rdx a true
                         login(true);
 

@@ -73,9 +73,10 @@ class OfertaDetail extends React.Component {
 
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
-
+        let id_empresa = this.props.ofertaDetail.idempresa;
+        
         // eslint-disable-next-line
-        if(((this.state.visitor_id == queries.id) && (visitor_name == queries.name)) && this.state.userType == "Empresa"){
+        if(id_empresa == queries.id && this.state.userType == "Empresa"){
 
             // en caso de ser la empresa que ha publicado la oferta, puedo ver también los nombres de todos los inscritos y 
             //links a sus perfiles
@@ -120,34 +121,25 @@ class OfertaDetail extends React.Component {
                 </Fragment>
             );
         }
-        
+        return;
     }
 
     muestraData () {
         return (
             <Fragment>
-                <p>{this.state.numSuscritos}</p>
+                <p>{this.state?.numSuscritos}</p>
             </Fragment>
         );
     }
 
     render() {
 
-        if(this.state.userType == "Candidato"){
-            return(
-                <div>
-                    {this.muestraData()}
-                    {this.showButton()}
-                </div>
-            );
-        }else {
-            return(
-                <div>
-                    {this.muestraData()}
-                    {this.showButton()}
-                </div>
-            );
-        }
+        return(
+            <div>
+                {this.muestraData()}
+                {this.showButton()}
+            </div>
+        );
         
     };
     

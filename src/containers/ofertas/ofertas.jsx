@@ -3,11 +3,11 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
 import "./ofertas.scss";
-// import Search from "../../components/search/search";
 import { rdx_ofertasResultadoEmpresa } from "../../redux/actions/ofertas";
 // import { session, getUrl, numToStr } from "../../utils/uti";
 import { session, getUrl } from "../../utils/uti";
 import Select from "react-select";
+import store from "../../redux/store";
 
 
 class Ofertas extends React.Component {
@@ -102,12 +102,19 @@ class Ofertas extends React.Component {
     }
 
     pulsaResultado(ofertaData) {
-        console.log(ofertaData);
+        
         // Guardo en redux
-        //rdx_productDetail(productData);
+        store.dispatch({
+            type: 'OFERTA_DETAIL',
+            payload: ofertaData
+        });
 
         // Redirijo
-        // this.props.history.push(`/detail?id=${productData._id}`);
+        
+        let id_visitor = session.get()?.visitor_id;
+        let profileName = session.get()?.visitor;
+
+        this.props.history.push(`/ofertaDetail?id=${id_visitor}&name=${profileName}`);
     }
 
     muestraResultados() {
@@ -223,7 +230,8 @@ const mapStateToProps = state => {
     // ese state es de redux
     return {
         //ofertasResultado: state.ofertasResultado,
-        ofertasResultadoEmpresa: state.ofertasResultadoEmpresa
+        ofertasResultadoEmpresa: state.ofertasResultadoEmpresa,
+
     };
 };
 
