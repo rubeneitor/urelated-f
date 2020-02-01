@@ -77,7 +77,6 @@ class registerE extends React.Component {
             secretQ: "",
             secretA: "",
             phone: "",
-            // fiscal: "",
             sector: "",
             description: "",
 

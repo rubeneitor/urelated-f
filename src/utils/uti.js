@@ -26,7 +26,6 @@ export const getUrl = (route = "", includeToken = false) => {
     return `http://localhost:8000/api${route}${token}`;
 };
 
-
 export const verify = (userInput, isFilled, validation, min, max) => {
     let valid = false;
 
@@ -80,15 +79,15 @@ export const verify = (userInput, isFilled, validation, min, max) => {
 
             break;
 
+        // case "number":
+        //     //comprobacion numeros
+        //     if (!/[^[0-9]*$]/g.test(userInput)) {
+        //         return valid;
+        //     }
+
+        //     break;
+
         case "number":
-            //comprobacion numeros
-            if (!/[^[0-9]*$]/g.test(userInput)) {
-                return valid;
-            }
-
-            break;
-
-        case "postalCode":
             //código postal
             if (!/^\d+$/g.test(userInput)) {
                 return valid;
@@ -121,38 +120,9 @@ export const verify = (userInput, isFilled, validation, min, max) => {
     return (valid = true);
 };
 
-export const muestraError = (message, timeout = 3, isError = true) => {
-    // Pongo la clase
-    let className = isError ? "error" : "success";
-    this.setState({ messageClassName: className });
-
-    // Pongo el mensaje
-    this.setState({ message: message });
-
-    // Ya estoy en loop
-    if (this.state.errorTime > 0) {
-        this.setState({ errorTime: timeout });
-        return; // y salgo
-    }
-
-    this.setState({ errorTime: timeout }); // Entro por primera vez, pongo tiempo
-
-    // Loop
-    let loop = setInterval(() => {
-        if (this.state.errorTime <= 0) {
-            this.setState({ message: "" });
-            clearInterval(loop); // salgo del loop
-        }
-
-        this.setState(preState => ({ errorTime: preState.errorTime - 1 }));
-    }, 1000);
-};
-
-
 export const minMax = (n, min, max) => {
     return Math.max(Math.min(n, max), min);
 };
-
 
 export const numToStr = (numero, separador = ".") => {
     // Existe?
@@ -188,3 +158,13 @@ export const numToStr = (numero, separador = ".") => {
     return arrNumeros.join("");
 };
 
+export const date = () => {
+
+    let mm = this.getMonth() + 1; // getMonth() is zero-based
+    let dd = this.getDate();
+
+    return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+        ].join('');
+};

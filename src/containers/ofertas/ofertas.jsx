@@ -155,7 +155,9 @@ class Ofertas extends React.Component {
     }
 
     nuevaOferta () {
-        console.log("a crearla!!!!!!!");
+        //redireccion a la vista de creacion de ofertas
+        
+        this.props.history.push(`/addOferta`);
     }
 
     render() {
