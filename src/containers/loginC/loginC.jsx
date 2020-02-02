@@ -82,9 +82,9 @@ class LoginC extends React.Component {
 
                     let res = await axios.post(getUrl(`/loginU`),lBody);
                     let data = res.data;
-                    
+
                     if(data[0]){
-                        
+
                         //email y password correctos, token actualizado, guardamos en session
                         session.set({
                             visitor: data[0].name,

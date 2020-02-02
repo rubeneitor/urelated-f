@@ -1,13 +1,11 @@
 import React from "react";
-// import axios from "axios";
-// import bcrypt from "bcryptjs";
-// import store from "../../redux/store";
+import axios from "axios";
+import bcrypt from "bcryptjs";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-// import queryString from 'query-string';
-// import { getUrl } from "../../utils/uti";
+import queryString from "query-string";
+import { getUrl } from "../../utils/uti";
 import { verify } from "../../utils/uti";
-// import { rdx_productDetail } from "../../redux/actions/products";
 
 import "./passwordRecovery.scss";
 
@@ -19,8 +17,8 @@ class PasswordRecovery extends React.Component {
             step: 1,
             email: "",
 
-            secretQuestion: "alibaba",
-            userAnswer: "",
+            secretQuestion: "",
+            secretAnswer: "",
 
             password: "",
             password2: "",
@@ -52,35 +50,22 @@ class PasswordRecovery extends React.Component {
         //comprobamos si se trata de un candidato o de una empresa.
         if (verificado === true) {
             this.setState({ errores: "" });
-            console.log("ESOOOOOOO SE TRATA DE -> ", this.props.lostPass);
 
             //si es un usuario o empresa...buscamos en la base de datos de una forma
-            //u otra
 
-            // axios.post(
-            // 	getUrl("/user/forgotPassword1"),
-            // 	{
-            // 		"username": this.state.username
-            // 	}
-            // ).then( (res) => {
+            let Body = {
+                email: this.state.email,
+                userType: this.props.lostPass
+            }
 
-            // 	let data = res.data;
-
-            // 	this.setState({
-            // 		secretQuestion: data.secretQuestion
-            // 	});
-
-            // }).catch( (error) => {
-
-            // 	let errData = error.response.data;
-
-            // 	if (errData.errorCode === "user_recovery_1") {
-            // 		this.muestraError("No se ha encontrado ningún usuario.", 2);
-            // 		return;
-            // 	};
-
-            // });
-
+            try {
+                const res = await axios.post(getUrl(`/recoverP`),Body);
+                
+                this.setState({ secretQuestion: res.data }, () => {});
+            } catch (err) {
+                console.log(err);
+            }
+             
             this.setState({ step: 2 });
         }
         return;
@@ -102,8 +87,8 @@ class PasswordRecovery extends React.Component {
             verificado = false;
         }
 
-        if (this.state.userAnswer.length < 4) {
-            errors.push("userAnswer");
+        if (this.state.secretAnswer.length < 4) {
+            errors.push("secretAnswer");
         }
 
         if (errors.length) {
@@ -113,67 +98,43 @@ class PasswordRecovery extends React.Component {
         }
 
         if (verificado === true) {
+            //una vez hemos verificado que se han rellenado todos los campos
+            // 	const encryptedPass = await bcrypt.hash(this.state.password, 10)
+            //const encryptedPass = await bcrypt.hash(this.state.password, 10);
             
-            //comprobamos si se trata de un candidato o de una empresa.
+            //encriptamos el password con bcrypt
 
-        // // Empiezo
-        // try {
+                let Body2 = {
+                    email: this.state.email,
+                    secretA: this.state.secretAnswer,
+                    password: this.state.password,
+                    userType: this.props.lostPass
+                }
 
-        // 	// Encripto pass
-        // 	const encryptedPass = await bcrypt.hash(this.state.password, 10);
+                try {
+                    
+                    //enviamos la respuesta y el nuevo pass para ser cambiado
+                    const res = await axios.post(getUrl(`/recoverP2`),Body2);
 
-        // 	// Llamo
-        // 	await axios.post(
-        // 		getUrl("/user/forgotPassword2"),
-        // 		{
-        // 			"username": this.state.username,
-        // 			"userAnswer": this.state.userAnswer,
-        // 			"newPassword": encryptedPass
-        // 		}
-        // 	);
-
-        // 	// Mensaje
-        // 	this.muestraError("Tu contraseña ha sido cambiada. Redireccionando al login...", 2000, false);
-
-        
-
-        // } catch (error) {
-
-        // 	if (error.response) {
-
-        // 		let errData = error.response.data;
-
-        // 		if (errData.errorCode === "user_recovery_2") {
-        // 			this.muestraError("La respuesta secreta no era correcta.", 2);
-        // 			return;
-        // 		};
-
-        // 	};
-
-        // 	this.muestraError(error.response.data);
-
-        // };
-
-        this.setState({ step: 3 });
-        
-        // Redirección si es candidato o empresa
-        let loginGo = "";
-        
-        if(this.props.lostPass === "Empresa"){
-            loginGo = "loginE";
-        }else{
-            loginGo = "loginC";
-        }
-        
-        setTimeout( () => {
-
-            this.props.history.push(loginGo);
-        
-        }, 2250);
+                } catch (err) {
+                    console.log(err);
+                }
             
-        }
+            this.setState({ step: 3 });
 
-        
+            // Redirección si es candidato o empresa
+            let loginGo = "";
+
+            if (this.props.lostPass === "Empresa") {
+                loginGo = "loginE";
+            } else {
+                loginGo = "loginC";
+            }
+
+            setTimeout(() => {
+                this.props.history.push(loginGo);
+            }, 2250);
+        }
     }
 
     errorCheck(arg) {
@@ -242,18 +203,14 @@ class PasswordRecovery extends React.Component {
                             </div>
                             <div className="cardBody mt4">
                                 <p className="recoverText2">Pregunta secreta</p>
-                                <input 
-                                    className={this.errorCheck("secretQuestion")}
-                                    type="text" 
-                                    placeholder="" 
-                                    value={this.state.secretQuestion} disabled />
+                                <input className={this.errorCheck("secretQuestion")} type="text" placeholder="" value={this.state.secretQuestion} disabled />
                                 <p className="recoverText4 ml1">Respuesta secreta (*min 4 char.)</p>
                                 <input
-                                    className={this.errorCheck("userAnswer")}
+                                    className={this.errorCheck("secretAnswer")}
                                     type="text"
                                     placeholder=""
                                     onChange={ev => {
-                                        this.handleChange(ev, "userAnswer");
+                                        this.handleChange(ev, "secretAnswer");
                                     }}
                                 />
                                 <p className="recoverText2">Nuevo password</p>
@@ -297,7 +254,7 @@ class PasswordRecovery extends React.Component {
                             <div className="cardHeader">
                                 <h1 className="cardTitle"> Password recuperado con éxito. </h1>
                             </div>
-                            
+
                             <div className="cardBody mt5">
                                 <p>Redireccionando a Login.</p>
                             </div>

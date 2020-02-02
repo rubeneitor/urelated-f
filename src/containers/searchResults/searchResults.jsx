@@ -50,6 +50,8 @@ class SearchResults extends React.Component {
     }
 
     pulsaResultado(ofertaData) {
+
+        console.log(ofertaData);
         
         // Guardo en redux
         store.dispatch({

@@ -60,8 +60,26 @@ class OfertaDetail extends React.Component {
 
         let id_oferta = this.props.ofertaDetail.id;
         let id_usuario = this.state.visitor_id;
+        let date = new Date().toISOString().slice(0,10); 
 
-        console.log("ID DE OFERTA: ", id_oferta, "ID DE USUARIO: ", id_usuario);
+        let bodySus = {
+            id_oferta : id_oferta,
+            id_usuario : id_usuario,
+            date : date
+        }
+
+        try {
+
+            await axios.post(getUrl(`/nuevaSuscripcion`), bodySus);
+           
+            //redirigimos
+            setTimeout(() => {
+                this.props.history.push("/candidaturas");
+            }, 1000);
+
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 
