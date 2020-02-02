@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
+import Moment from 'react-moment';
+import 'moment-timezone';
 import queryString from "query-string";
 import { session, getUrl, verify } from "../../utils/uti";
 import "./profileC.scss";
@@ -58,17 +60,28 @@ class ProfileC extends React.Component {
         const queries = queryString.parse(this.props.location.search);
 
         try {
-            let token = session.get()?.token;
+            // let token = session.get()?.token;
             let id = session.get()?.visitor_id;
 
             const res = await axios.get(getUrl(`/perfilU/${queries.id}`));
             
-            this.setState({ userData: res.data[id] });
+            this.setState({ 
+
+                userData: res.data[id],
+                username: res.data[id].name,
+                surname: res.data[id].surname,
+                phone: res.data[id].phone,
+                email: res.data[id].email,
+                country: res.data[id].pais,
+                provincia: res.data[id].provincia,
+                ciudad: res.data[id].ciudad
+            
+            });
         } catch (err) {
             console.error(err);
         }
 
-        // console.log(this.state.userData);
+        
     }
 
     showButton() {
@@ -220,7 +233,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("username")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.name}
                                         name="username"
                                         value={this.state.username}
                                         onChange={this.handleChange}
@@ -231,7 +243,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("surname")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.surname}
                                         name="surname"
                                         value={this.state.surname}
                                         onChange={this.handleChange}
@@ -242,7 +253,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("email")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.email}
                                         name="email"
                                         value={this.state.email}
                                         onChange={this.handleChange}
@@ -253,7 +263,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("phone")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.phone}
                                         name="phone"
                                         value={this.state.phone}
                                         onChange={this.handleChange}
@@ -264,7 +273,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("ciudad")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.ciudad}
                                         name="ciudad"
                                         value={this.state.ciudad}
                                         onChange={this.handleChange}
@@ -275,7 +283,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("provincia")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.provincia}
                                         name="provincia"
                                         value={this.state.provincia}
                                         onChange={this.handleChange}
@@ -286,7 +293,6 @@ class ProfileC extends React.Component {
                                     <input
                                         className={`${this.errorCheck("country")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.pais}
                                         name="country"
                                         value={this.state.country}
                                         onChange={this.handleChange}
@@ -302,9 +308,8 @@ class ProfileC extends React.Component {
                             </div>
                             <div className="cardEditProfileBody mt3">
                                 <div className="editInfoRight">
-                                    {/* <p className="mt1">{this.state.userData?.updated_at}</p>} */}
-                                    <p className="nameMod mt3">{this.state.userData?.name}</p>
-                                    <p className="dateMod mt3">28/01/2020</p>
+                                    <p className="nameMod mt3">{this.state.name}</p>
+                                    <p className="dateMod mt3"><Moment format="DD/MM/YYYY">{this.state.userData?.updated_at}</Moment></p>
                                     <p className="dateMod2">Última fecha de modificación.</p>
                                     {this.showButton()}
                                 </div>

@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
+import Moment from 'react-moment';
+import 'moment-timezone';
 import queryString from 'query-string';
 import { session, getUrl, verify } from "../../utils/uti";
 import "./profileE.scss";
@@ -79,12 +81,21 @@ class ProfileE extends React.Component {
         const queries = queryString.parse(this.props.location.search);
         
         try {
-            let token = session.get()?.token;
+            // let token = session.get()?.token;
             let id = session.get()?.visitor_id;
 
             const res = await axios.get(getUrl(`/perfilE/${queries.id}`));
             
-            this.setState({ userData: res.data[id] },() =>{});
+            this.setState({ 
+
+                userData: res.data[id],
+                sector: res.data[id].sector,
+                phone: res.data[id].phone,
+                name: res.data[id].name,
+                email: res.data[id].email,
+                description: res.data[id].description
+            
+            });
 
         } catch (err) {
             console.error(err);
@@ -253,7 +264,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("name")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.name}
+                                        placeholder={this.state?.name}
                                         name="name"
                                         value={this.state.name}
                                         onChange={this.handleChange}
@@ -264,7 +275,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("email")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.email}
+                                        placeholder={this.state?.email}
                                         name="email"
                                         value={this.state.email}
                                         onChange={this.handleChange}
@@ -275,7 +286,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("phone")} ml3`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.phone}
+                                        placeholder={this.state?.phone}
                                         name="phone"
                                         value={this.state.phone}
                                         onChange={this.handleChange}
@@ -286,7 +297,7 @@ class ProfileE extends React.Component {
                                     <input
                                         className={`${this.errorCheck("sector")}`}
                                         readOnly={this.state.readOnly}
-                                        placeholder={this.state.userData?.sector}
+                                        placeholder={this.state?.sector}
                                         name="sector"
                                         value={this.state.sector}
                                         onChange={this.handleChange}
@@ -296,13 +307,12 @@ class ProfileE extends React.Component {
                             <div className="descripcionEmpresa mr5">
                                 <p className="cabeceraInput">Descripcion de tu empresa</p>
                                 <textarea
-                                    // className={this.errorCheck("description")}
                                     className={`${this.errorCheck("description")}`}
                                     readOnly={this.state.readOnly}
                                     rows="7"
                                     cols="50"
                                     maxLength="2000"
-                                    placeholder={this.state.userData?.description}
+                                    placeholder={this.state?.description}
                                     name="description"
                                     value={this.state.description}
                                     onChange={this.handleChange}
@@ -317,10 +327,8 @@ class ProfileE extends React.Component {
                         </div>
                         <div className="cardEditProfileBody mt3">
                             <div className="editInfoRight">
-                                {/* <p>{this.state.userData?.name}</p>
-                                <p className="mt1">{this.state.userData?.updated_at}</p> */}
                                 <p className="nameMod mt3">{this.state.userData?.name}</p>
-                                <p className="dateMod mt3">27/01/2020</p>
+                                <p className="dateMod mt3"><Moment format="DD/MM/YYYY">{this.state.userData?.updated_at}</Moment></p>
                                 <p className="dateMod2">Última fecha de modificación.</p>
                                 {this.showButton()}
                             </div>

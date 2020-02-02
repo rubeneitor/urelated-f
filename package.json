@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
     "node-sass": "^4.13.1",
     "query-string": "^6.9.0",
     "querystring": "^0.2.0",
