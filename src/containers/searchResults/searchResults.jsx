@@ -1,11 +1,9 @@
 import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import axios from "axios";
 import "./searchResults.scss";
 import Search from "../../components/search/search";
 import { getOfertasFiltradas } from "../../redux/actions/ofertas";
-// import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
 import { session } from "../../utils/uti";
 import Select from "react-select";
 import store from "../../redux/store";
@@ -19,8 +17,16 @@ class SearchResults extends React.Component {
             selSal: "",
             selExp: "",
             selJor: "",
+            keyWord: "",
         };
+
+        this.buscaFiltro = this.buscaFiltro.bind(this);
     }
+
+    handleChange = (ev) => {
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
+        
+    };
 
     handleChangeDrop = (ev, action) =>{
     	this.setState({[action.name]: ev.value}, () => {
@@ -31,15 +37,15 @@ class SearchResults extends React.Component {
 
 
         //obtenemos los dos parámetros de la última búsqueda realizada
-
         //aplicamos los filtros 
         let salario = this.state.selSal;
         let puesto = this.props.filtros?.puesto;
         let lugar = this.props.filtros?.lugar;
         let experiencia = this.state.selExp;
         let jornada = this.state.selJor;
+        let keyWord = this.state.keyWord;
 
-        getOfertasFiltradas(puesto,lugar,salario,experiencia,jornada).catch(error =>console.error(error));
+        getOfertasFiltradas(puesto,lugar,salario,experiencia,jornada,keyWord).catch(error =>console.error(error));
         
     }
 
@@ -51,8 +57,6 @@ class SearchResults extends React.Component {
 
     pulsaResultado(ofertaData) {
 
-        console.log(ofertaData);
-        
         // Guardo en redux
         store.dispatch({
             type: 'OFERTA_DETAIL',
@@ -68,6 +72,7 @@ class SearchResults extends React.Component {
     }
 
     muestraResultados() {
+
         if (!this.props.ofertasResultado[0]) {
             return (
                 <Fragment>
@@ -103,7 +108,6 @@ class SearchResults extends React.Component {
                                 <h2 className="cardTitulo2">{_x.sector}</h2>
                                 <div className="placeDate">
                                     <p className="placeDateText mr3">{_x.ciudad}</p>
-                                    {/* <p className="placeDateText mr3">{_x.provincia}</p> */}
                                     <p className="placeDateText mr3">{_x.fecha_publi}</p>
                                 </div>
                                 <p className="cardDescription mt3 mr5">{_x.desc_general}</p>
@@ -175,6 +179,7 @@ class SearchResults extends React.Component {
 
 const mapStateToProps = state => {
     // ese state es de redux
+
     return {
         ofertasResultado: state.ofertas,
         filtros: state.filtros,

@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { getUrl } from "../../utils/uti";
 import axios from "axios";
-import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
+// import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Search from "../../components/search/search";
+import store from "../../redux/store";
 import "./home.scss";
 
 class Home extends Component {
@@ -32,14 +33,36 @@ class Home extends Component {
         } catch (err) {
             res = "error";
         }
-        
-        //guardamos los resultados en redux
-        rdx_ofertasResultado({
-			data: res.data
-        });
 
+        store.dispatch({
+            type:'GET_OFERTAS_FILTRADAS',
+            payload: res.data
+        })
+
+        let puesto = "";
+        let lugar = "";
+
+        if(argImg == `/puestos/${"CEO"}`){
+            puesto = "CEO";
+        }
+
+        if(argImg == `/ciudades/${"Valencia"}`){
+            lugar = "Valencia";
+        }
+
+        let filtroBusca = {
+            puesto: puesto,
+            lugar: lugar
+        }
+
+        //guardamos en redux la última búsqueda desde la barra
+        store.dispatch({
+            type: 'SEARCH_BARRA',
+            payload: filtroBusca
+        });
+        
         //redireccion con los resultados
-        this.props.history.push("/searchResults");
+        this.props.history.push(`/searchResults`);
         
     }
 
