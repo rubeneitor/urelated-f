@@ -13,10 +13,13 @@ class SearchResults extends React.Component {
         super(props);
 
         this.state = {
+            
             selSal: "",
             selExp: "",
             selJor: "",
-            keyWord: ""
+            keyWord: "",
+
+            image: "img/placeOffer.png"
         };
 
         this.buscaFiltro = this.buscaFiltro.bind(this);
@@ -70,6 +73,7 @@ class SearchResults extends React.Component {
     }
 
     muestraResultados() {
+        
         if (!this.props.ofertasResultado[0]) {
             return (
                 <Fragment>
@@ -85,9 +89,12 @@ class SearchResults extends React.Component {
             );
         }
 
+        
+
         return (
             <Fragment>
                 {this.props?.ofertasResultado.map(_x => {
+
                     return (
                         <div
                             className="cardOferta mb5"
@@ -97,7 +104,7 @@ class SearchResults extends React.Component {
                             }}
                         >
                             <div className="cardOfertaSide">
-                                <img className="cardImage mt5" src="img/placeOffer.png" alt="oferta" />
+                                <img className="cardImage mt5" src={_x.picture ? _x.picture : "img/placeOffer.png"} alt="oferta" />
                             </div>
 
                             <div className="cardOfertaBody ml3 mt5">
