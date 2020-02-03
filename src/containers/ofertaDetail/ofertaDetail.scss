@@ -43,10 +43,45 @@
                 }
 
                 .ofertaHeadUpTiempo {
+                    display: flex;
+                    flex-direction: row;
                     font-style: italic;
                     color: var(--pri8);
+
+                    .ofertaHeadUpTiempoText{
+                        margin-right: 4em;
+                    }
                 }
 
+            }
+
+        }
+
+        .ofertaHeadDown {
+
+            display: flex;
+            flex-direction: column;
+
+            .ofertaHeadDownU {
+                display: flex;
+                flex-direction: row;
+                margin-left: 12.9em;
+
+                .ofertaHeadDownUText {
+                    width: 14em;
+                    color: var(--pri9);
+                }
+            }
+
+            .ofertaHeadDownD {
+                display: flex;
+                flex-direction: row;
+                margin-left: 12.9em;
+
+                .ofertaHeadDownDText {
+                    width: 14em;
+                    color: var(--pri9);
+                }
             }
 
         }
@@ -56,7 +91,7 @@
         display: flex;
 		flex-direction: column;
 		width: 55em;
-		height: 28em;
+		height: 23em;
 		background-color: var(--colBla);
 		border-radius: 1em;
         transition: 0.3s;

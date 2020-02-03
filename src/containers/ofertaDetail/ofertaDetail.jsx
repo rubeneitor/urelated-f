@@ -5,9 +5,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import axios from "axios";
-import moment from 'moment';
+import moment from "moment";
 import "moment-timezone";
-
 
 class OfertaDetail extends React.Component {
     constructor(props) {
@@ -18,7 +17,7 @@ class OfertaDetail extends React.Component {
             numSuscritos: "",
             botonCandidato: false,
             detailOferta: "",
-            publicada: "",
+            publicada: ""
         };
     }
 
@@ -40,14 +39,16 @@ class OfertaDetail extends React.Component {
             let id_oferta = this.props.ofertaDetail.id;
 
             let now = Date();
-            
-            let publicada = moment(now).diff(this.props.ofertaDetail?.created_at, 'hours');
-            
-            this.setState({ 
-                detailOferta: this.props.ofertaDetail,
-                publicada: publicada,
-            
-            }, () => {});
+
+            let publicada = moment(now).diff(this.props.ofertaDetail?.created_at, "hours");
+
+            this.setState(
+                {
+                    detailOferta: this.props.ofertaDetail,
+                    publicada: publicada
+                },
+                () => {}
+            );
 
             const res = await axios.get(getUrl(`/numSuscritos?id_oferta=${id_oferta}`));
 
@@ -156,17 +157,29 @@ class OfertaDetail extends React.Component {
                         <div className="cardODetailHead">
                             <div className="ofertaHeadUp">
                                 <div>
-                                    <img className="ofertaHeadImg ml5 mt3" src={this.state.detailOferta?.picture} alt="logoEmpresa" />
+                                    <img className="ofertaHeadImg ml5 mt1" src={this.state.detailOferta?.picture} alt="logoEmpresa" />
                                 </div>
                                 <div className="ofertaHeadUpText mt5 ml3">
                                     <div className="ofertaHeadUpTitulo">{this.state.detailOferta?.titulo}</div>
                                     <div className="ofertaHeadUpEmpresa">{this.state.detailOferta?.name}</div>
                                     <div className="ofertaHeadUpTiempo">
-                                        <p>Publicada hace {this.state.publicada} horas.</p>
+                                        <p className="ofertaHeadUpTiempoText">Publicada hace {this.state.publicada} horas.</p>
+                                        <p classname="mt1">Suscritos a esta oferta: {this.state?.numSuscritos}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div className="ofertaHeadDown"></div>
+                            <div className="ofertaHeadDown">
+                                <div className="ofertaHeadDownU">
+                                    <div className="ofertaHeadDownUText">{this.state.detailOferta?.ciudad}</div>
+                                    <div className="ofertaHeadDownUText">{this.state.detailOferta?.sector}</div>
+                                    <div className="ofertaHeadDownUText">Vacantes: {this.state.detailOferta?.num_vacantes}</div>
+                                </div>
+                                <div className="ofertaHeadDownD mt1">
+                                    <div className="ofertaHeadDownDText">{this.state.detailOferta?.tipo_contrato}</div>
+                                    <div className="ofertaHeadDownDText">{this.state.detailOferta?.salario}€</div>
+                                    <div className="ofertaHeadDownDText">Experiencia mín.: {this.state.detailOferta?.exp_requerida} año/s</div>
+                                </div>
+                            </div>
                         </div>
                         <div className="cardODetailBody mt3">{this.showButton()}</div>
                     </div>
