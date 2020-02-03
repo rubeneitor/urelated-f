@@ -1,0 +1,66 @@
+.mainOfertaDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // height: 40.9em;
+
+    .cardODetailHead {
+        display: flex;
+		flex-direction: column;
+		width: 55em;
+		height: 14em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-top: 2em;
+
+        .ofertaHeadUp {
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+
+
+            .ofertaHeadImg {
+                max-width: 10em;
+                height: 8em;
+                cursor: default;
+            }
+
+            .ofertaHeadUpText {
+                display: flex;
+                flex-direction: column;
+                
+                .ofertaHeadUpTitulo {
+                    color: var(pri--9);
+                    font-size: 1.4em;
+                    font-weight: bold;
+                }
+
+                .ofertaHeadUpEmpresa {
+                    color: var(--pri6);
+                    font-size: 1.2em;
+                    
+                }
+
+                .ofertaHeadUpTiempo {
+                    font-style: italic;
+                    color: var(--pri8);
+                }
+
+            }
+
+        }
+    }
+
+    .cardODetailBody {
+        display: flex;
+		flex-direction: column;
+		width: 55em;
+		height: 28em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-bottom: 0.8em;
+    }
+
+}
