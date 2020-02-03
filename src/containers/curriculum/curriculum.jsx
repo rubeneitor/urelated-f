@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { session, getUrl, verify} from "../../utils/uti";
 import "./curriculum.scss";
 
 
@@ -21,8 +23,8 @@ class Curriculum extends React.Component {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
     };
 
-     async 
-     registraDatos() {
+     
+     async registraDatos() {
         try {
             //llamada a la DB para registrar la empresa
             let lBody = {
