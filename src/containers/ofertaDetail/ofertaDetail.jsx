@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import "./ofertaDetail.scss";
-import { session, getUrl } from "../../utils/uti";
+import { session, getUrl, verify } from "../../utils/uti";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import queryString from "query-string";
@@ -21,17 +21,42 @@ class OfertaDetail extends React.Component {
             readOnly: true,
             button: "blueButton",
 
-            picture: "",
-            titutlo: "",
-            name: "",
-            ciudad: "",
-            sector: "",
-            salario: "",
-            tipo_contrato: "",
             num_vacantes: "",
-            exp_requerida: "",
-            desc_general: ""
+            description: "",
+
+            errores: []
         };
+
+        this.clickEditar = this.clickEditar.bind(this);
+    }
+
+    handleChange = ev => {
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
+
+        // Excepción para medir caracteres restantes en la descripción
+        if (ev.target.name === "description") {
+            this.updateDescriptionRemainingCharacters();
+        }
+    };
+
+    updateDescriptionRemainingCharacters() {
+        let ele = document.querySelector(".textAddInfo2");
+
+        if (!document.querySelector(".textAddInfo2")) {
+            ele = document.querySelector(".textAddInfo3");
+        }
+
+        let lenght = ele.value.length;
+        let max = ele.maxLength;
+        let remaining = document.querySelector("#descriptionRemainingCharacters");
+
+        remaining.innerHTML = `${lenght}/${max}`;
+
+        if (lenght >= max) {
+            remaining.classList.add("error");
+        } else {
+            remaining.classList.remove("error");
+        }
     }
 
     async componentDidMount() {
@@ -60,23 +85,14 @@ class OfertaDetail extends React.Component {
             }
 
             let now = Date();
+            
 
             let publicada = moment(now).diff(this.props.ofertaDetail?.created_at, "hours");
-
+            
             this.setState(
                 {
-                    // detailOferta: this.props.ofertaDetail,
-
-                    picture: this.props.ofertaDetail?.picture,
-                    titulo: this.props.ofertaDetail?.titulo,
-                    name: this.props.ofertaDetail?.name,
-                    ciudad: this.props.ofertaDetail?.ciudad,
-                    sector: this.props.ofertaDetail?.sector,
-                    salario: this.props.ofertaDetail?.salario,
-                    tipo_contrato: this.props.ofertaDetail?.tipo_contrato,
                     num_vacantes: this.props.ofertaDetail?.num_vacantes,
-                    exp_requerida: this.props.ofertaDetail?.exp_requerida,
-                    desc_general: descripcionNull,
+                    description: descripcionNull,
                     publicada: publicada
                 },
                 () => {}
@@ -132,69 +148,53 @@ class OfertaDetail extends React.Component {
         } else {
             //el boton es de color rojo y se procede a editar
             let verificado = true;
-            // let errors = [];
+            let errors = [];
 
-            // if (!(verificado = verify(this.state.email, 1, "email"))) {
-            //     errors.push("email");
-            //     this.setState({ email_err: "Introduce un email válido." });
-            // } else {
-            //     this.setState({ email_err: "" });
-            // }
+            //vacantes
+            if (!(verificado = verify(this.state.num_vacantes, 1, "phone"))) {
+                errors.push("num_vacantes");
+                
+            } else {
+                // this.setState({ phone_err: "" });
+            }
 
-            // //nombre de la empresa
-            // if (!(verificado = verify(this.state.name, 1, "string"))) {
-            //     errors.push("name");
-            // }
+            if(this.state.num_vacantes == 0){
+                errors.push("num_vacantes");
+            }
 
-            // //telefono
-            // if (!(verificado = verify(this.state.phone, 1, "phone"))) {
-            //     errors.push("phone");
-            //     this.setState({ phone_err: "Introduce un teléfono válido." });
-            // } else {
-            //     this.setState({ phone_err: "" });
-            // }
+            if (this.state.description === "") {
+                errors.push("description");
+            }
 
-            // //sector de la empresa
-            // if (!(verificado = verify(this.state.sector, 1, "string"))) {
-            //     errors.push("sector");
-            // }
-
-            // if (this.state.description === "") {
-            //     errors.push("description");
-            // }
-
-            // if (errors.length) {
-            //     verificado = false;
-            //     this.setState({ errores: errors });
-            //     return;
-            // }
+            if (errors.length) {
+                verificado = false;
+                this.setState({ errores: errors });
+                return;
+            }
 
             if (verificado) {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
-                console.log("bien bien bien bien bien bien biennnnn");
-                // try {
-                //     //llamada a la DB para registrar la empresa
-                //     let id = session.get()?.visitor_id;
+                
+                try {
+                    //llamada a la DB para registrar la empresa
+                    let id = session.get()?.visitor_id;
 
-                //     let lBody = {
+                    let lBody = {
                         
-                //         id: id,
-                //         name: this.state.name,
-                //         email: this.state.email,
-                //         phone: this.state.phone,
-                //         sector: this.state.sector,
-                //         description: this.state.description
-                //     };
+                        id: this.props.ofertaDetail?.id,
+                        num_vacantes: this.state.num_vacantes,
+                        description: this.state.description
+                    };
         
-                //     let res = await axios.post(getUrl(`/perfilEMod`), lBody);
-                //     let data = res.data[0];
+                    await axios.post(getUrl(`/modOfertaE`), lBody);
+                    // let data = res.data[0];
 
         
-                //     this.props.history.push(`/`);
+                    this.props.history.push(`/`);
 
-                // } catch (err) {
-                //     console.log(err);
-                // }
+                } catch (err) {
+                    console.log(err);
+                }
             }
 
             return;
@@ -205,9 +205,9 @@ class OfertaDetail extends React.Component {
         let estiloError = "";
 
         if (this.state.button === "blueButton") {
-            estiloError = "inputProfile";
+            estiloError = "inputOferta";
         } else {
-            estiloError = "inputProfile2";
+            estiloError = "inputOferta2";
         }
 
         for (let _y of this.state.errores) {
@@ -215,11 +215,12 @@ class OfertaDetail extends React.Component {
             if (arg == [_y]) {
                 // eslint-disable-next-line
                 if (arg == [_y] && arg == "description") {
+                    console.log("yeeee");
                     estiloError = "textAddInfo3";
                     return estiloError;
                 }
 
-                estiloError = "inputProfile3";
+                estiloError = "inputOferta3";
                 return estiloError;
             }
         }
@@ -239,7 +240,7 @@ class OfertaDetail extends React.Component {
     }
 
     showButton() {
-        let visitor_name = session.get()?.visitor;
+        // let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
         let id_empresa = this.props.ofertaDetail.idempresa;
 
@@ -301,27 +302,27 @@ class OfertaDetail extends React.Component {
                         <div className="cardODetailHead">
                             <div className="ofertaHeadUp">
                                 <div>
-                                    <img className="ofertaHeadImg ml5 mt1" src={this.state?.picture} alt="logoEmpresa" />
+                                    <img className="ofertaHeadImg ml5 mt1" src={this.props.ofertaDetail?.picture} alt="logoEmpresa" />
                                 </div>
                                 <div className="ofertaHeadUpText mt5 ml3">
-                                    <div className="ofertaHeadUpTitulo">{this.state?.titulo}</div>
-                                    <div className="ofertaHeadUpEmpresa">{this.state?.name}</div>
+                                    <div className="ofertaHeadUpTitulo">{this.props.ofertaDetail?.titulo}</div>
+                                    <div className="ofertaHeadUpEmpresa">{this.props.ofertaDetail?.name}</div>
                                     <div className="ofertaHeadUpTiempo">
                                         <p className="ofertaHeadUpTiempoText">Publicada hace {this.state.publicada} horas.</p>
-                                        <p classname="mt1">Suscritos a esta oferta: {this.state?.numSuscritos}</p>
+                                        <p className="mt1">Suscritos a esta oferta: {this.state?.numSuscritos}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="ofertaHeadDown">
                                 <div className="ofertaHeadDownU">
-                                    <div className="ofertaHeadDownUText">{this.state?.ciudad}</div>
-                                    <div className="ofertaHeadDownUText">{this.state?.tipo_contrato}</div>
-                                    <div className="ofertaHeadDownUText">Vacantes: {this.state?.num_vacantes}</div>
+                                    <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.ciudad}</div>
+                                    <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.tipo_contrato}</div>
+                                    <div className="ofertaHeadDownUText">Experiencia mín.: {this.props.ofertaDetail?.exp_requerida} año/s</div>
                                 </div>
                                 <div className="ofertaHeadDownD mt1">
-                                    <div className="ofertaHeadDownDText">{this.state?.sector}</div>
-                                    <div className="ofertaHeadDownDText">{this.state?.salario}€</div>
-                                    <div className="ofertaHeadDownDText">Experiencia mín.: {this.state?.exp_requerida} año/s</div>
+                                    <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.sector}</div>
+                                    <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.salario}€</div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -329,18 +330,28 @@ class OfertaDetail extends React.Component {
                             <div className="descripcionOferta mr5">
                                 <p className="cabeceraInput mb3">Descripcion de tu empresa</p>
                                 <textarea
-                                    // className={`${this.errorCheck("description")}`}
-                                    className="textAddInfo"
+                                    className={`${this.errorCheck("description")}`}
                                     readOnly={this.state.readOnly}
                                     rows="7"
                                     cols="50"
                                     maxLength="2000"
-                                    placeholder={this.state?.desc_general}
-                                    name="desc_general"
-                                    value={this.state?.desc_general}
+                                    placeholder={this.state?.desription}
+                                    name="description"
+                                    value={this.state?.description}
                                     onChange={this.handleChange}
                                 ></textarea>
                                 <span id="descriptionRemainingCharacters"></span>
+                            </div>
+                            <div className="vacantesBox mb3">
+                                <div className="vacantesTitle mt3">Vacantes: </div>
+                                <input
+                                    className={`${this.errorCheck("InputOferta")} mt3`}
+                                    readOnly={this.state.readOnly}
+                                    placeholder={this.state?.num_vacantes}
+                                    name="num_vacantes"
+                                    value={this.state?.num_vacantes}
+                                    onChange={this.handleChange}
+                                ></input>
                             </div>
                          {this.showButton()}
                         </div>
