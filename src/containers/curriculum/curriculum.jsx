@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { session, getUrl, verify } from "../../utils/uti";
+import queryString from "query-string";
 import "./curriculum.scss";
 
 
@@ -10,14 +11,48 @@ class Curriculum extends React.Component {
         super(props);
 
         this.state = {
+            isWorked_before: false,
+            isWorking: false,
+            isEstudios: false,
             formacion: "",
-            requisitos: "",
-            isWorked: 0,
-            isWorking: 0,
-            isEstudios: 0
+            requisitos: ""
         }
 
     };
+
+    resetStates() {
+        this.setState({
+            isWorking: false,
+            isWorked_before: false,
+            isEstudios: false,
+            formacion: "",
+            requisitos: ""
+        });
+    }
+
+    async componentDidMount() {
+        this.resetStates();
+
+        const queries = queryString.parse(this.props.location.search);
+        try {
+            // let token = session.get()?.token;
+            let id = session.get()?.visitor_id;
+
+            const res = await axios.get(getUrl(`/curriculum/${queries.id}`));
+            
+            this.setState({ 
+
+                isWorking: res.data[id].isWorking,
+                isWorked_before: res.data[id].isWorked_before,
+                isEstudios: res.data[id].isEstudios,
+                formacion: res.data[id].formacion,
+                experiencia: res.data[id].experiencia
+            
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     handleChange = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
@@ -26,18 +61,22 @@ class Curriculum extends React.Component {
 
     async registraDatos() {
         try {
+
+            let id = session.get()?.visitor_id;
+            console.log(id);
             //llamada a la DB para registrar la empresa
             let lBody = {
+                id: id,
                 formacion: this.state.formacion,
                 requisitos: this.state.requisitos,
-                isWorked: this.state.isWorked,
+                isWorked_before: this.state.isWorked,
                 isWorking: this.state.isWorking,
                 isEstudios: this.state.isEstudios
             };
 
             console.log(lBody);
 
-            let res = await axios.post(getUrl(`/registerCurriculum`), lBody);
+            let res = await axios.post(getUrl(`/nuevoCurriculum`), lBody);
             let data = res.data;
 
             //redirigimos
@@ -101,7 +140,7 @@ class Curriculum extends React.Component {
                             }}>Guardar</button>
                         </div>
                     </div>
-                </div>         
+                </div>
             </div>
         );
     };
