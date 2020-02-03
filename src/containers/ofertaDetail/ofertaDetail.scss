@@ -108,11 +108,29 @@
             flex-direction: row;
         }
 
-        .button {
+        .blueButton {
+            background: var(--colAzuDos);
+            margin-left: 2em;
+        }
+
+        .blueButton:hover{
+            background: var(--colAzu);
+        }
+
+        .redButton {
+            background: var(--colRojCla);
+            margin-left: 2em;
+        }
+
+        .redButton:hover {
+            background: var(--colRoj);
+        }
+
+        .blueButton2 {
             background: var(--colAzuDos);
         }
 
-        .button:hover {
+        .blueButton2:hover {
             background: var(--colAzu);
         }
 

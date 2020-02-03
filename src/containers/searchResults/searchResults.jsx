@@ -8,7 +8,6 @@ import { session } from "../../utils/uti";
 import Select from "react-select";
 import store from "../../redux/store";
 
-
 class SearchResults extends React.Component {
     constructor(props) {
         super(props);
@@ -17,27 +16,30 @@ class SearchResults extends React.Component {
             selSal: "",
             selExp: "",
             selJor: "",
-            keyWord: "",
+            keyWord: ""
         };
 
         this.buscaFiltro = this.buscaFiltro.bind(this);
     }
 
-    handleChange = (ev) => {
+    handleChange = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
-        
     };
 
-    handleChangeDrop = (ev, action) =>{
-    	this.setState({[action.name]: ev.value}, () => {
+    handleChangeDrop = (ev, action) => {
+        this.setState({ [action.name]: ev.value }, () => {
             this.buscaFiltro();
-    })};
+        });
+    };
+
+    pulsaKeyword (){
+        this.buscaFiltro();
+    }
+
+    async buscaFiltro() {
         
-    async buscaFiltro(){
-
-
         //obtenemos los dos parámetros de la última búsqueda realizada
-        //aplicamos los filtros 
+        //aplicamos los filtros
         let salario = this.state.selSal;
         let puesto = this.props.filtros?.puesto;
         let lugar = this.props.filtros?.lugar;
@@ -45,26 +47,22 @@ class SearchResults extends React.Component {
         let jornada = this.state.selJor;
         let keyWord = this.state.keyWord;
 
-        getOfertasFiltradas(puesto,lugar,salario,experiencia,jornada,keyWord).catch(error =>console.error(error));
-        
+        getOfertasFiltradas(puesto, lugar, salario, experiencia, jornada, keyWord).catch(error => console.error(error));
     }
 
     componentDidUpdate() {
-        
         this.render();
-        
     }
 
     pulsaResultado(ofertaData) {
-
         // Guardo en redux
         store.dispatch({
-            type: 'OFERTA_DETAIL',
+            type: "OFERTA_DETAIL",
             payload: ofertaData
         });
 
         // Redirijo
-        
+
         let id_visitor = session.get()?.visitor_id;
         let profileName = session.get()?.visitor;
 
@@ -72,7 +70,6 @@ class SearchResults extends React.Component {
     }
 
     muestraResultados() {
-
         if (!this.props.ofertasResultado[0]) {
             return (
                 <Fragment>
@@ -130,41 +127,54 @@ class SearchResults extends React.Component {
                 <div className="main">
                     <div className="mainSearch">
                         <div className="searchColumn mt5 mr5">
-                        <p className="estadoText ml5">Palabra clave</p>
-                                <input
-                                    className="ofertasDashInput ml5"
-                                    maxLength="240"
-                                    placeholder=""
-                                    name="keyWord"
-                                    value={this.state.keyWord}
-                                    onChange={this.handleChange}
-                                ></input>
+                            <p className="estadoText ml5">Palabra clave</p>
+                            <div>
+                                <input className="ofertasDashInput ml5" maxLength="240" placeholder="" name="keyWord" value={this.state.keyWord} onChange={this.handleChange}></input>
+                                <button onClick={() => {
+                                    this.pulsaKeyword();
+                                }}>Go!</button>
+                            </div>
+
                             <p className="estadoText ml5 mt5">Rango salarial</p>
                             <div className="sel">
-                                <Select placeholder="" name="selSal" onChange={this.handleChangeDrop}
-                                options={[
+                                <Select
+                                    placeholder=""
+                                    name="selSal"
+                                    onChange={this.handleChangeDrop}
+                                    options={[
                                         { value: "12000", label: ">12.000€" },
                                         { value: "24000", label: ">24.000€" },
-                                        { value: "38000", label: ">38.000€" },
-                                    ]} />
+                                        { value: "38000", label: ">38.000€" }
+                                    ]}
+                                />
                             </div>
                             <p className="estadoText ml5 mt5">Años de experiencia</p>
                             <div className="sel">
-                                <Select placeholder="" name="selExp" onChange={this.handleChangeDrop} options={[
+                                <Select
+                                    placeholder=""
+                                    name="selExp"
+                                    onChange={this.handleChangeDrop}
+                                    options={[
                                         { value: "", label: "" },
                                         { value: "1", label: "1 año" },
                                         { value: "2", label: "2 años" },
                                         { value: "3", label: "5 años" },
                                         { value: "4", label: "+ de 5 años" }
-                                    ]} />
+                                    ]}
+                                />
                             </div>
                             <p className="estadoText ml5 mt5">Jornada</p>
                             <div className="sel">
-                                <Select placeholder="" name="selJor" onChange={this.handleChangeDrop} options={[
+                                <Select
+                                    placeholder=""
+                                    name="selJor"
+                                    onChange={this.handleChangeDrop}
+                                    options={[
                                         { value: "Completa", label: "Completa" },
                                         { value: "Media Jornada", label: "Media Jornada" },
-                                        { value: "Teletrabajo", label: "Teletrabajo" },
-                                     ]} />
+                                        { value: "Teletrabajo", label: "Teletrabajo" }
+                                    ]}
+                                />
                             </div>
                         </div>
                         <div className="resultsColumn mr5 mt5">
@@ -182,7 +192,7 @@ const mapStateToProps = state => {
 
     return {
         ofertasResultado: state.ofertas,
-        filtros: state.filtros,
+        filtros: state.filtros
     };
 };
 

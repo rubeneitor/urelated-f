@@ -19,6 +19,7 @@ class OfertaDetail extends React.Component {
             detailOferta: "",
             publicada: "",
             readOnly: true,
+            button: "blueButton",
 
             picture: "",
             titutlo: "",
@@ -123,8 +124,114 @@ class OfertaDetail extends React.Component {
     }
 
     async clickEditar() {
-        //eres la empresa que ha publicado esta oferta y tienes permiso para editarla
-        console.log("NAAAAAAAADA");
+        //estilo del boton ... aviso (boton rojo) y edicion habilitada
+        if (this.state.button === "blueButton") {
+            this.setState({ button: "redButton" });
+            //inputs y cajas de texto editables
+            this.setState({ readOnly: false });
+        } else {
+            //el boton es de color rojo y se procede a editar
+            let verificado = true;
+            // let errors = [];
+
+            // if (!(verificado = verify(this.state.email, 1, "email"))) {
+            //     errors.push("email");
+            //     this.setState({ email_err: "Introduce un email válido." });
+            // } else {
+            //     this.setState({ email_err: "" });
+            // }
+
+            // //nombre de la empresa
+            // if (!(verificado = verify(this.state.name, 1, "string"))) {
+            //     errors.push("name");
+            // }
+
+            // //telefono
+            // if (!(verificado = verify(this.state.phone, 1, "phone"))) {
+            //     errors.push("phone");
+            //     this.setState({ phone_err: "Introduce un teléfono válido." });
+            // } else {
+            //     this.setState({ phone_err: "" });
+            // }
+
+            // //sector de la empresa
+            // if (!(verificado = verify(this.state.sector, 1, "string"))) {
+            //     errors.push("sector");
+            // }
+
+            // if (this.state.description === "") {
+            //     errors.push("description");
+            // }
+
+            // if (errors.length) {
+            //     verificado = false;
+            //     this.setState({ errores: errors });
+            //     return;
+            // }
+
+            if (verificado) {
+                //no hay errores,...llamamos a la base de datos y actualizamos los datos
+                console.log("bien bien bien bien bien bien biennnnn");
+                // try {
+                //     //llamada a la DB para registrar la empresa
+                //     let id = session.get()?.visitor_id;
+
+                //     let lBody = {
+                        
+                //         id: id,
+                //         name: this.state.name,
+                //         email: this.state.email,
+                //         phone: this.state.phone,
+                //         sector: this.state.sector,
+                //         description: this.state.description
+                //     };
+        
+                //     let res = await axios.post(getUrl(`/perfilEMod`), lBody);
+                //     let data = res.data[0];
+
+        
+                //     this.props.history.push(`/`);
+
+                // } catch (err) {
+                //     console.log(err);
+                // }
+            }
+
+            return;
+        }
+    }
+
+    errorCheck(arg) {
+        let estiloError = "";
+
+        if (this.state.button === "blueButton") {
+            estiloError = "inputProfile";
+        } else {
+            estiloError = "inputProfile2";
+        }
+
+        for (let _y of this.state.errores) {
+            // eslint-disable-next-line
+            if (arg == [_y]) {
+                // eslint-disable-next-line
+                if (arg == [_y] && arg == "description") {
+                    estiloError = "textAddInfo3";
+                    return estiloError;
+                }
+
+                estiloError = "inputProfile3";
+                return estiloError;
+            }
+        }
+        if (arg === "description") {
+            if (this.state.button === "redButton") {
+                estiloError = "textAddInfo2";
+                return estiloError;
+            }
+            estiloError = "textAddInfo";
+            return estiloError;
+        }
+        return estiloError;
     }
 
     verSuscritos () {
@@ -146,7 +253,7 @@ class OfertaDetail extends React.Component {
                     <div className="botonesEditarEmpresa">
                         <button
                             // className={this.state.button}
-                            className="button mr5"
+                            className="blueButton2"
                             onClick={() => {
                                 this.verSuscritos();
                             }}
@@ -155,7 +262,7 @@ class OfertaDetail extends React.Component {
                         </button>
                         <button
                             // className={this.state.button}
-                            className="button"
+                            className={this.state.button}
                             onClick={() => {
                                 this.clickEditar();
                             }}
@@ -173,7 +280,7 @@ class OfertaDetail extends React.Component {
                 <Fragment>
                     <button
                         // className={this.state.button}
-                        className="button"
+                        className="blueButton2"
                         onClick={() => {
                             this.suscribirse();
                         }}
