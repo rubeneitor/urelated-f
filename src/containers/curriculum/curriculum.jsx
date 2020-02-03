@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { session, getUrl, verify} from "../../utils/uti";
+import { session, getUrl, verify } from "../../utils/uti";
 import "./curriculum.scss";
 
 
@@ -9,7 +9,7 @@ class Curriculum extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state={
+        this.state = {
             formacion: "",
             requisitos: "",
             isWorked: 0,
@@ -19,12 +19,12 @@ class Curriculum extends React.Component {
 
     };
 
-     handleChange = ev => {
+    handleChange = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
     };
 
-     
-     async registraDatos() {
+
+    async registraDatos() {
         try {
             //llamada a la DB para registrar la empresa
             let lBody = {
@@ -53,51 +53,55 @@ class Curriculum extends React.Component {
         return (
             <div className="curriculumContainer">
                 {/* Aqui se mostrará el curriculum ...nice as it can be. */}
-                <div className="questionario">
-                    <div>
-                        <p>¿Estas trabajando actualmente?</p>
-                        <input type="radio" id="si" name="isWorking" value={this.state.isWorking} 
-                        onChange={this.handleChange}/>
-                        <label>Si</label>
-                        <input type="radio" id="no" name="isWorking" value="no" 
-                        onChange={this.handleChange}/>
-                        <label>No</label>
+                <div className="cartQuest">
+                    <div className="questionario">
+                        <div>
+                            <p className="titulos">¿Estas trabajando actualmente?</p>
+                            <input type="radio" id="si" name="isWorking" value={this.state.isWorking}
+                                onChange={this.handleChange} />
+                            <label>Si</label>
+                            <input type="radio" id="no" name="isWorking" value="no"
+                                onChange={this.handleChange} />
+                            <label>No</label>
+                        </div>
+                        <div>
+                            <p className="titulos">¿Has trabajado anteriormente?</p>
+                            <input type="radio" id="si" name="isWorked-before" value={this.state.isWorked}
+                                onChange={this.handleChange} />
+                            <label>Si</label>
+                            <input type="radio" id="no" name="isWorked-before" value={this.state.isWorked}
+                                onChange={this.handleChange} />
+                            <label>No</label>
+                        </div>
+                        <div>
+                            <p className="titulos">¿Tienes estudios?</p>
+                            <input type="radio" id="si" name="isEstudios" value={this.state.isEstudios}
+                                onChange={this.handleChange} />
+                            <label>Si</label>
+                            <input type="radio" id="no" name="isEstudios" value={this.state.isEstudios}
+                                onChange={this.handleChange} />
+                            <label>No</label>
+                        </div>
                     </div>
-                    <div>
-                        <p>¿Has trabajado anteriormente?</p>
-                        <input type="radio" id="si" name="isWorked-before" value={this.state.isWorked} 
-                        onChange={this.handleChange}/>
-                        <label>Si</label>
-                        <input type="radio" id="no" name="isWorked-before" value={this.state.isWorked} 
-                        onChange={this.handleChange}/>
-                        <label>No</label>
-                    </div>
-                    <div>
-                        <p>¿Tienes estudios?</p>
-                        <input type="radio" id="si" name="isEstudios" value={this.state.isEstudios}
-                        onChange={this.handleChange} />
-                        <label>Si</label>
-                        <input type="radio" id="no" name="isEstudios" value={this.state.isEstudios}
-                        onChange={this.handleChange} />
-                        <label>No</label>
-                    </div>
-                </div>
-                <div className="expProfForm">
-                    <div>
-                        <p>Experiencia profesional</p>
-                        <textarea cols="100" rows="10" onChange={this.handleChange}></textarea>
-                    </div>
-                    <div>
-                        <p>Formacion</p>
-                        <textarea cols="100" rows="10" onChange={this.handleChange}></textarea>
-                    </div>
-                </div>
-                <div>
-                    <button onClick={() => {
-                        this.registraDatos();
-                    }}>Guardar</button>
-                </div>
 
+                </div>
+                <div className="cartExp">
+                    <div className="expProfForm">
+                        <div>
+                            <p className="titulos">Experiencia profesional:</p>
+                            <textarea cols="100" rows="7" onChange={this.handleChange}></textarea>
+                        </div>
+                        <div>
+                            <p className="titulos">Formacion:</p>
+                            <textarea cols="100" rows="7" onChange={this.handleChange}></textarea>
+                        </div>
+                        <div className="containerButton">
+                            <button className="colorButton" onClick={() => {
+                                this.registraDatos();
+                            }}>Guardar</button>
+                        </div>
+                    </div>
+                </div>         
             </div>
         );
     };
