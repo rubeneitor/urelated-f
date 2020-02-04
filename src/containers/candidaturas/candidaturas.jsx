@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { Fragment } from "react";
 import { session, getUrl} from "../../utils/uti";
 import axios from "axios";
 import queryString from 'query-string';
@@ -13,6 +13,7 @@ class Candidaturas extends React.Component {
         
         this.state = {
             userType : session.get()?.userType,
+            ofertaEmpresaInfo : "",
         }
     };
 
@@ -28,7 +29,9 @@ class Candidaturas extends React.Component {
             //axios...
             const res = await axios.get(getUrl(`/suscripcionesPorE?id_oferta=${queries.idoferta}`));
 
-            console.log(res);
+            this.setState({ofertasEmpresaInfo : res.data});
+
+            console.log(this.state.ofertasEmpresaInfo);
 
         }else{
             //buscamos las candidaturas por candidato
@@ -41,16 +44,61 @@ class Candidaturas extends React.Component {
         }
 
     }
+
+    muestraResultadoE () {
+
+        if(!this.state.ofertasEmpresaInfo[0]){
+            return (
+            <Fragment>
+                <div>
+                    <div className="main">
+                        <div className="mainCandidaturasEmpresa">
+                            <div className="noCandidaturas">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+            );
+
+        }else{
+            return(
+
+                <Fragment>
+                <div>
+                    <div className="main">
+                        <div className="mainCandidaturasEmpresa">
+                            <div className="columnOfertaInfo mt5">
+                                {/* <p className="infoOferta">{this.state.ofertaEmpresaInfo[0]}</p> */}
+                                {/* <p className="infoOferta">{}</p> */}
+                                {/* <p className="infoOferta">{}</p> */}
+                                {/* <p className="infoOferta">{}</p> */}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </Fragment>
+
+            );
+        }
+
+        
+    }
     
     render() {
-        return(
-            <div>
-                Las candidaturas y su estado se mostrarán aqui.
-            </div>
-        );
+        
+        if(this.state.userType === "Empresa"){
+            return (
+                <Fragment>
+                    
+                    {this.muestraResultadoE()}
+
+                </Fragment>
+            );
+        }
+        
     };
-    
-    
 };
 
 

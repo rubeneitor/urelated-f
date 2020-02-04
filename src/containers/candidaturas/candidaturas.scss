@@ -1,0 +1,16 @@
+.mainCandidaturasEmpresa {
+    display: flex;
+	flex-direction: row;
+    margin-top: 1em;
+    
+    .columnOfertaInfo {
+        display: flex;
+		flex-direction: column;
+		width: 20em;
+		height: 35em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+		margin-bottom: 5em;
+		margin-left: 2.7em;
+    }
+}
