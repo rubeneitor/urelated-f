@@ -34,6 +34,8 @@ class Home extends Component {
             res = "error";
         }
 
+        console.log(res.data);
+
         store.dispatch({
             type:'GET_OFERTAS_FILTRADAS',
             payload: res.data
@@ -120,7 +122,7 @@ class Home extends Component {
                             <div className="bloqueSelectHome">
                                 <img
                                     onClick={() => {
-                                        this.pulsaImagen(`/sectores/${"software"}`);
+                                        this.pulsaImagen(`/sectores/${"Software"}`);
                                     }}
                                     className="imgHomeSelect"
                                     src="img/coder.png"
