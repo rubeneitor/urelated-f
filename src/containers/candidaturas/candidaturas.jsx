@@ -24,10 +24,17 @@ class Candidaturas extends React.Component {
 
             //axios...
             const res = await axios.get(getUrl(`/suscripcionesPorE?id_empresa=${id_empresa}`));
+
             console.log(res);
 
         }else{
             //buscamos las candidaturas por candidato
+            const id_usuario = session.get()?.visitor_id;
+
+            //axios...
+            const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}`));
+            
+            console.log(res);
         }
 
     }
