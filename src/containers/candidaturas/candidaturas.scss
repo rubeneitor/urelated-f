@@ -34,10 +34,21 @@
         display: flex;
 		flex-direction: column;
 		width: 20em;
-		height: 35em;
+		height: 16em;
 		background-color: var(--colBla);
 		border-radius: 1em;
 		margin-bottom: 5em;
-		margin-left: 2.7em;
+        margin-left: 2.7em;
+        
+        .ofertaIContenedor {
+            display: flex;
+            flex-direction: row;
+
+            .tituloInfo {
+                color: var(--pri9);
+                font-weight: bold;
+            }
+
+        }
     }
 }

@@ -13,7 +13,7 @@ class Candidaturas extends React.Component {
         
         this.state = {
             userType : session.get()?.userType,
-            ofertaEmpresaInfo : "",
+            ofertasEmpresaInfo : "",
         }
     };
 
@@ -31,7 +31,7 @@ class Candidaturas extends React.Component {
 
             this.setState({ofertasEmpresaInfo : res.data});
 
-            console.log(this.state.ofertasEmpresaInfo);
+            // console.log(this.state.ofertasEmpresaInfo);
 
         }else{
             //buscamos las candidaturas por candidato
@@ -50,8 +50,8 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoE () {
-
-        if(!this.state?.ofertaEmpresaInfo[0]){
+        console.log(this.state.ofertasEmpresaInfo[0]);
+        if(!this.state.ofertasEmpresaInfo){
             return (
             <Fragment>
                 <div>
@@ -75,10 +75,22 @@ class Candidaturas extends React.Component {
                     <div className="main">
                         <div className="mainCandidaturasEmpresa">
                             <div className="columnOfertaInfo mt5">
-                                {/* <p className="infoOferta">{this.state.ofertaEmpresaInfo[0]}</p> */}
-                                {/* <p className="infoOferta">{}</p> */}
-                                {/* <p className="infoOferta">{}</p> */}
-                                {/* <p className="infoOferta">{}</p> */}
+                                <div className="ofertaIContenedor mt5 ml5">
+                                <p className="tituloInfo mr3">Puesto:</p>
+                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].titulo}</p>
+                                </div>
+                                <div className="ofertaIContenedor mt5 ml5">
+                                <p className="tituloInfo mr3">Publicación:</p>
+                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].fecha_publi}</p>
+                                </div>
+                                <div className="ofertaIContenedor mt5 ml5">
+                                <p className="tituloInfo mr3">Ciudad:</p>
+                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].ciudad}</p>
+                                </div>
+                                <div className="ofertaIContenedor mt5 ml5">
+                                <p className="tituloInfo mr3">Sector:</p>
+                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].sector}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
