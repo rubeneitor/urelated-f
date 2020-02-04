@@ -148,4 +148,70 @@
 
         }
     }
+
+    .columnEstado {
+        display: flex;
+		flex-direction: column;
+		width: 20em;
+		height: 16em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+		margin-bottom: 5em;
+        margin-left: 2.7em;
+    }
+
+    .columnMisCandidaturas {
+        display: flex;
+		flex-direction: column;
+		//margin-bottom: 5em;
+        width: 60em;
+
+        .cardCandidaturaFinal {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 57em;
+            height: 5em;
+            background-color: var(--colBla);
+            border-radius: 1em;
+        }
+        
+        .cardCandidaturaUser {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+			width: 57em;
+			height: 5em;
+			background-color: var(--colBla);
+			border-radius: 1em;
+            transition: 0.3s;
+            
+            .datosCardCandidatura {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                width: 40em;
+
+                .datosCandidato {
+                    
+                }
+            }
+
+            .eliminarCandidatura {
+                width: 16em;
+
+                .redButton {
+                    background-color: var(--colRojCla);
+                }
+
+                .redButton:hover{
+                    background-color: var(--colRoj);
+                }
+            }
+
+            
+        }
+    }
 }

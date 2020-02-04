@@ -19,7 +19,7 @@ class Candidaturas extends React.Component {
                 3: "Rechazada"
             },
             ofeSta: "",
-            loading: true,
+            loading: true
         };
     }
 
@@ -28,49 +28,42 @@ class Candidaturas extends React.Component {
     };
 
     async componentDidMount() {
-
         //comprobamos si se trata de una empresa o un candidato
         if (this.state.userType === "Empresa") {
             //buscamos las candidaturas por empresa y la id de oferta
             const queries = queryString.parse(this.props.location.search);
-            
+
             try {
-                
                 const res = await axios.get(getUrl(`/suscripcionesPorE?id_oferta=${queries.idoferta}`));
 
-                this.setState({ ofertasEmpresaInfo : res.data},()=>{});
-                
+                this.setState({ ofertasEmpresaInfo: res.data }, () => {});
+
                 this.setState({ loading: false });
             } catch (error) {
                 console.log(error);
             }
             //axios...
-
         } else {
             //buscamos las candidaturas por candidato
             const id_usuario = session.get()?.visitor_id;
-            
+
             //axios...
 
             try {
-
                 const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}`));
 
-                this.setState({ suscripcionesCandidato : res.data},()=>{});
-                
-                this.setState({ loading: false })
-                ;
-            } catch (error){
+                this.setState({ suscripcionesCandidato: res.data }, () => {});
+
+                this.setState({ loading: false });
+            } catch (error) {
                 console.log(error);
             }
-            
-            
         }
     }
 
     componentDidUpdate() {
-		this.render();
-	};
+        this.render();
+    }
 
     async editarEstado(id) {
         //axios edicion de estado en la suscripción
@@ -93,19 +86,22 @@ class Candidaturas extends React.Component {
         }
     }
 
-    clickVolver() {
+    async clickEliminar(id) {
+        let idSuscripcion = id;
 
-        if(this.state.userType === "Empresa"){
+        console.log(idSuscripcion);
+    }
+
+    clickVolver() {
+        if (this.state.userType === "Empresa") {
             this.props.history.push(`/ofertas`);
-        }else{
-            console.log("llegamos aqui");
+        } else {
             this.props.history.push(`/`);
         }
-        
     }
 
     muestraResultadoE() {
-        if ((!this.state.ofertasEmpresaInfo[0]) && (this.state.loading == false)) {
+        if (!this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
             return (
                 <Fragment>
                     <div>
@@ -127,9 +123,9 @@ class Candidaturas extends React.Component {
                     </div>
                 </Fragment>
             );
-        } 
+        }
 
-        if((this.state.ofertasEmpresaInfo[0]) && (this.state.loading == false)){
+        if (this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
             return (
                 <Fragment>
                     <div>
@@ -209,9 +205,7 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoU() {
-        
-
-        if ((!this.state.suscripcionesCandidato[0]) && (this.state.loading == false)) {
+        if (!this.state.suscripcionesCandidato[0] && this.state.loading == false) {
             return (
                 <Fragment>
                     <div>
@@ -235,13 +229,48 @@ class Candidaturas extends React.Component {
             );
         }
 
-        if ((this.state.suscripcionesCandidato[0]) && (this.state.loading == false)) {
+        if (this.state.suscripcionesCandidato[0] && this.state.loading == false) {
             return (
                 <Fragment>
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasCandidato">
-                                
+                                <div className="columnEstado mt5"></div>
+                                <div className="columnMisCandidaturas ml5 mt5">
+                                    {this.state.suscripcionesCandidato?.map(_x => {
+                                        return (
+                                            <div
+                                                className="cardCandidaturaUser mb5"
+                                                key={_x.id + Math.random() * (1000 - 1) + 1}
+                                                
+                                            >
+                                                <div className="datosCardCandidatura">
+                                                    <p className="datosCandidato mr3">{_x.name}</p>
+                                                    <p className="datosCandidato mr3">{_x.titulo}</p>
+                                                    <p className="datosCandidato mr3">{_x.ciudad}</p>
+                                                    <p className="datosCandidato mr3">{_x.tipo_contrato}</p>
+                                                    <p className="datosCandidato mr3">{_x.fecha_sus}</p>
+                                                </div>
+                                                <div className="eliminarCandidatura">
+                                                    <button onClick={() => {
+                                                this.clickEliminar(_x.idsuscrip);
+                                            }}
+                                            className="redButton">Eliminar</button>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                    <div className="cardCandidaturaFinal mt5">
+                                        <button
+                                            onClick={() => {
+                                                this.clickVolver();
+                                            }}
+                                            className="blueButton"
+                                        >
+                                            Volver
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,12 +282,10 @@ class Candidaturas extends React.Component {
     render() {
         if (this.state.userType === "Empresa") {
             return <Fragment>{this.muestraResultadoE()}</Fragment>;
-        }else{
-            return <Fragment>{this.muestraResultadoU()}</Fragment>
+        } else {
+            return <Fragment>{this.muestraResultadoU()}</Fragment>;
         }
     }
 }
 
 export default Candidaturas;
-
-
