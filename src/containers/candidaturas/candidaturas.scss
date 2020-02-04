@@ -51,4 +51,41 @@
 
         }
     }
+
+    .columnCandidatos {
+        display: flex;
+		flex-direction: column;
+		//margin-bottom: 5em;
+        width: 60em;
+        
+        .cardCandidatura {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+			width: 50em;
+			height: 5em;
+			background-color: var(--colBla);
+			border-radius: 1em;
+            transition: 0.3s;
+            
+            .datosCandidato {
+                // margin-right: 5em;
+            }
+
+            .sel {
+                width: 9em;
+            }
+
+            .blueButton2 {
+                background-color: var(--colAzuDos);
+                height: 1.8em;
+            }
+
+            .blueButton2:hover {
+                background-color: var(--colAzu);
+            }
+
+        }
+    }
 }

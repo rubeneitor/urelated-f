@@ -1,26 +1,26 @@
 
 import React, { Fragment } from "react";
-import { session, getUrl} from "../../utils/uti";
+import { session, getUrl } from "../../utils/uti";
 import axios from "axios";
 import queryString from 'query-string';
 import "./candidaturas.scss";
-
+import Select from "react-select";
 
 class Candidaturas extends React.Component {
-    
-    constructor (props) {
+
+    constructor(props) {
         super(props);
-        
+
         this.state = {
-            userType : session.get()?.userType,
-            ofertasEmpresaInfo : "",
+            userType: session.get()?.userType,
+            ofertasEmpresaInfo: "",
         }
     };
 
-    async componentDidMount(){
-        
+    async componentDidMount() {
+
         //comprobamos si se trata de una empresa o un candidato
-        if(this.state.userType === "Empresa"){
+        if (this.state.userType === "Empresa") {
 
             //buscamos las candidaturas por empresa
             //obtenemos la id de oferta
@@ -29,92 +29,116 @@ class Candidaturas extends React.Component {
             //axios...
             const res = await axios.get(getUrl(`/suscripcionesPorE?id_oferta=${queries.idoferta}`));
 
-            this.setState({ofertasEmpresaInfo : res.data});
+            this.setState({ ofertasEmpresaInfo: res.data });
 
             // console.log(this.state.ofertasEmpresaInfo);
 
-        }else{
+        } else {
             //buscamos las candidaturas por candidato
             const id_usuario = session.get()?.visitor_id;
 
             //axios...
             const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}`));
-            
+
             console.log(res);
         }
 
     }
 
-    clickVolver(){
+    clickVolver() {
         this.props.history.push(`/ofertas`);
     }
 
-    muestraResultadoE () {
+    muestraResultadoE() {
         console.log(this.state.ofertasEmpresaInfo[0]);
-        if(!this.state.ofertasEmpresaInfo){
+        if (!this.state.ofertasEmpresaInfo) {
             return (
-            <Fragment>
-                <div>
-                    <div className="main">
-                        <div className="mainCandidaturasEmpresa">
-                            <div className="noCandidaturas">
-                                <p className="sinCandidatos">Vaya, aun no hay candidatos inscritos a esta oferta.</p>
-                                <button onClick={()=>{this.clickVolver()}} className="blueButton mt5">Volver</button>
+                <Fragment>
+                    <div>
+                        <div className="main">
+                            <div className="mainCandidaturasEmpresa">
+                                <div className="noCandidaturas">
+                                    <p className="sinCandidatos">Vaya, aun no hay candidatos inscritos a esta oferta.</p>
+                                    <button onClick={() => { this.clickVolver() }} className="blueButton mt5">Volver</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </Fragment>
+                </Fragment>
             );
 
-        }else{
-            return(
+        } else {
+            return (
 
                 <Fragment>
-                <div>
-                    <div className="main">
-                        <div className="mainCandidaturasEmpresa">
-                            <div className="columnOfertaInfo mt5">
-                                <div className="ofertaIContenedor mt5 ml5">
-                                <p className="tituloInfo mr3">Puesto:</p>
-                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].titulo}</p>
+                    <div>
+                        <div className="main">
+                            <div className="mainCandidaturasEmpresa">
+                                <div className="columnOfertaInfo mt5">
+                                    <div className="ofertaIContenedor mt5 ml5">
+                                        <p className="tituloInfo mr3">Puesto:</p>
+                                        <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].titulo}</p>
+                                    </div>
+                                    <div className="ofertaIContenedor mt5 ml5">
+                                        <p className="tituloInfo mr3">Publicación:</p>
+                                        <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].fecha_publi}</p>
+                                    </div>
+                                    <div className="ofertaIContenedor mt5 ml5">
+                                        <p className="tituloInfo mr3">Ciudad:</p>
+                                        <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].ciudad}</p>
+                                    </div>
+                                    <div className="ofertaIContenedor mt5 ml5">
+                                        <p className="tituloInfo mr3">Sector:</p>
+                                        <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].sector}</p>
+                                    </div>
                                 </div>
-                                <div className="ofertaIContenedor mt5 ml5">
-                                <p className="tituloInfo mr3">Publicación:</p>
-                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].fecha_publi}</p>
-                                </div>
-                                <div className="ofertaIContenedor mt5 ml5">
-                                <p className="tituloInfo mr3">Ciudad:</p>
-                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].ciudad}</p>
-                                </div>
-                                <div className="ofertaIContenedor mt5 ml5">
-                                <p className="tituloInfo mr3">Sector:</p>
-                                <p className="infoOferta ">{this.state.ofertasEmpresaInfo[0].sector}</p>
+                                <div className="columnCandidatos ml5 mt5">
+                                    {this.state.ofertasEmpresaInfo.map(_x => {
+                                        return (
+                                            <div
+                                                className="cardCandidatura mb5"
+                                                key={_x.id + "," + _x.titulo}
+                                            >
+                                                <p className="datosCandidato mr2">{_x.name}</p>
+                                                <p className="datosCandidato mr7">{_x.surname}</p>
+                                                <p className="datosCandidato mr9">{_x.fecha_sus}</p>
+                                                <div className="sel ml5">
+                                                    <Select placeholder="" name="ofeSta" onChange={this.handleChangeDrop} options={[
+                                                        { value: "1", label: "Revisando" },
+                                                        { value: "2", label: "Aceptada" },
+                                                        { value: "3", label: "Rechazada" }
+                                                    ]} />
+                                                </div>
+                                                <button className="blueButton2 ml5">Cambiar estado</button>
+                                            </div>
+
+                                        );
+
+                                    })}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </Fragment>
 
             );
         }
 
-        
+
     }
-    
+
     render() {
-        
-        if(this.state.userType === "Empresa"){
+
+        if (this.state.userType === "Empresa") {
             return (
                 <Fragment>
-                    
+
                     {this.muestraResultadoE()}
 
                 </Fragment>
             );
         }
-        
+
     };
 };
 
