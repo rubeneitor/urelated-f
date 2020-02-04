@@ -195,7 +195,7 @@ class ProfileE extends React.Component {
                     };
         
                     let res = await axios.post(getUrl(`/perfilEMod`), lBody);
-                    let data = res.data[0];
+                    // let data = res.data[0];
 
                     
         

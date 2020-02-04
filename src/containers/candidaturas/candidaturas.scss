@@ -2,7 +2,7 @@
     display: flex;
 	flex-direction: row;
     margin-top: 1em;
-    height: 35.7em;
+    height: 39.8em;
 
     .blueButton {
         background: var(--colAzuDos);
@@ -57,34 +57,94 @@
 		flex-direction: column;
 		//margin-bottom: 5em;
         width: 60em;
+
+        .cardCandidaturaFinal {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 57em;
+            height: 5em;
+            background-color: var(--colBla);
+            border-radius: 1em;
+        }
         
         .cardCandidatura {
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-			width: 50em;
+			width: 57em;
 			height: 5em;
 			background-color: var(--colBla);
 			border-radius: 1em;
             transition: 0.3s;
             
-            .datosCandidato {
-                // margin-right: 5em;
+            .datosCardCandidatura {
+
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                width: 35em;
+                
+
+            }
+            
+            .editorEstado {
+
+                display: flex;
+                flex-direction: row;
+                width: 25em;
+                
+
+                .sel {
+                    width: 9em;
+                }
+    
+                .blueButton2 {
+                    background-color: var(--colAzuDos);
+                    height: 1.8em;
+                }
+    
+                .blueButton2:hover {
+                    background-color: var(--colAzu);
+                }
             }
 
-            .sel {
-                width: 9em;
-            }
+            
 
-            .blueButton2 {
-                background-color: var(--colAzuDos);
-                height: 1.8em;
-            }
+        }
+    }
+}
 
-            .blueButton2:hover {
-                background-color: var(--colAzu);
-            }
+.mainCandidaturasCandidato {
+    display: flex;
+	flex-direction: row;
+    margin-top: 1em;
+    height: 39.8em;
+
+    .blueButton {
+        background: var(--colAzuDos);
+    }
+
+    .blueButton:hover{
+        background: var(--colAzu);
+    }
+
+    .noCandidaturas {
+        background-color: var(--colBla);
+        border-radius: 1em;
+        width: 40em;
+        height: 20em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5em;
+
+        .sinCandidatos {
+            font-size: 1.3em;
+            color: var(--pri9);
 
         }
     }
