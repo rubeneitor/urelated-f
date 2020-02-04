@@ -2,6 +2,33 @@
     display: flex;
 	flex-direction: row;
     margin-top: 1em;
+    height: 35.7em;
+
+    .blueButton {
+        background: var(--colAzuDos);
+    }
+
+    .blueButton:hover{
+        background: var(--colAzu);
+    }
+
+    .noCandidaturas {
+        background-color: var(--colBla);
+        border-radius: 1em;
+        width: 40em;
+        height: 20em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5em;
+
+        .sinCandidatos {
+            font-size: 1.3em;
+            color: var(--pri9);
+
+        }
+    }
     
     .columnOfertaInfo {
         display: flex;

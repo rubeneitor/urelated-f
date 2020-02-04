@@ -45,16 +45,21 @@ class Candidaturas extends React.Component {
 
     }
 
+    clickVolver(){
+        this.props.history.push(`/ofertas`);
+    }
+
     muestraResultadoE () {
 
-        if(!this.state.ofertasEmpresaInfo[0]){
+        if(!this.state?.ofertaEmpresaInfo[0]){
             return (
             <Fragment>
                 <div>
                     <div className="main">
                         <div className="mainCandidaturasEmpresa">
                             <div className="noCandidaturas">
-
+                                <p className="sinCandidatos">Vaya, aun no hay candidatos inscritos a esta oferta.</p>
+                                <button onClick={()=>{this.clickVolver()}} className="blueButton mt5">Volver</button>
                             </div>
                         </div>
                     </div>
