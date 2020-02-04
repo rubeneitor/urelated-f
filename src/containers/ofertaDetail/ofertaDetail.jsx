@@ -236,7 +236,10 @@ class OfertaDetail extends React.Component {
     }
 
     verSuscritos () {
-        console.log("VETE A VER LOS SUSCRITOS ANDA Y VE");
+        
+        //redireccionamos a candidaturas para empresa
+        this.props.history.push(`/candidaturas?idoferta=${this.props.ofertaDetail?.id}`);
+        
     }
 
     showButton() {
@@ -259,7 +262,7 @@ class OfertaDetail extends React.Component {
                                 this.verSuscritos();
                             }}
                         >
-                            Ver suscritos a esta oferta
+                            Gestionar suscripciones
                         </button>
                         <button
                             // className={this.state.button}

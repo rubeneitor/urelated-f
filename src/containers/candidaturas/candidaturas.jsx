@@ -2,6 +2,7 @@
 import React from "react";
 import { session, getUrl} from "../../utils/uti";
 import axios from "axios";
+import queryString from 'query-string';
 import "./candidaturas.scss";
 
 
@@ -19,11 +20,13 @@ class Candidaturas extends React.Component {
         
         //comprobamos si se trata de una empresa o un candidato
         if(this.state.userType === "Empresa"){
+
             //buscamos las candidaturas por empresa
-            const id_empresa = session.get()?.visitor_id;
+            //obtenemos la id de oferta
+            const queries = queryString.parse(this.props.location.search);
 
             //axios...
-            const res = await axios.get(getUrl(`/suscripcionesPorE?id_empresa=${id_empresa}`));
+            const res = await axios.get(getUrl(`/suscripcionesPorE?id_oferta=${queries.idoferta}`));
 
             console.log(res);
 
