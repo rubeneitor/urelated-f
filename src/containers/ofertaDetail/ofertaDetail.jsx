@@ -78,17 +78,15 @@ class OfertaDetail extends React.Component {
             let descripcionNull = "";
 
             if (!this.props.ofertaDetail?.desc_general) {
-                
                 descripcionNull = "Oferta sin descripción general";
-            }else {
+            } else {
                 descripcionNull = this.props.ofertaDetail?.desc_general;
             }
 
             let now = Date();
-            
 
             let publicada = moment(now).diff(this.props.ofertaDetail?.created_at, "hours");
-            
+
             this.setState(
                 {
                     num_vacantes: this.props.ofertaDetail?.num_vacantes,
@@ -97,8 +95,6 @@ class OfertaDetail extends React.Component {
                 },
                 () => {}
             );
-
-            
 
             const res = await axios.get(getUrl(`/numSuscritos?id_oferta=${id_oferta}`));
 
@@ -153,12 +149,11 @@ class OfertaDetail extends React.Component {
             //vacantes
             if (!(verificado = verify(this.state.num_vacantes, 1, "phone"))) {
                 errors.push("num_vacantes");
-                
             } else {
                 // this.setState({ phone_err: "" });
             }
 
-            if(this.state.num_vacantes == 0){
+            if (this.state.num_vacantes == 0) {
                 errors.push("num_vacantes");
             }
 
@@ -174,24 +169,21 @@ class OfertaDetail extends React.Component {
 
             if (verificado) {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
-                
+
                 try {
                     //llamada a la DB para registrar la empresa
                     let id = session.get()?.visitor_id;
 
                     let lBody = {
-                        
                         id: this.props.ofertaDetail?.id,
                         num_vacantes: this.state.num_vacantes,
                         description: this.state.description
                     };
-        
+
                     await axios.post(getUrl(`/modOfertaE`), lBody);
                     // let data = res.data[0];
 
-        
                     this.props.history.push(`/`);
-
                 } catch (err) {
                     console.log(err);
                 }
@@ -235,11 +227,9 @@ class OfertaDetail extends React.Component {
         return estiloError;
     }
 
-    verSuscritos () {
-        
+    verSuscritos() {
         //redireccionamos a candidaturas para empresa
         this.props.history.push(`/candidaturas?idoferta=${this.props.ofertaDetail?.id}`);
-        
     }
 
     showButton() {
@@ -274,7 +264,6 @@ class OfertaDetail extends React.Component {
                             Editar
                         </button>
                     </div>
-                    
                 </Fragment>
             );
         }
@@ -305,7 +294,7 @@ class OfertaDetail extends React.Component {
                         <div className="cardODetailHead">
                             <div className="ofertaHeadUp">
                                 <div>
-                                    <img className="ofertaHeadImg ml5 mt1" src={this.props.ofertaDetail?.picture} alt="logoEmpresa" />
+                                    <img className="ofertaHeadImg ml5 mt1" src={this.props.ofertaDetail?.picture ? this.props.ofertaDetail?.picture : "img/placeOffer.png"} alt="logoEmpresa" />
                                 </div>
                                 <div className="ofertaHeadUpText mt5 ml3">
                                     <div className="ofertaHeadUpTitulo">{this.props.ofertaDetail?.titulo}</div>
@@ -325,7 +314,6 @@ class OfertaDetail extends React.Component {
                                 <div className="ofertaHeadDownD mt1">
                                     <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.sector}</div>
                                     <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.salario}€</div>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -356,11 +344,10 @@ class OfertaDetail extends React.Component {
                                     onChange={this.handleChange}
                                 ></input>
                             </div>
-                         {this.showButton()}
+                            {this.showButton()}
                         </div>
                     </div>
                 </div>
-               
             </div>
         );
     }

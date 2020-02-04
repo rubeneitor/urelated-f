@@ -18,7 +18,8 @@ class Candidaturas extends React.Component {
                 2: "Aceptada",
                 3: "Rechazada"
             },
-            ofeSta: ""
+            ofeSta: "",
+            loading: true,
         };
     }
 
@@ -27,27 +28,49 @@ class Candidaturas extends React.Component {
     };
 
     async componentDidMount() {
+
         //comprobamos si se trata de una empresa o un candidato
         if (this.state.userType === "Empresa") {
             //buscamos las candidaturas por empresa y la id de oferta
             const queries = queryString.parse(this.props.location.search);
             
+            try {
+                
+                const res = await axios.get(getUrl(`/suscripcionesPorE?id_oferta=${queries.idoferta}`));
+
+                this.setState({ ofertasEmpresaInfo : res.data},()=>{});
+                
+                this.setState({ loading: false });
+            } catch (error) {
+                console.log(error);
+            }
             //axios...
-            const res = await axios.get(getUrl(`/suscripcionesPorE?id_oferta=${queries.idoferta}`));
 
-            this.setState({ ofertasEmpresaInfo: res.data });
-
-            // console.log(this.state.ofertasEmpresaInfo);
         } else {
             //buscamos las candidaturas por candidato
             const id_usuario = session.get()?.visitor_id;
-
+            
             //axios...
-            const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}`));
 
-            this.setState({ suscripcionesCandidato : res.data});
+            try {
+
+                const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}`));
+
+                this.setState({ suscripcionesCandidato : res.data},()=>{});
+                
+                this.setState({ loading: false })
+                ;
+            } catch (error){
+                console.log(error);
+            }
+            
+            
         }
     }
+
+    componentDidUpdate() {
+		this.render();
+	};
 
     async editarEstado(id) {
         //axios edicion de estado en la suscripción
@@ -82,7 +105,7 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoE() {
-        if (!this.state.ofertasEmpresaInfo) {
+        if ((!this.state.ofertasEmpresaInfo[0]) && (this.state.loading == false)) {
             return (
                 <Fragment>
                     <div>
@@ -104,7 +127,9 @@ class Candidaturas extends React.Component {
                     </div>
                 </Fragment>
             );
-        } else {
+        } 
+
+        if((this.state.ofertasEmpresaInfo[0]) && (this.state.loading == false)){
             return (
                 <Fragment>
                     <div>
@@ -184,8 +209,9 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoU() {
+        
 
-        if (!this.state.suscripcionesCandidato[0]) {
+        if ((!this.state.suscripcionesCandidato[0]) && (this.state.loading == false)) {
             return (
                 <Fragment>
                     <div>
@@ -207,13 +233,15 @@ class Candidaturas extends React.Component {
                     </div>
                 </Fragment>
             );
-        } else {
+        }
+
+        if ((this.state.suscripcionesCandidato[0]) && (this.state.loading == false)) {
             return (
                 <Fragment>
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasCandidato">
-                                <p>HOLA DON PEPITO</p>
+                                
                             </div>
                         </div>
                     </div>
@@ -232,3 +260,5 @@ class Candidaturas extends React.Component {
 }
 
 export default Candidaturas;
+
+
