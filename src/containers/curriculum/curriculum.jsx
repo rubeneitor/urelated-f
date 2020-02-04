@@ -52,6 +52,10 @@ class Curriculum extends React.Component {
         } catch (err) {
             console.error(err);
         }
+
+        let id_visitor = session.get()?.visitor_id;
+        let profileName = session.get()?.visitor;
+        this.props.history.push(`/profileC?id=${id_visitor}&name=${profileName}`);
     }
 
     handleChange = ev => {
