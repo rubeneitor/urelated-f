@@ -1,19 +1,104 @@
 .curriculumContainer {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    align-items: center;
+    height: 36.6em;
     justify-content: center;
-    background: #F1F1F1;
+    align-items: center;
+    background: var(--colGri);
 
-    .questionario{
-        display: flex;
-        flex-direction: column;
-        border-radius: 2%;
-        height: 28em;
-        justify-content: center;
-        width: 14em;
-    
+    .cardQuest{
+
+        background: var(--colBla);
+        border-radius: 0.6em;
+        width: 18em;
+        height: 16em;
+        margin-top: -18em;
+   
+
+        .cuestionario{
+            display: flex;
+            flex-direction: column;
+            border-radius: 2%;
+            width: 18em;
+
+
+            .checkBoxContainer {
+
+	    		margin-right: 4em;
+	    		width: 15em;
+                /* Customize the label (the container) */
+             .container {
+                // display: block;
+                position: relative;
+                // padding-left: 35px;
+                padding-left: 2em;
+
+                cursor: pointer;
+                font-size: 1em;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                }
+            
+                /* Hide the browser's default checkbox */
+                .container input {
+                  position: absolute;
+                  opacity: 0;
+                  cursor: pointer;
+                  height: 0;
+                  width: 0;
+                }
+            
+                /* Create a custom checkbox */
+                .checkmark {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  height: 1em;
+	    		  width: 1em;
+	    		  margin-top: 0.2em;
+                  background-color: var(--colGri);
+                }
+            
+                /* On mouse-over, add a grey background color */
+                .container:hover input ~ .checkmark {
+                  background-color: var(--colDarGri);
+                }
+            
+                /* When the checkbox is checked, add a blue background */
+                .container input:checked ~ .checkmark {
+                  background-color: var(--colAzuDos);
+                }
+            
+                /* Create the checkmark/indicator (hidden when not checked) */
+                .checkmark:after {
+                  content: "";
+                  position: absolute;
+                  display: none;
+                }
+            
+                /* Show the checkmark when checked */
+                .container input:checked ~ .checkmark:after {
+                  display: block;
+                }
+            
+                /* Style the checkmark/indicator */
+                .container .checkmark:after {
+                  left: 4px;
+                  top: 0px;
+                  width: 5px;
+                  height: 10px;
+                  border: solid white;
+                  border-width: 0 3px 3px 0;
+                  -webkit-transform: rotate(45deg);
+                  -ms-transform: rotate(45deg);
+                  transform: rotate(45deg);
+                }
+            }
+        
+
+        }
 
     }
 
@@ -24,22 +109,15 @@
         height: 28em;
     }
 
-    .cartQuest{
+    
 
+    .cardExp{
         background: var(--colBla);
         border-radius: 0.6em;
         margin: 2em;
-        margin-right: 1em;
+        margin-left: 2em;
         padding: 2em;
-        
-    }
-
-    .cartExp{
-        background: var(--colBla);
-        border-radius: 0.6em;
-        margin: 2em;
-        margin-left: 1em;;
-        padding: 2em;
+        padding-bottom: 4em;
     }
 
     .containerButton{
@@ -48,9 +126,15 @@
         flex-direction: row;
         justify-content: center;
 
-        .colorButton{
-            background: var(--colAzu);
-        }
+        .blueButton {
+			
+			background: var(--colAzuDos);
+		}
+
+		.blueButton:hover{
+			
+			background: var(--colAzu);
+		}
         
     }
 

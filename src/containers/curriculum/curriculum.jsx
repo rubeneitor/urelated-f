@@ -11,9 +11,9 @@ class Curriculum extends React.Component {
         super(props);
 
         this.state = {
-            isWorked_before: false,
-            isWorking: false,
-            isEstudios: false,
+            check1: false,
+            check2: false,
+            check3: false,
             formacion: "",
             requisitos: ""
         }
@@ -22,9 +22,9 @@ class Curriculum extends React.Component {
 
     resetStates() {
         this.setState({
-            isWorking: false,
-            isWorked_before: false,
-            isEstudios: false,
+            check1: false,
+            check2: false,
+            check3: false,
             formacion: "",
             requisitos: ""
         });
@@ -52,10 +52,22 @@ class Curriculum extends React.Component {
         } catch (err) {
             console.error(err);
         }
+
+        // let id_visitor = session.get()?.visitor_id;
+        // let profileName = session.get()?.visitor;
+        // this.props.history.push(`/profileC?id=${id_visitor}&name=${profileName}`);
     }
 
     handleChange = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
+    };
+
+    handleChangeCheck = ev => {
+        this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.checked : ev.target.checked },() => {
+
+            // this.buscaFiltro();
+        });
+
     };
 
 
@@ -78,10 +90,11 @@ class Curriculum extends React.Component {
 
             let res = await axios.post(getUrl(`/nuevoCurriculum`), lBody);
             let data = res.data;
-
+            let id_visitor = session.get()?.visitor_id;
+            let profileName = session.get()?.visitor;
             //redirigimos
             setTimeout(() => {
-                this.props.history.push("/profileC");
+                this.props.history.push(`/profileC?id=${id_visitor}&name=${profileName}`);
             }, 500);
         } catch (err) {
             console.log(err);
@@ -92,50 +105,44 @@ class Curriculum extends React.Component {
         return (
             <div className="curriculumContainer">
                 {/* Aqui se mostrará el curriculum ...nice as it can be. */}
-                <div className="cartQuest">
-                    <div className="questionario">
-                        <div>
-                            <p className="titulos">¿Estas trabajando actualmente?</p>
-                            <input type="radio" id="si" name="isWorking" value={this.state.isWorking}
-                                onChange={this.handleChange} />
-                            <label>Si</label>
-                            <input type="radio" id="no" name="isWorking" value="no"
-                                onChange={this.handleChange} />
-                            <label>No</label>
+                <div className="cardQuest">
+                    <div className="cuestionario">
+                        <div className="checkBoxContainer ml5 mt5">
+                            <label className="container">
+                            ¿Estás trabajando actualmente?
+                            <input type="checkbox" name="check1" value={this.state.check1} onChange={this.handleChangeCheck}></input>
+                            <span className="checkmark"></span>
+                            </label>
                         </div>
-                        <div>
-                            <p className="titulos">¿Has trabajado anteriormente?</p>
-                            <input type="radio" id="si" name="isWorked-before" value={this.state.isWorked}
-                                onChange={this.handleChange} />
-                            <label>Si</label>
-                            <input type="radio" id="no" name="isWorked-before" value={this.state.isWorked}
-                                onChange={this.handleChange} />
-                            <label>No</label>
+                        <div className="checkBoxContainer ml5 mt5">
+                            <label className="container">
+                            ¿Has trabajado anteriormente?
+                            <input type="checkbox" name="check2" value={this.state.check2} onChange={this.handleChangeCheck}></input>
+                            <span className="checkmark"></span>
+                            </label>
                         </div>
-                        <div>
-                            <p className="titulos">¿Tienes estudios?</p>
-                            <input type="radio" id="si" name="isEstudios" value={this.state.isEstudios}
-                                onChange={this.handleChange} />
-                            <label>Si</label>
-                            <input type="radio" id="no" name="isEstudios" value={this.state.isEstudios}
-                                onChange={this.handleChange} />
-                            <label>No</label>
+                        <div className="checkBoxContainer ml5 mt5">
+                            <label className="container">
+                            ¿Tienes estudios oficiales?
+                            <input type="checkbox" name="check3" value={this.state.check3} onChange={this.handleChangeCheck}></input>
+                            <span className="checkmark"></span>
+                            </label>
                         </div>
                     </div>
 
                 </div>
-                <div className="cartExp">
+                <div className="cardExp">
                     <div className="expProfForm">
                         <div>
                             <p className="titulos">Experiencia profesional:</p>
                             <textarea cols="100" rows="7" onChange={this.handleChange}></textarea>
                         </div>
-                        <div>
+                        <div className="mt3">
                             <p className="titulos">Formacion:</p>
                             <textarea cols="100" rows="7" onChange={this.handleChange}></textarea>
                         </div>
-                        <div className="containerButton">
-                            <button className="colorButton" onClick={() => {
+                        <div className="containerButton mt5">
+                            <button className="blueButton" onClick={() => {
                                 this.registraDatos();
                             }}>Guardar</button>
                         </div>
