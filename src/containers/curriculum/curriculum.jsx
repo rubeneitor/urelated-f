@@ -42,9 +42,9 @@ class Curriculum extends React.Component {
             
             this.setState({ 
 
-                isWorking: res.data[id].isWorking,
-                isWorked_before: res.data[id].isWorked_before,
-                isEstudios: res.data[id].isEstudios,
+                check1: res.data[id].isWorking,
+                check2: res.data[id].isWorked_before,
+                check3: res.data[id].isEstudios,
                 formacion: res.data[id].formacion,
                 experiencia: res.data[id].experiencia
             
@@ -74,22 +74,23 @@ class Curriculum extends React.Component {
     async registraDatos() {
         try {
 
-            let id = session.get()?.visitor_id;
+            let idusuario = session.get()?.visitor_id;
             
-            //llamada a la DB para registrar la empresa
+            //llamada a la DB para registrar el curriculum
             let lBody = {
-                id: id,
+                id: idusuario,
                 formacion: this.state.formacion,
                 requisitos: this.state.requisitos,
-                isWorked_before: this.state.isWorked,
-                isWorking: this.state.isWorking,
-                isEstudios: this.state.isEstudios
+                isWorked_before: this.state.check2,
+                isWorking: this.state.check1,
+                isEstudios: this.state.check3
             };
 
             
 
-            await axios.post(getUrl(`/nuevoCurriculum`), lBody);
+            let res = await axios.post(getUrl(`/nuevoCurriculum`), lBody);
             //let data = res.data;
+            console.log(res.data);
             let id_visitor = session.get()?.visitor_id;
             let profileName = session.get()?.visitor;
             //redirigimos
