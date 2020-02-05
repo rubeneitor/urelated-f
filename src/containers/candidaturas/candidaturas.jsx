@@ -109,6 +109,20 @@ class Candidaturas extends React.Component {
         }
     }
 
+    colorEstado(argColor) {
+        switch (argColor) {
+            case 1:
+              return "colorDelEstadoN";
+            case 2:
+                return "colorDelEstadoV";
+            case 3:
+                return "colorDelEstadoR";
+            
+            default:
+              console.log("error");
+          }
+    }
+
     muestraResultadoE() {
         if (!this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
             return (
@@ -261,10 +275,12 @@ class Candidaturas extends React.Component {
                                                     <p className="datosCandidato mr3">{_x.fecha_sus}</p>
                                                 </div>
                                                 <div className="eliminarCandidatura">
+                                                <p className={this.colorEstado(_x.estado)}>{this.state.selectEstado[_x.estado]}</p>
+
                                                     <button onClick={() => {
                                                 this.clickEliminar(_x.idsuscrip);
                                             }}
-                                            className="redButton">Eliminar</button>
+                                            className="redButton ml5">Eliminar</button>
                                                 </div>
                                             </div>
                                         );

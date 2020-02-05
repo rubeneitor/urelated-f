@@ -2,7 +2,7 @@
     display: flex;
 	flex-direction: row;
     margin-top: 1em;
-    height: 39.8em;
+    height: 40em;
 
     .blueButton {
         background: var(--colAzuDos);
@@ -121,7 +121,7 @@
     display: flex;
 	flex-direction: row;
     margin-top: 1em;
-    height: 39.8em;
+    height: 40em;
 
     .blueButton {
         background: var(--colAzuDos);
@@ -201,9 +201,29 @@
 
             .eliminarCandidatura {
                 width: 16em;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                .colorDelEstadoN {
+                    color: var(--colNarCla);
+                    font-weight: bold;
+                }
+
+                .colorDelEstadoV {
+                    color: var(--colVer);
+                    font-weight: bold;
+                }
+
+                .colorDelEstadoR {
+                    color: var(--colRoj);
+                    font-weight: bold;
+                }
 
                 .redButton {
                     background-color: var(--colRojCla);
+                    height: 1.5em;
                 }
 
                 .redButton:hover{
