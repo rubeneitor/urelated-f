@@ -19,12 +19,19 @@ class Candidaturas extends React.Component {
                 3: "Rechazada"
             },
             ofeSta: "",
+            ofeStaU: "",
             loading: true
         };
     }
 
     handleChangeDrop = (ev, action) => {
         this.setState({ [action.name]: ev.value }, () => {});
+    };
+
+    handleChangeDropU = (ev, action) => {
+        this.setState({ [action.name]: ev.value }, () => {
+            this.buscaFiltro();
+        });
     };
 
     async componentDidMount() {
@@ -63,6 +70,23 @@ class Candidaturas extends React.Component {
 
     componentDidUpdate() {
         this.render();
+    }
+
+    async buscaFiltro() {
+        //activas orden estado palabra clave
+        
+        let estado = this.state.ofeStaU;
+
+        console.log("el estado es ", estado);
+        
+        let id_usuario = session.get()?.visitor_id;
+
+        //llamada a axios con la query 
+        const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}&estado=${estado}`));
+
+        this.setState({ suscripcionesCandidato: res.data }, () => {});
+
+        
     }
 
     async editarEstado(id) {
@@ -112,15 +136,15 @@ class Candidaturas extends React.Component {
     colorEstado(argColor) {
         switch (argColor) {
             case 1:
-              return "colorDelEstadoN";
+                return "colorDelEstadoN";
             case 2:
                 return "colorDelEstadoV";
             case 3:
                 return "colorDelEstadoR";
-            
+
             default:
-              console.log("error");
-          }
+                console.log("error");
+        }
     }
 
     muestraResultadoE() {
@@ -235,7 +259,7 @@ class Candidaturas extends React.Component {
                         <div className="main">
                             <div className="mainCandidaturasCandidato">
                                 <div className="noCandidaturas">
-                                    <p className="sinCandidatos">Aun no te has suscrito a ninguna candidatura.</p>
+                                    <p className="sinCandidatos">No hay candidaturas que mostrar con este criterio.</p>
                                     <button
                                         onClick={() => {
                                             this.clickVolver();
@@ -258,15 +282,25 @@ class Candidaturas extends React.Component {
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasCandidato">
-                                <div className="columnEstado mt5"></div>
+                                <div className="columnEstado mt5">
+                                    <p className="filtroEstadoCandidato ml5 mt5">Busca por estado:</p>
+                                    <div className="sel ml5 mt5">
+                                        <Select
+                                            // placeholder={this.state.selectEstado[_x.estado]}
+                                            name="ofeStaU"
+                                            onChange={this.handleChangeDropU}
+                                            options={[
+                                                { value: "1", label: "Revisando" },
+                                                { value: "2", label: "Aceptada" },
+                                                { value: "3", label: "Rechazada" }
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
                                 <div className="columnMisCandidaturas ml5 mt5">
                                     {this.state.suscripcionesCandidato?.map(_x => {
                                         return (
-                                            <div
-                                                className="cardCandidaturaUser mb5"
-                                                key={_x.id + Math.random() * (1000 - 1) + 1}
-                                                
-                                            >
+                                            <div className="cardCandidaturaUser mb5" key={_x.id + Math.random() * (1000 - 1) + 1}>
                                                 <div className="datosCardCandidatura">
                                                     <p className="datosCandidato mr3">{_x.name}</p>
                                                     <p className="datosCandidato mr3">{_x.titulo}</p>
@@ -275,12 +309,16 @@ class Candidaturas extends React.Component {
                                                     <p className="datosCandidato mr3">{_x.fecha_sus}</p>
                                                 </div>
                                                 <div className="eliminarCandidatura">
-                                                <p className={this.colorEstado(_x.estado)}>{this.state.selectEstado[_x.estado]}</p>
+                                                    <p className={this.colorEstado(_x.estado)}>{this.state.selectEstado[_x.estado]}</p>
 
-                                                    <button onClick={() => {
-                                                this.clickEliminar(_x.idsuscrip);
-                                            }}
-                                            className="redButton ml5">Eliminar</button>
+                                                    <button
+                                                        onClick={() => {
+                                                            this.clickEliminar(_x.idsuscrip);
+                                                        }}
+                                                        className="redButton ml5"
+                                                    >
+                                                        Eliminar
+                                                    </button>
                                                 </div>
                                             </div>
                                         );
