@@ -15,7 +15,7 @@ class Curriculum extends React.Component {
             check2: false,
             check3: false,
             formacion: "",
-            requisitos: ""
+            experiencia: ""
         }
 
     };
@@ -26,8 +26,48 @@ class Curriculum extends React.Component {
             check2: false,
             check3: false,
             formacion: "",
-            requisitos: ""
+            experiencia: ""
         });
+    }
+
+    updateDescriptionRemainingCharacters() {
+        let ele = document.querySelector(".curriculum");
+
+        if (!document.querySelector(".curriculum")) {
+            ele = document.querySelector(".curriculum2");
+        }
+
+        let lenght = ele.value.length;
+        let max = ele.maxLength;
+        let remaining = document.querySelector("#descriptionRemainingCharacters");
+
+        remaining.innerHTML = `${lenght}/${max}`;
+
+        if (lenght >= max) {
+            remaining.classList.add("error");
+        } else {
+            remaining.classList.remove("error");
+        }
+    }
+
+    updateDescriptionRemainingCharacters2() {
+        let ele = document.querySelector(".experiencia");
+
+        if (!document.querySelector(".experiencia")) {
+            ele = document.querySelector(".experiencia2");
+        }
+
+        let lenght = ele.value.length;
+        let max = ele.maxLength;
+        let remaining = document.querySelector("#descriptionRemainingCharacters2");
+
+        remaining.innerHTML = `${lenght}/${max}`;
+
+        if (lenght >= max) {
+            remaining.classList.add("error");
+        } else {
+            remaining.classList.remove("error");
+        }
     }
 
     async componentDidMount() {
@@ -60,6 +100,15 @@ class Curriculum extends React.Component {
 
     handleChange = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.value : ev.target.value });
+
+        // Excepción para medir caracteres restantes en la descripción
+        if (ev.target.name === "formacion") {
+            this.updateDescriptionRemainingCharacters("formacion");
+        }
+
+        if (ev.target.name === "experiencia") {
+            this.updateDescriptionRemainingCharacters2("experiencia");
+        }
     };
 
     handleChangeCheck = ev => {
@@ -80,7 +129,7 @@ class Curriculum extends React.Component {
             let lBody = {
                 id: idusuario,
                 formacion: this.state.formacion,
-                requisitos: this.state.requisitos,
+                experiencia: this.state.experiencia,
                 isWorked_before: this.state.check2,
                 isWorking: this.state.check1,
                 isEstudios: this.state.check3
@@ -133,14 +182,33 @@ class Curriculum extends React.Component {
 
                 </div>
                 <div className="cardExp">
-                    <div className="expProfForm">
-                        <div>
-                            <p className="titulos">Experiencia profesional:</p>
-                            <textarea cols="100" rows="7" onChange={this.handleChange}></textarea>
-                        </div>
-                        <div className="mt3">
-                            <p className="titulos">Formacion:</p>
-                            <textarea cols="100" rows="7" onChange={this.handleChange}></textarea>
+                    <div className="textAreaCurriculum">
+                            <p className="cabeceraInput">Formacion</p>
+                            <textarea
+                                className="curriculum"
+                                rows="5"
+                                cols="108"
+                                maxLength="2000"
+                                placeholder="Utiliza este espacio para describir aquellos aspectos de tu formación que consideres de especial relevancia para las empresas."
+                                name="formacion"
+                                value={this.state.formacion}
+                                onChange={this.handleChange}
+                            ></textarea>
+                            <span id="descriptionRemainingCharacters"></span>
+                        
+                        <div className="textAreaCurriculum">
+                            <p className="cabeceraInput">Experiencia laboral</p>
+                            <textarea
+                                className="experiencia"
+                                rows="5"
+                                cols="108"
+                                maxLength="2000"
+                                placeholder="Utiliza este espacio para describir tu trayectoria en el mundo laboral."
+                                name="experiencia"
+                                value={this.state.experiencia}
+                                onChange={this.handleChange}
+                            ></textarea>
+                            <span id="descriptionRemainingCharacters2"></span>
                         </div>
                         <div className="containerButton mt5">
                             <button className="blueButton" onClick={() => {
