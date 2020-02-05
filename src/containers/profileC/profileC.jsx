@@ -24,6 +24,8 @@ class ProfileC extends React.Component {
             country: "",
             provincia: "",
             ciudad: "",
+            
+            foto: "",
 
             errores: []
         };
@@ -74,8 +76,9 @@ class ProfileC extends React.Component {
                 email: res.data[id].email,
                 country: res.data[id].pais,
                 provincia: res.data[id].provincia,
-                ciudad: res.data[id].ciudad
-            
+                ciudad: res.data[id].ciudad,
+                foto: res.data[id].picture ? res.data[id].picture : "img/placeProfile.png",
+
             });
         } catch (err) {
             console.error(err);
@@ -304,7 +307,7 @@ class ProfileC extends React.Component {
                     <div className="profileRightSide">
                         <div className="cardEditProfile ml5">
                             <div className="cardEditProfileHeader">
-                                <img src="https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg" alt="logoEmpresa" />
+                                <img src={this.state.foto}/>
                             </div>
                             <div className="cardEditProfileBody mt3">
                                 <div className="editInfoRight">

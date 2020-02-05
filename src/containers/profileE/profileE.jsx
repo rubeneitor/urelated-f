@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import axios from "axios";
 // import { withRouter } from "react-router-dom";
-import Moment from 'react-moment';
-import 'moment-timezone';
-import queryString from 'query-string';
+import Moment from "react-moment";
+import "moment-timezone";
+import queryString from "query-string";
 import { session, getUrl, verify } from "../../utils/uti";
 import "./profileE.scss";
 
@@ -21,6 +21,8 @@ class ProfileE extends React.Component {
             name: "",
             email: "",
             description: "",
+
+            foto: "",
 
             errores: []
         };
@@ -75,46 +77,38 @@ class ProfileE extends React.Component {
     }
 
     async componentDidMount() {
-
         this.resetStates();
 
         const queries = queryString.parse(this.props.location.search);
-        
+
         try {
             // let token = session.get()?.token;
             let id = session.get()?.visitor_id;
 
             const res = await axios.get(getUrl(`/perfilE/${queries.id}`));
-            
-            this.setState({ 
 
+            this.setState({
                 userData: res.data[id],
                 sector: res.data[id].sector,
                 phone: res.data[id].phone,
                 name: res.data[id].name,
                 email: res.data[id].email,
-                description: res.data[id].description
-            
+                description: res.data[id].description,
+                foto: res.data[id].picture ? res.data[id].picture : "img/placeProfileE.png"
             });
 
         } catch (err) {
             console.error(err);
         }
-
-        
-
     }
 
-
     showButton() {
-
         let visitor_id = session.get()?.visitor_id;
         let visitor_name = session.get()?.visitor;
         const queries = queryString.parse(this.props.location.search);
 
-        
         // eslint-disable-next-line
-        if((visitor_id == queries.id) && (visitor_name == queries.name)){
+        if (visitor_id == queries.id && visitor_name == queries.name) {
             return (
                 <Fragment>
                     <button
@@ -127,9 +121,7 @@ class ProfileE extends React.Component {
                     </button>
                 </Fragment>
             );
-        };
-
-        
+        }
     }
 
     async clickEditar() {
@@ -185,7 +177,6 @@ class ProfileE extends React.Component {
                     let id = session.get()?.visitor_id;
 
                     let lBody = {
-                        
                         id: id,
                         name: this.state.name,
                         email: this.state.email,
@@ -193,19 +184,16 @@ class ProfileE extends React.Component {
                         sector: this.state.sector,
                         description: this.state.description
                     };
-        
+
                     let res = await axios.post(getUrl(`/perfilEMod`), lBody);
                     // let data = res.data[0];
 
-                    
-        
                     //redirigimos
                     // setTimeout(() => {
                     //     this.props.history.push("/loginE");
                     // }, 500);
-        
-                    this.props.history.push(`/`);
 
+                    this.props.history.push(`/`);
                 } catch (err) {
                     console.log(err);
                 }
@@ -248,7 +236,12 @@ class ProfileE extends React.Component {
         return estiloError;
     }
 
+    cargaPic(){
+        
+    }
+
     render() {
+
         return (
             <div className="main">
                 <div className="mainProfileE">
@@ -323,12 +316,14 @@ class ProfileE extends React.Component {
                     </div>
                     <div className="cardEditProfile ml5">
                         <div className="cardEditProfileHeader">
-                            <img src="https://www.bang-olufsen.com/~/media/images/bang-olufsen-attention-logo.png" alt="logoEmpresa" />
+                            <img src={this.state.foto}/>
                         </div>
                         <div className="cardEditProfileBody mt3">
                             <div className="editInfoRight">
                                 <p className="nameMod mt3">{this.state.userData?.name}</p>
-                                <p className="dateMod mt3"><Moment format="DD/MM/YYYY">{this.state.userData?.updated_at}</Moment></p>
+                                <p className="dateMod mt3">
+                                    <Moment format="DD/MM/YYYY">{this.state.userData?.updated_at}</Moment>
+                                </p>
                                 <p className="dateMod2">Última fecha de modificación.</p>
                                 {this.showButton()}
                             </div>
@@ -337,6 +332,8 @@ class ProfileE extends React.Component {
                 </div>
             </div>
         );
+
+        
     }
 }
 
