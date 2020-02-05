@@ -89,7 +89,16 @@ class Candidaturas extends React.Component {
     async clickEliminar(id) {
         let idSuscripcion = id;
 
-        console.log(idSuscripcion);
+        try {
+            await axios.post(getUrl(`/delSuscripcion?id_suscripcion=${idSuscripcion}`));
+
+            //redirigimos
+            setTimeout(() => {
+                this.props.history.push(`/`);
+            }, 500);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     clickVolver() {
