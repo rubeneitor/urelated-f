@@ -1,7 +1,7 @@
 .curriculumContainer {
     display: flex;
     flex-direction: row;
-    height: 36.6em;
+    height: 40.8em;
     justify-content: center;
     align-items: center;
     background: var(--colGri);
@@ -109,8 +109,6 @@
         height: 28em;
     }
 
-    
-
     .cardExp{
         background: var(--colBla);
         border-radius: 0.6em;
@@ -123,6 +121,7 @@
 
           display: flex;
           flex-direction: column;
+          margin-top: 1.6em;
   
           .curriculum {
               
