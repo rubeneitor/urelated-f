@@ -77,8 +77,6 @@ class Candidaturas extends React.Component {
         
         let estado = this.state.ofeStaU;
 
-        console.log("el estado es ", estado);
-        
         let id_usuario = session.get()?.visitor_id;
 
         //llamada a axios con la query 
@@ -148,21 +146,21 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoE() {
-
+        // eslint-disable-next-line
         if(this.state.loading == true){
             return (
                 <Fragment>
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasEmpresa">
-                                <img className="spinnerImg" src="img/spinner.gif"/>
+                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCargaE"/>
                             </div>
                         </div>
                     </div>
                 </Fragment>
             );
         }
-
+        // eslint-disable-next-line
         if (!this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
             return (
                 <Fragment>
@@ -186,7 +184,7 @@ class Candidaturas extends React.Component {
                 </Fragment>
             );
         }
-
+        // eslint-disable-next-line
         if (this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
             return (
                 <Fragment>
@@ -267,21 +265,21 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoU() {
-
+        // eslint-disable-next-line
         if(this.state.loading == true){
             return (
                 <Fragment>
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasCandidato">
-                                <img className="spinnerImg" src="img/spinner.gif"/>
+                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCandidato"/>
                             </div>
                         </div>
                     </div>
                 </Fragment>
             );
         }
-
+        // eslint-disable-next-line
         if (!this.state.suscripcionesCandidato[0] && this.state.loading == false) {
             return (
                 <Fragment>
@@ -305,7 +303,7 @@ class Candidaturas extends React.Component {
                 </Fragment>
             );
         }
-
+        // eslint-disable-next-line
         if (this.state.suscripcionesCandidato[0] && this.state.loading == false) {
             return (
                 <Fragment>

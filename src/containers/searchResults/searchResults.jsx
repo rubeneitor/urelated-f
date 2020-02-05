@@ -74,8 +74,6 @@ class SearchResults extends React.Component {
 
     muestraResultados() {
 
-        console.log(this.props.ofertasResultado);
-        
         if (!this.props.ofertasResultado[0]) {
             return (
                 <Fragment>

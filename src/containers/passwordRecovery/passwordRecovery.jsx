@@ -1,9 +1,7 @@
 import React from "react";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import queryString from "query-string";
 import { getUrl } from "../../utils/uti";
 import { verify } from "../../utils/uti";
 
@@ -114,7 +112,7 @@ class PasswordRecovery extends React.Component {
                 try {
                     
                     //enviamos la respuesta y el nuevo pass para ser cambiado
-                    const res = await axios.post(getUrl(`/recoverP2`),Body2);
+                    await axios.post(getUrl(`/recoverP2`),Body2);
 
                 } catch (err) {
                     console.log(err);

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { session, getUrl, verify } from "../../utils/uti";
+import { session, getUrl } from "../../utils/uti";
 import queryString from "query-string";
 import "./curriculum.scss";
 
@@ -75,7 +75,7 @@ class Curriculum extends React.Component {
         try {
 
             let id = session.get()?.visitor_id;
-            console.log(id);
+            
             //llamada a la DB para registrar la empresa
             let lBody = {
                 id: id,
@@ -86,10 +86,10 @@ class Curriculum extends React.Component {
                 isEstudios: this.state.isEstudios
             };
 
-            console.log(lBody);
+            
 
-            let res = await axios.post(getUrl(`/nuevoCurriculum`), lBody);
-            let data = res.data;
+            await axios.post(getUrl(`/nuevoCurriculum`), lBody);
+            //let data = res.data;
             let id_visitor = session.get()?.visitor_id;
             let profileName = session.get()?.visitor;
             //redirigimos

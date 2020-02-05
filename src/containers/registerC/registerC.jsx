@@ -78,10 +78,8 @@ class RegisterC extends React.Component {
                 picture: this.state.picture,
             };
 
-            console.log(lBody);
-
-            let res = await axios.post(getUrl(`/registerU`), lBody);
-            let data = res.data;
+            await axios.post(getUrl(`/registerU`), lBody);
+            //let data = res.data;
 
             //redirigimos
             setTimeout(() => {

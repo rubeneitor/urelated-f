@@ -185,7 +185,7 @@ class ProfileE extends React.Component {
                         description: this.state.description
                     };
 
-                    let res = await axios.post(getUrl(`/perfilEMod`), lBody);
+                    await axios.post(getUrl(`/perfilEMod`), lBody);
                     // let data = res.data[0];
 
                     //redirigimos
@@ -316,7 +316,7 @@ class ProfileE extends React.Component {
                     </div>
                     <div className="cardEditProfile ml5">
                         <div className="cardEditProfileHeader">
-                            <img src={this.state.foto}/>
+                            <img src={this.state.foto} alt="fotodePerfilEmpresa"/>
                         </div>
                         <div className="cardEditProfileBody mt3">
                             <div className="editInfoRight">

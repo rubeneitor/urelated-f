@@ -121,7 +121,7 @@ class addOferta extends React.Component {
         //descripcion
         if (this.state.description === "") {
             errors.push("description");
-            console.log("siiii");
+            
         }
 
         if (errors.length) {

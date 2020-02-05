@@ -34,8 +34,6 @@ class Home extends Component {
             res = "error";
         }
 
-        console.log(res.data);
-
         store.dispatch({
             type:'GET_OFERTAS_FILTRADAS',
             payload: res.data
@@ -44,10 +42,12 @@ class Home extends Component {
         let puesto = "";
         let lugar = "";
 
+        // eslint-disable-next-line
         if(argImg == `/puestos/${"CEO"}`){
             puesto = "CEO";
         }
 
+        // eslint-disable-next-line
         if(argImg == `/ciudades/${"Valencia"}`){
             lugar = "Valencia";
         }

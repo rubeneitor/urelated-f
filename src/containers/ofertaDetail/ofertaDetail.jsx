@@ -97,7 +97,7 @@ class OfertaDetail extends React.Component {
             );
 
             const res = await axios.get(getUrl(`/numSuscritos?id_oferta=${id_oferta}`));
-
+            // eslint-disable-next-line
             if (userType == "Candidato") {
                 const res2 = await axios.get(getUrl(`/isCandidato?id_candidato=${this.state.visitor_id}&id_oferta=${id_oferta}`));
 
@@ -152,7 +152,7 @@ class OfertaDetail extends React.Component {
             } else {
                 // this.setState({ phone_err: "" });
             }
-
+            // eslint-disable-next-line
             if (this.state.num_vacantes == 0) {
                 errors.push("num_vacantes");
             }
@@ -172,7 +172,7 @@ class OfertaDetail extends React.Component {
 
                 try {
                     //llamada a la DB para registrar la empresa
-                    let id = session.get()?.visitor_id;
+                    //let id = session.get()?.visitor_id;
 
                     let lBody = {
                         id: this.props.ofertaDetail?.id,
@@ -207,7 +207,6 @@ class OfertaDetail extends React.Component {
             if (arg == [_y]) {
                 // eslint-disable-next-line
                 if (arg == [_y] && arg == "description") {
-                    console.log("yeeee");
                     estiloError = "textAddInfo3";
                     return estiloError;
                 }
@@ -267,7 +266,7 @@ class OfertaDetail extends React.Component {
                 </Fragment>
             );
         }
-
+        // eslint-disable-next-line
         if (this.state.botonCandidato == true) {
             return (
                 <Fragment>

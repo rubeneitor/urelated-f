@@ -182,8 +182,8 @@ class ProfileC extends React.Component {
                         country: this.state.country
                     };
 
-                    let res = await axios.post(getUrl(`/perfilUMod`), lBody);
-                    let data = res.data[0];
+                    await axios.post(getUrl(`/perfilUMod`), lBody);
+                    //let data = res.data[0];
 
                     //redirigimos
                     // setTimeout(() => {
@@ -307,7 +307,7 @@ class ProfileC extends React.Component {
                     <div className="profileRightSide">
                         <div className="cardEditProfile ml5">
                             <div className="cardEditProfileHeader">
-                                <img src={this.state.foto}/>
+                                <img src={this.state.foto} alt="imagenperfilCandidato"/>
                             </div>
                             <div className="cardEditProfileBody mt3">
                                 <div className="editInfoRight">
