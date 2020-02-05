@@ -21,7 +21,7 @@ class ProfileE extends React.Component {
             name: "",
             email: "",
             description: "",
-
+            loading: true,
             foto: "",
 
             errores: []
@@ -94,8 +94,11 @@ class ProfileE extends React.Component {
                 name: res.data[id].name,
                 email: res.data[id].email,
                 description: res.data[id].description,
-                foto: res.data[id].picture ? res.data[id].picture : "img/placeProfileE.png"
+                foto: res.data[id].picture ? res.data[id].picture : "img/placeProfileE.png",
+                loading: false,
             });
+
+            
 
         } catch (err) {
             console.error(err);
@@ -241,6 +244,20 @@ class ProfileE extends React.Component {
     }
 
     render() {
+        // eslint-disable-next-line
+        if(this.state.loading == true){
+            return (
+                
+                    <div>
+                        <div className="main">
+                            <div className="mainProfileE">
+                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCargaE"/>
+                            </div>
+                        </div>
+                    </div>
+                
+            );
+        }
 
         return (
             <div className="main">

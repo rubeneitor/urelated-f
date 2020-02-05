@@ -24,6 +24,7 @@ class ProfileC extends React.Component {
             country: "",
             provincia: "",
             ciudad: "",
+            loading: true,
             
             foto: "",
 
@@ -78,8 +79,11 @@ class ProfileC extends React.Component {
                 provincia: res.data[id].provincia,
                 ciudad: res.data[id].ciudad,
                 foto: res.data[id].picture ? res.data[id].picture : "img/placeProfile.png",
+                loading: false,
 
             });
+
+            
         } catch (err) {
             console.error(err);
         }
@@ -216,6 +220,21 @@ class ProfileC extends React.Component {
     }
 
     render() {
+        // eslint-disable-next-line
+        if(this.state.loading == true){
+            return (
+                
+                    <div>
+                        <div className="main">
+                            <div className="mainProfileC">
+                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCargaE"/>
+                            </div>
+                        </div>
+                    </div>
+                
+            );
+        }
+
         return (
             <div className="main">
                 <div className="mainProfileC">
