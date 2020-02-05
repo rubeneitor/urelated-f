@@ -167,7 +167,9 @@ class PasswordRecovery extends React.Component {
                                 <p className="recoverText">Introduce tu e-mail</p>
                                 <input
                                     className={this.errorCheck("email")}
-                                    type="text"
+                                    name="email"
+                                    
+                                    value={this.state.email}
                                     placeholder=""
                                     onChange={ev => {
                                         this.handleChange(ev, "email");

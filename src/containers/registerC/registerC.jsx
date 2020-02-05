@@ -328,7 +328,7 @@ class RegisterC extends React.Component {
                             </div>
                             <div>
                                 <p className="cabeceraInput">Imagen de Perfil</p>
-                                <input className={this.errorCheck("picture")} type="text" maxLength="50" placeholder="" name="picture" value={this.state.picture} onChange={this.handleChange}></input>
+                                <input className={this.errorCheck("picture")} type="text" maxLength="240" placeholder="" name="picture" value={this.state.picture} onChange={this.handleChange}></input>
                                 <p className="errorInputText">{this.state.picture_err}</p>
                             </div>
                         </div>

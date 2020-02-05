@@ -83,9 +83,11 @@ class OfertaDetail extends React.Component {
                 descripcionNull = this.props.ofertaDetail?.desc_general;
             }
 
-            let now = Date();
+            let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
+            let now = moment().format('YYYY-MM-DD HH:mm:ss')
+            
 
-            let publicada = moment(now).diff(this.props.ofertaDetail?.created_at, "hours");
+            let publicada = moment(now).diff(before, "hours");
 
             this.setState(
                 {
