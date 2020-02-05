@@ -78,17 +78,18 @@ class Curriculum extends React.Component {
             // let token = session.get()?.token;
             let id = session.get()?.visitor_id;
 
-            const res = await axios.get(getUrl(`/curriculum/${queries.id}`));
+            const res = await axios.get(getUrl(`/curriculum?idusuario=${queries.id}`));
+            
             
             this.setState({ 
 
-                check1: res.data[id].isWorking,
-                check2: res.data[id].isWorked_before,
-                check3: res.data[id].isEstudios,
-                formacion: res.data[id].formacion,
-                experiencia: res.data[id].experiencia
+                check1: true,
+                check2: res.data[0].isWorked_before,
+                check3: res.data[0].isEstudios,
+                formacion: res.data[0].formacion,
+                experiencia: res.data[0].experiencia
             
-            });
+            },()=>{});
         } catch (err) {
             console.error(err);
         }
