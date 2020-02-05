@@ -83,13 +83,15 @@ class Curriculum extends React.Component {
             
             this.setState({ 
 
-                check1: true,
-                check2: res.data[0].isWorked_before,
-                check3: res.data[0].isEstudios,
+                check1: res.data[0].isWorking ? true: false,
+                check2: res.data[0].isWorked_before ? true : false,
+                check3: res.data[0].isEstudios ? true: false,
                 formacion: res.data[0].formacion,
                 experiencia: res.data[0].experiencia
             
-            },()=>{});
+            },()=>{
+                console.log(this.state);
+            });
         } catch (err) {
             console.error(err);
         }
@@ -161,21 +163,21 @@ class Curriculum extends React.Component {
                         <div className="checkBoxContainer ml5 mt5">
                             <label className="container">
                             ¿Estás trabajando actualmente?
-                            <input type="checkbox" name="check1" value={this.state.check1} onChange={this.handleChangeCheck}></input>
+                            <input type="checkbox" name="check1" checked={this.state.check1} value={this.state.check1} onChange={this.handleChangeCheck}></input>
                             <span className="checkmark"></span>
                             </label>
                         </div>
                         <div className="checkBoxContainer ml5 mt5">
                             <label className="container">
                             ¿Has trabajado anteriormente?
-                            <input type="checkbox" name="check2" value={this.state.check2} onChange={this.handleChangeCheck}></input>
+                            <input type="checkbox" name="check2" checked={this.state.check2} value={this.state.check2} onChange={this.handleChangeCheck}></input>
                             <span className="checkmark"></span>
                             </label>
                         </div>
                         <div className="checkBoxContainer ml5 mt5">
                             <label className="container">
                             ¿Tienes estudios oficiales?
-                            <input type="checkbox" name="check3" value={this.state.check3} onChange={this.handleChangeCheck}></input>
+                            <input type="checkbox" name="check3" checked={this.state.check3} value={this.state.check3} onChange={this.handleChangeCheck}></input>
                             <span className="checkmark"></span>
                             </label>
                         </div>
