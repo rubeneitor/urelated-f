@@ -4,6 +4,12 @@
     margin-top: 1em;
     height: 40em;
 
+    .spinnerImg {
+        width: 10em;
+        height: 10em;
+        margin-top: 15em;
+    }
+
     .blueButton {
         background: var(--colAzuDos);
     }
@@ -122,6 +128,12 @@
 	flex-direction: row;
     margin-top: 1em;
     height: 40em;
+
+    .spinnerImg {
+        width: 10em;
+        height: 10em;
+        margin-top: 15em;
+    }
 
     .blueButton {
         background: var(--colAzuDos);

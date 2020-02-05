@@ -17,18 +17,12 @@ class RegisterC extends React.Component {
             password2: "",
             secretQ: "",
             secretA: "",
-            // birthday: "",
             phone: "",
-            // userGenre: 0,
-            //address: "",
             country: "",
             city: "",
-            // cpostal: "",
             provincia: "",
-            // check1: false,
-            // check2: false,
-            // check3: false,
-
+            picture: "",
+            
             errores: [],
 
             email_err: "",
@@ -57,18 +51,12 @@ class RegisterC extends React.Component {
             password2: "",
             secretQ: "",
             secretA: "",
-            // birthday: "",
             phone: "",
-            // userGenre: 0,
-            //address: "",
             country: "",
             city: "",
-            // cpostal: "",
             provincia: "",
-            // check1: false,
-            // check2: false,
-            // check3: false,
-
+            picture: "",
+            
             errores: []
         });
     }
@@ -86,7 +74,8 @@ class RegisterC extends React.Component {
                 secretA: this.state.secretA,
                 ciudad: this.state.city,
                 provincia: this.state.provincia,
-                pais: this.state.country
+                pais: this.state.country,
+                picture: this.state.picture,
             };
 
             console.log(lBody);
@@ -177,6 +166,11 @@ class RegisterC extends React.Component {
                     this.setState({ phone_err: "Introduce un teléfono válido." });
                 } else {
                     this.setState({ phone_err: "" });
+                }
+
+                //picture
+                if (!(verificado = verify(this.state.picture, 1, "string"))) {
+                    errors.push("picture");
                 }
 
                 break;
@@ -333,6 +327,11 @@ class RegisterC extends React.Component {
                                 <p className="cabeceraInput">Tfno. móvil</p>
                                 <input className={this.errorCheck("phone")} type="text" maxLength="50" placeholder="" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                                 <p className="errorInputText">{this.state.phone_err}</p>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Imagen de Perfil</p>
+                                <input className={this.errorCheck("picture")} type="text" maxLength="50" placeholder="" name="picture" value={this.state.picture} onChange={this.handleChange}></input>
+                                <p className="errorInputText">{this.state.picture_err}</p>
                             </div>
                         </div>
                         <div className="botones">

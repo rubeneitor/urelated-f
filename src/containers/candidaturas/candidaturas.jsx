@@ -148,6 +148,21 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoE() {
+
+        if(this.state.loading == true){
+            return (
+                <Fragment>
+                    <div>
+                        <div className="main">
+                            <div className="mainCandidaturasEmpresa">
+                                <img className="spinnerImg" src="img/spinner.gif"/>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        }
+
         if (!this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
             return (
                 <Fragment>
@@ -252,6 +267,21 @@ class Candidaturas extends React.Component {
     }
 
     muestraResultadoU() {
+
+        if(this.state.loading == true){
+            return (
+                <Fragment>
+                    <div>
+                        <div className="main">
+                            <div className="mainCandidaturasCandidato">
+                                <img className="spinnerImg" src="img/spinner.gif"/>
+                            </div>
+                        </div>
+                    </div>
+                </Fragment>
+            );
+        }
+
         if (!this.state.suscripcionesCandidato[0] && this.state.loading == false) {
             return (
                 <Fragment>

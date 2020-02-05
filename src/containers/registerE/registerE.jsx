@@ -21,12 +21,14 @@ class registerE extends React.Component {
             phone: "",
             sector: "",
             description: "",
+            picture: "",
 
             errores: [],
 
             email_err: "",
             password_err: "",
-            phone_err: ""
+            phone_err: "",
+            picture_err: "",
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -79,6 +81,7 @@ class registerE extends React.Component {
             phone: "",
             sector: "",
             description: "",
+            picture: "",
 
             errores: [],
 
@@ -102,7 +105,8 @@ class registerE extends React.Component {
                 secretA: this.state.secretA,
                 phone: this.state.phone,
                 sector: this.state.sector,
-                description: this.state.description
+                description: this.state.description,
+                picture: this.state.picture
             };
 
             //let res = await axios.post(getUrl(`/registerE`), lBody);
@@ -204,6 +208,12 @@ class registerE extends React.Component {
                 //sector de la empresa
                 if (!(verificado = verify(this.state.sector, 1, "string"))) {
                     errors.push("sector");
+                }
+
+                //imagen de perfil
+                if (!(verificado = verify(this.state.picture, 1, "string"))) {
+                    errors.push("picture");
+                    this.setState({ picture_err: "Introduce un link válido." });
                 }
 
                 if (this.state.description === "") {
@@ -361,6 +371,10 @@ class registerE extends React.Component {
                             <div>
                                 <p className="cabeceraInput">Sector empresarial</p>
                                 <input className={this.errorCheck("sector")} type="text" maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>
+                            </div>
+                            <div>
+                                <p className="cabeceraInput">Imagen de perfil</p>
+                                <input className={this.errorCheck("picture")} type="text" maxLength="240" placeholder="" name="picture" value={this.state.picture} onChange={this.handleChange}></input>
                             </div>
                         </div>
 
