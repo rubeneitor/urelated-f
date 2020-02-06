@@ -115,16 +115,16 @@ Esquema DB
 	- **POST** /loginE
 ```json
 {
-	"email":  "usuarioprueba@gmail.com",
+	"email":  "empresaprueba@gmail.com",
 	"password":  "12345"
 }
 ```
 
 - Logout
-	- **POST** /logOutU
+	- **POST** /logOutE
 	
 - Get user profile
-	- **GET** /perfilU/{id}
+	- **GET** /perfilE/{id}
 
 
 
