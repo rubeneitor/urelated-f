@@ -14,7 +14,8 @@ class Curriculum extends React.Component {
             check3: false,
             formacion: "",
             experiencia: "",
-            curriculumU: ""
+            curriculumU: "",
+            loading: true
         };
     }
 
@@ -79,19 +80,22 @@ class Curriculum extends React.Component {
 
             const res = await axios.get(getUrl(`/curriculum?idusuario=${queries.id}`));
 
-            this.setState(
-                {
-                    curriculumU: res.data,
-                    check1: res.data[0].isWorking ? true : false,
-                    check2: res.data[0].isWorked_before ? true : false,
-                    check3: res.data[0].isEstudios ? true : false,
-                    formacion: res.data[0].formacion,
-                    experiencia: res.data[0].experiencia
-                },
-                () => {
-                    //console.log(this.state);
-                }
-            );
+            if (res.data[0]) {
+                this.setState(
+                    {
+                        curriculumU: res.data,
+                        check1: res.data[0].isWorking ? true : false,
+                        check2: res.data[0].isWorked_before ? true : false,
+                        check3: res.data[0].isEstudios ? true : false,
+                        formacion: res.data[0].formacion,
+                        experiencia: res.data[0].experiencia,
+                        loading: false
+                    },
+                    () => {
+                        //console.log(this.state);
+                    }
+                );
+            }
         } catch (err) {
             console.error(err);
         }
@@ -117,7 +121,9 @@ class Curriculum extends React.Component {
     };
 
     showButton() {
-        if (this.state.curriculumU[0]) {
+        let userType = session.get().userType;
+        // eslint-disable-next-line
+        if (this.state.curriculumU[0] && userType == "Candidato") {
             return (
                 <Fragment>
                     <button
@@ -130,7 +136,9 @@ class Curriculum extends React.Component {
                     </button>
                 </Fragment>
             );
-        } else{
+        }
+        // eslint-disable-next-line
+        if (!this.state.curriculumU[0] && userType == "Candidato") {
             return (
                 <Fragment>
                     <button
@@ -150,7 +158,6 @@ class Curriculum extends React.Component {
         try {
             //let idusuario = session.get()?.visitor_id;
 
-            
             let eBody = {
                 id: this.state.curriculumU[0].id,
                 formacion: this.state.formacion,
@@ -161,7 +168,7 @@ class Curriculum extends React.Component {
             };
 
             await axios.post(getUrl(`/modCurriculum`), eBody);
-            
+
             let id_visitor = session.get()?.visitor_id;
             let profileName = session.get()?.visitor;
             //redirigimos
@@ -179,17 +186,16 @@ class Curriculum extends React.Component {
 
             //llamada a la DB para registrar el curriculum
             let lBody = {
-                id: idusuario,
+                idusuario: idusuario,
                 formacion: this.state.formacion,
                 experiencia: this.state.experiencia,
                 isWorked_before: this.state.check2,
                 isWorking: this.state.check1,
                 isEstudios: this.state.check3
             };
-
+            // eslint-disable-next-line
             let res = await axios.post(getUrl(`/nuevoCurriculum`), lBody);
             //let data = res.data;
-            console.log(res.data);
             let id_visitor = session.get()?.visitor_id;
             let profileName = session.get()?.visitor;
             //redirigimos
@@ -202,6 +208,14 @@ class Curriculum extends React.Component {
     }
 
     render() {
+        if (this.state.loading === true) {
+            return (
+                <div className="mainLoading">
+                    <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCargaE" />
+                </div>
+            );
+        }
+
         return (
             <div className="curriculumContainer">
                 <div className="cardQuest">

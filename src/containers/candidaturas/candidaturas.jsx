@@ -4,6 +4,7 @@ import axios from "axios";
 import queryString from "query-string";
 import "./candidaturas.scss";
 import Select from "react-select";
+import store from "../../redux/store";
 
 class Candidaturas extends React.Component {
     constructor(props) {
@@ -74,17 +75,15 @@ class Candidaturas extends React.Component {
 
     async buscaFiltro() {
         //activas orden estado palabra clave
-        
+
         let estado = this.state.ofeStaU;
 
         let id_usuario = session.get()?.visitor_id;
 
-        //llamada a axios con la query 
+        //llamada a axios con la query
         const res = await axios.get(getUrl(`/suscripcionesPorU?id_usuario=${id_usuario}&estado=${estado}`));
 
         this.setState({ suscripcionesCandidato: res.data }, () => {});
-
-        
     }
 
     async editarEstado(id) {
@@ -131,6 +130,48 @@ class Candidaturas extends React.Component {
         }
     }
 
+    linkEmpresa(datosEmpresa) {
+        let empresa_name = datosEmpresa.name;
+        let id_empresa = datosEmpresa.idempresa;
+
+        this.props.history.push(`profileE?id=${id_empresa}&name=${empresa_name}`);
+    }
+
+    perfilCandidato(datosCandidato){
+        
+
+        let id_visitor = datosCandidato.id;
+        let profileName = datosCandidato.name;
+
+        this.props.history.push(`profileC?id=${id_visitor}&name=${profileName}`);
+
+    }
+
+    async linkOferta(datosOferta) {
+        let idoferta = datosOferta.idoferta;
+
+        try {
+            //buscamos la oferta por id de oferta
+
+            const res = await axios.get(getUrl(`/ofertaId/${idoferta}`));
+            const busqueda = res.data[0];
+
+            // Guardo en redux
+            store.dispatch({
+                type: "OFERTA_DETAIL",
+                payload: busqueda
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        let id_visitor = session.get()?.visitor_id;
+        let profileName = session.get()?.visitor;
+
+        this.props.history.push(`/ofertaDetail?id=${id_visitor}&name=${profileName}`);
+    }
+
     colorEstado(argColor) {
         switch (argColor) {
             case 1:
@@ -147,13 +188,13 @@ class Candidaturas extends React.Component {
 
     muestraResultadoE() {
         // eslint-disable-next-line
-        if(this.state.loading == true){
+        if (this.state.loading == true) {
             return (
                 <Fragment>
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasEmpresa">
-                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCargaE"/>
+                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCargaE" />
                             </div>
                         </div>
                     </div>
@@ -214,8 +255,8 @@ class Candidaturas extends React.Component {
                                         return (
                                             <div className="cardCandidatura mb5" key={_x.id + "," + _x.titulo}>
                                                 <div className="datosCardCandidatura">
-                                                    <p className="datosCandidato mr2">{_x.name}</p>
-                                                    <p className="datosCandidato mr7">{_x.surname}</p>
+                                        <p onClick={()=>{this.perfilCandidato(_x)}} className="datosCandidatoELink mr5">{_x.name} {_x.surname}</p>
+                                                    {/* <p className="datosCandidato mr7">{_x.surname}</p> */}
                                                     <p className="datosCandidato mr5">{_x.usuciudad}</p>
                                                     <p className="datosCandidato mr9">{_x.fecha_sus}</p>
                                                 </div>
@@ -266,13 +307,13 @@ class Candidaturas extends React.Component {
 
     muestraResultadoU() {
         // eslint-disable-next-line
-        if(this.state.loading == true){
+        if (this.state.loading == true) {
             return (
                 <Fragment>
                     <div>
                         <div className="main">
                             <div className="mainCandidaturasCandidato">
-                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCandidato"/>
+                                <img className="spinnerImg" src="img/spinner.gif" alt="spinnerCandidato" />
                             </div>
                         </div>
                     </div>
@@ -330,8 +371,22 @@ class Candidaturas extends React.Component {
                                         return (
                                             <div className="cardCandidaturaUser mb5" key={_x.id + Math.random() * (1000 - 1) + 1}>
                                                 <div className="datosCardCandidatura">
-                                                    <p className="datosCandidato mr3">{_x.name}</p>
-                                                    <p className="datosCandidato mr3">{_x.titulo}</p>
+                                                    <p
+                                                        onClick={() => {
+                                                            this.linkEmpresa(_x);
+                                                        }}
+                                                        className="datosCandidatoELink mr3"
+                                                    >
+                                                        {_x.name}
+                                                    </p>
+                                                    <p
+                                                        onClick={() => {
+                                                            this.linkOferta(_x);
+                                                        }}
+                                                        className="datosCandidatoELink mr3"
+                                                    >
+                                                        {_x.titulo}
+                                                    </p>
                                                     <p className="datosCandidato mr3">{_x.ciudad}</p>
                                                     <p className="datosCandidato mr3">{_x.tipo_contrato}</p>
                                                     <p className="datosCandidato mr3">{_x.fecha_sus}</p>

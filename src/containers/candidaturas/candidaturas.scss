@@ -93,6 +93,16 @@
                 justify-content: center;
                 width: 35em;
                 
+                .datosCandidatoELink {
+                    cursor: pointer;
+                    //transition: 0.5s;
+                }
+
+                .datosCandidatoELink:hover{
+                    //subrayado con delay
+                    color: var(--colAzu);
+                    font-weight: bold;
+                }
 
             }
             
@@ -219,6 +229,17 @@
 
                 .datosCandidato {
                     
+                }
+
+                .datosCandidatoELink {
+                    cursor: pointer;
+                    //transition: 0.5s;
+                }
+
+                .datosCandidatoELink:hover{
+                    //subrayado con delay
+                    color: var(--colAzu);
+                    font-weight: bold;
                 }
             }
 

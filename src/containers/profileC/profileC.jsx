@@ -64,7 +64,7 @@ class ProfileC extends React.Component {
 
         try {
             // let token = session.get()?.token;
-            let id = session.get()?.visitor_id;
+            let id = queries.id;
 
             const res = await axios.get(getUrl(`/perfilU/${queries.id}`));
             
@@ -94,9 +94,10 @@ class ProfileC extends React.Component {
     showButton() {
         let visitor_id = session.get()?.visitor_id;
         let visitor_name = session.get()?.visitor;
+        let userType = session.get()?.userType;
         const queries = queryString.parse(this.props.location.search);
         // eslint-disable-next-line
-        if (visitor_id == queries.id && visitor_name == queries.name) {
+        if ((visitor_id == queries.id && visitor_name == queries.name) && userType == "Candidato") {
             return (
                 <Fragment>
                     <button

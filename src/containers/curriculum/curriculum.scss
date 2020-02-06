@@ -225,3 +225,20 @@
 			color: var(--pri9);
     }
 }
+
+.mainLoading {
+
+  height: 40.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+
+  .spinnerImg {
+    width: 10em;
+    height: 10em;
+    
+}
+}
