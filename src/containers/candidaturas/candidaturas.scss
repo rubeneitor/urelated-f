@@ -61,8 +61,7 @@
     .columnCandidatos {
         display: flex;
 		flex-direction: column;
-		//margin-bottom: 5em;
-        width: 60em;
+		width: 60em;
 
         .cardCandidaturaFinal {
             display: flex;
@@ -95,11 +94,10 @@
                 
                 .datosCandidatoELink {
                     cursor: pointer;
-                    //transition: 0.5s;
+                    
                 }
 
                 .datosCandidatoELink:hover{
-                    //subrayado con delay
                     color: var(--colAzu);
                     font-weight: bold;
                 }
@@ -196,8 +194,7 @@
     .columnMisCandidaturas {
         display: flex;
 		flex-direction: column;
-		//margin-bottom: 5em;
-        width: 60em;
+		width: 60em;
 
         .cardCandidaturaFinal {
             display: flex;
@@ -227,17 +224,11 @@
                 justify-content: center;
                 width: 40em;
 
-                .datosCandidato {
-                    
-                }
-
                 .datosCandidatoELink {
                     cursor: pointer;
-                    //transition: 0.5s;
                 }
 
                 .datosCandidatoELink:hover{
-                    //subrayado con delay
                     color: var(--colAzu);
                     font-weight: bold;
                 }

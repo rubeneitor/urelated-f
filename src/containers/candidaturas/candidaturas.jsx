@@ -174,6 +174,8 @@ class Candidaturas extends React.Component {
     }
 
     colorEstado(argColor) {
+
+        //asignacion de estilo (scss) según estado de la candidatura
         switch (argColor) {
             case 1:
                 return "colorDelEstadoN";

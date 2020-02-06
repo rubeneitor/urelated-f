@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { getUrl } from "../../utils/uti";
 import axios from "axios";
-// import { rdx_ofertasResultado } from "../../redux/actions/ofertas";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Search from "../../components/search/search";
@@ -18,14 +17,19 @@ class Home extends Component {
     }
 
     pulsaRegUser() {
+        //redireccion al registro de candidato
         this.props.history.push("/registerC");
     }
 
     pulsaRegEmpresa() {
+        //redireccion al registro de empresa
         this.props.history.push("/registerE");
     }
 
     async pulsaImagen(argImg) {
+
+        //búsqueda según imagen de filtro pulsada
+
         let res = {};
         //aqui recibiremos y haremos el axios
         try {

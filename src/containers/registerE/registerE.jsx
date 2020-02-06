@@ -243,6 +243,7 @@ class registerE extends React.Component {
     }
 
     errorCheck(arg) {
+        //className inicial por defecto
         let estiloError = "inputRegister";
 
         for (let _y of this.state.errores) {

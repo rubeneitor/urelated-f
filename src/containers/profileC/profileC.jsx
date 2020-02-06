@@ -192,7 +192,7 @@ class ProfileC extends React.Component {
                     };
 
                     await axios.post(getUrl(`/perfilUMod`), lBody);
-                    //let data = res.data[0];
+                    
 
                     this.props.history.push(`/`);
                 } catch (err) {

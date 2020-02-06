@@ -60,7 +60,6 @@ class LoginC extends React.Component {
             this.setState({errores: ''});
 
             //comprobamos si ya existe un token de sesion y el usuario ya está logeado
-            //if((session.get().candi_Id === data[0].id) && session.get().candi_Token){
             if(session.get()?.token){
                 console.log("ya estabas logeado...");
                 login(true);
@@ -74,7 +73,6 @@ class LoginC extends React.Component {
                 try {
 
                     //llamada para comprobar datos y actualizar token
-                    //let res = await axios.get(getUrl(`/loginU/${this.state.email}/${this.state.password}`));
                     let lBody = {
                         email: this.state.email,
                         password: this.state.password
@@ -129,9 +127,10 @@ class LoginC extends React.Component {
     }
 
     errorCheck(arg){
+
+        //className por defecto
         let estiloError = "inputRegister";
         
-
         for(let _y of this.state.errores){
             // eslint-disable-next-line
             if(arg == [_y]){

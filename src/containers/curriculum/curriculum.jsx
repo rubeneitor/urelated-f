@@ -217,6 +217,8 @@ class Curriculum extends React.Component {
     }
 
     render() {
+
+        //en caso de que loading sea true, la carga prosigue y se muestra el spinner.gif
         if (this.state.loading === true) {
             return (
                 <div className="mainLoading">

@@ -16,8 +16,6 @@ export const rdx_ofertasResultadoEmpresa = (ofertasResultadoEmpresa) => {
 	})
 };
 
-
-
 export const getOfertasFiltradas = async (puesto="",lugar="",salario="",experiencia="",jornada="",keyWord="") =>{
 	const res = await axios.get(getUrl(`/searchHome?puesto=${puesto}&lugar=${lugar}&salario=${salario}&experiencia=${experiencia}&jornada=${jornada}&keyWord=${keyWord}`));
 	store.dispatch({

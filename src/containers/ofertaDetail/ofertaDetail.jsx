@@ -173,8 +173,7 @@ class OfertaDetail extends React.Component {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
 
                 try {
-                    //llamada a la DB para registrar la empresa
-                    //let id = session.get()?.visitor_id;
+                    
                     let token = session.get()?.token;
                     let userType = session.get()?.userType;
 
@@ -187,7 +186,7 @@ class OfertaDetail extends React.Component {
                     };
 
                     await axios.post(getUrl(`/modOfertaE`), lBody);
-                    // let data = res.data[0];
+                    
 
                     this.props.history.push(`/`);
                 } catch (err) {
@@ -244,8 +243,7 @@ class OfertaDetail extends React.Component {
 
         // eslint-disable-next-line
         if (id_empresa == queries.id && this.state.userType == "Empresa") {
-            // en caso de ser la empresa que ha publicado la oferta, puedo ver también los nombres de todos los inscritos y
-            //links a sus perfiles
+            
 
             return (
                 <Fragment>

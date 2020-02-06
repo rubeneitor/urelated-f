@@ -194,14 +194,9 @@ class ProfileE extends React.Component {
                     };
 
                     await axios.post(getUrl(`/perfilEMod`), lBody);
-                    // let data = res.data[0];
-
-                    //redirigimos
-                    // setTimeout(() => {
-                    //     this.props.history.push("/loginE");
-                    // }, 500);
-
+                    
                     this.props.history.push(`/`);
+
                 } catch (err) {
                     console.log(err);
                 }
@@ -242,10 +237,6 @@ class ProfileE extends React.Component {
             return estiloError;
         }
         return estiloError;
-    }
-
-    cargaPic(){
-        
     }
 
     render() {

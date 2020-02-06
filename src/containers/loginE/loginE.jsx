@@ -92,7 +92,7 @@ class LoginE extends React.Component {
                         //variable login de rdx a true
                         login(true);
 
-                        //redirigimos
+                        //redirigimos a home
                         setTimeout(() => {
                             this.props.history.push("/");
                         }, 200);

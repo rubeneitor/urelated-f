@@ -26,24 +26,6 @@ class addOferta extends React.Component {
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
     }
 
-    resetState() {
-        this.setState({
-            step: 1,
-            titulo: "",
-            ciudad: "",
-            provincia: "",
-            isActive: false,
-            exp_requerida: "",
-            tipo_contrato: "",
-            salario: 0,
-            sector: "",
-            num_vacantes: "",
-            desc_general: "",
-
-            errores: []
-        });
-    }
-
     handleChangeDrop = (ev, action) => {
         this.setState({ [action.name]: ev.value }, () => {});
     };
@@ -111,8 +93,6 @@ class addOferta extends React.Component {
             errors.push("num_vacantes");
         }
 
-        //experiencia (no necesaria)
-
         //jornada
         if (!(verificado = verify(this.state.jornada, 1, "string"))) {
             errors.push("jornada");
@@ -125,12 +105,14 @@ class addOferta extends React.Component {
         }
 
         if (errors.length) {
+            //se han encontrado errores, se depositan en la variable de estado errores (array)
             verificado = false;
             this.setState({ errores: errors });
             return;
         }
 
         if (verificado) {
+            //sin errores, se procede a registrar los datos en la db
             this.registraDatos();
         }
 
@@ -139,14 +121,14 @@ class addOferta extends React.Component {
     async registraDatos() {
 
         let idEmpresa = session.get()?.visitor_id;
-        let date = new Date().toISOString().slice(0,10); 
-        let token = session.get()?.token;
+        let date = new Date().toISOString().slice(0,10);      //fecha actual
+        let token = session.get()?.token;                
         let userType = session.get()?.userType;
         
         try {
 
-        
-            //llamada a la DB para registrar la empresa
+            //construimos el body (en este caso de oferta), que enviaremos por axios
+            
             let lBody = {
                 token: token,
                 userType: userType,
@@ -160,12 +142,13 @@ class addOferta extends React.Component {
                 jornada: this.state.jornada,
                 description: this.state.description,
                 fecha: date
+
             };
 
-
+            //axios para añadir una nueva oferta
             await axios.post(getUrl(`/nuevaOferta`), lBody);
            
-            //redirigimos
+            //redirigimos a ofertas
             setTimeout(() => {
                 this.props.history.push("/ofertas");
             }, 1000);
@@ -177,13 +160,16 @@ class addOferta extends React.Component {
     }
 
     errorCheck(arg) {
+        
         let estiloError = "inputRegister";
 
         for (let _y of this.state.errores) {
             // eslint-disable-next-line
             if (arg == [_y]) {
+                //error detectado
                 // eslint-disable-next-line
                 if (arg == [_y] && arg == "description") {
+                    //error detectado en la descripcion , cambio de estilo.
                     estiloError = "textAddInfo2";
                     return estiloError;
                 }
@@ -203,7 +189,8 @@ class addOferta extends React.Component {
             estiloError = "textAddInfo";
             return estiloError;
         }
-        estiloError = "inputRegister";
+        
+        //devolvemos la className
         return estiloError;
     }
 

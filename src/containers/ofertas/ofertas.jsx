@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import axios from "axios";
 import "./ofertas.scss";
 import { rdx_ofertasResultadoEmpresa } from "../../redux/actions/ofertas";
-// import { session, getUrl, numToStr } from "../../utils/uti";
 import { session, getUrl } from "../../utils/uti";
 import Select from "react-select";
 import store from "../../redux/store";
