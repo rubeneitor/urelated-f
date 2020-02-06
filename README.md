@@ -58,96 +58,76 @@ Esquema DB
 ## USER
 
 - Register
-	- **POST** /user/register
+	- **POST** /registerU
 ```json
 {
-	"username":  "Username",
-	"email": "asd@asd.com",
-	"password":  "1234",
-	"phone": "647123456",
-	"address": "c/ Falsa, 123",
-	"billing": {
-		"cardNumber": 123456789,
-		"cardOwner": "Name Name Name",
-		"cardExpireDate": [6, 22]
-	}
+	"name": "usuario",
+	"surname": "prueba",
+	"email":  "usuarioprueba@gmail.com",
+	"picture": "https://s3-us-west-2.amazonaws.com/thecoderlist/testing/coder-man-profile-pic.png",
+	"phone": "123456789",
+	"password":  "12345",
+	"secretQ": "hola",
+	"secretA": "adios",
+	"ciudad": "Mislata",
+	"provincia": "Valencia",
+	"pais": "España"
 }
 ```
 
 - Login
-	- **POST** /user/login
+	- **POST** /loginU
 ```json
 {
-	"username":  "Icaruk",
-	"password":  "1234"
+	"email":  "usuarioprueba@gmail.com",
+	"password":  "12345"
 }
 ```
 
 - Logout
-	- **GET** user/logout?token={token}
+	- **POST** /logOutU
 	
-- Get user data
-	- **GET** user/{userId}?token={token}
+- Get user profile
+	- **GET** /perfilU/{id}
 
-- Delete user
-	- **DELETE** user/delete/{userId}?token={token}
 
-#
-## PRODUCT
+## BUSINESS
 
-- Get products
-	- GET /product/get?{params}
-		- Posibles params:
-		- NOTA: title, id y ownerId NO son combinables!
-			
-			* title (que contenga esas palabras)
-				title=a	
-				title=silla
-				title=silla+negra
-			
-			* id
-				id= <_id de mongo>
-			
-			* ownerId
-				id= <_id de mongo>
-			
-			* isActive (default true)
-				isActive=false
-			
-			* sort (default pa)
-				sort=pa
-				
-				- pa: price ascendant
-				- pd: price descendant
-				- ra: rating ascendant
-				- rd: rating descendant
-				- tsa: times sold ascendant
-				- tsd: times sold descendant
-			
-			* limit (default 500)
-				limit=20
-				
-			* skip (default 0)
-				skip=20
-			
-			* category
-				category=electron
-				
-			* minPrice
-				minPrice=100
-			
-			* maxPrice
-				maxPrice= 500
-				
-		- Ejemplos:	
-			- Top 10 productos más vendidos
-			`/product/get?sort=tsd&isActive=true&limit=10`
-			
-			- Top 10 productos más baratos de electrónica
-			`/product/get?sort=pa&isActive=true&limit=10&category=electron`
+- Register
+	- **POST** /registerE
+```json
+{
+	"name_reg": "empresa",
+	"surname_reg": "prueba",
+	"name": "empresaprueba",
+	"email":  "empresaprueba@gmail.com",
+	"picture": "https://www.lafabricadebordados.es/2783-large_default/parche-bordado-mercedes-benz.jpg",
+	"password":  "12345",
+	"secretQ": "hola",
+	"secretA": "adios",
+	"phone": "123456789",
+	"description": "Empresa dedica a la marca mercedes y al desarrollo de sus webs",
+	"sector": "software"
+}
+```
 
-#
-## RATING
+- Login
+	- **POST** /loginE
+```json
+{
+	"email":  "usuarioprueba@gmail.com",
+	"password":  "12345"
+}
+```
+
+- Logout
+	- **POST** /logOutU
+	
+- Get user profile
+	- **GET** /perfilU/{id}
+
+
+
 
 
 
