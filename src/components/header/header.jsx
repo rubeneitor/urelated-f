@@ -82,7 +82,7 @@ class Header extends React.Component {
                             <img src="img/logouRelated_1lit.png" alt="logo" />
                         </NavLink>
                     </div>
-                    <div className="slogan">
+                    <div className="slogan ml3">
                         _Hiring Time
                     </div>
 
