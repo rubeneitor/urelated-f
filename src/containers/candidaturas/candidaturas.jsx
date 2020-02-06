@@ -111,6 +111,7 @@ class Candidaturas extends React.Component {
         let idSuscripcion = id;
 
         try {
+            
             await axios.post(getUrl(`/delSuscripcion?id_suscripcion=${idSuscripcion}`));
 
             //redirigimos

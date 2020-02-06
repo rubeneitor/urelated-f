@@ -2,9 +2,7 @@ import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getUrl } from "../../utils/uti";
-import { verify } from "../../utils/uti";
-
+import { getUrl, session, verify } from "../../utils/uti";
 import "./passwordRecovery.scss";
 
 class PasswordRecovery extends React.Component {
@@ -51,7 +49,11 @@ class PasswordRecovery extends React.Component {
 
             //si es un usuario o empresa...buscamos en la base de datos de una forma
 
+            let token = session.get()?.token;
+            
+
             let Body = {
+                token: token,
                 email: this.state.email,
                 userType: this.props.lostPass
             }
@@ -96,13 +98,11 @@ class PasswordRecovery extends React.Component {
         }
 
         if (verificado === true) {
-            //una vez hemos verificado que se han rellenado todos los campos
-            // 	const encryptedPass = await bcrypt.hash(this.state.password, 10)
-            //const encryptedPass = await bcrypt.hash(this.state.password, 10);
             
-            //encriptamos el password con bcrypt
-
+            let token = session.get()?.token;
+            
                 let Body2 = {
+                    token: token,
                     email: this.state.email,
                     secretA: this.state.secretAnswer,
                     password: this.state.password,

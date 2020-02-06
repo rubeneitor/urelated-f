@@ -175,8 +175,12 @@ class ProfileC extends React.Component {
                 try {
                     //llamada a la DB para registrar la empresa
                     let id = session.get()?.visitor_id;
+                    let token = session.get()?.token;
+                    let userType = session.get()?.userType;
 
                     let lBody = {
+                        token: token,
+                        userType: userType,
                         id: id,
                         name: this.state.username,
                         surname: this.state.surname,

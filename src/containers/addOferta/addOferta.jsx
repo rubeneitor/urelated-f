@@ -140,12 +140,16 @@ class addOferta extends React.Component {
 
         let idEmpresa = session.get()?.visitor_id;
         let date = new Date().toISOString().slice(0,10); 
+        let token = session.get()?.token;
+        let userType = session.get()?.userType;
         
         try {
 
         
             //llamada a la DB para registrar la empresa
             let lBody = {
+                token: token,
+                userType: userType,
                 idEmpresa: idEmpresa,
                 titulo: this.state.titulo,
                 ciudad: this.state.ciudad,

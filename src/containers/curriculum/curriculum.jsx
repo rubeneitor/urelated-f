@@ -157,8 +157,13 @@ class Curriculum extends React.Component {
     async editaDatos() {
         try {
             //let idusuario = session.get()?.visitor_id;
+            let token = session.get()?.token;
+            let userType = session.get()?.userType;
+
 
             let eBody = {
+                token: token,
+                userType: userType,
                 id: this.state.curriculumU[0].id,
                 formacion: this.state.formacion,
                 experiencia: this.state.experiencia,
@@ -183,9 +188,13 @@ class Curriculum extends React.Component {
     async registraDatos() {
         try {
             let idusuario = session.get()?.visitor_id;
+            let token = session.get()?.token;
+            let userType = session.get()?.userType;
 
             //llamada a la DB para registrar el curriculum
             let lBody = {
+                token: token,
+                userType: userType,
                 idusuario: idusuario,
                 formacion: this.state.formacion,
                 experiencia: this.state.experiencia,

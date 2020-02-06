@@ -175,8 +175,12 @@ class OfertaDetail extends React.Component {
                 try {
                     //llamada a la DB para registrar la empresa
                     //let id = session.get()?.visitor_id;
+                    let token = session.get()?.token;
+                    let userType = session.get()?.userType;
 
                     let lBody = {
+                        token: token,
+                        userType: userType,
                         id: this.props.ofertaDetail?.id,
                         num_vacantes: this.state.num_vacantes,
                         description: this.state.description
