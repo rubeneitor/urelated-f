@@ -138,42 +138,46 @@ Esquema DB
 ## Features 📃
 
 - Homepage:
-	- Slider con los productos más comprados
-	- Slider con los productos mejor valorados
-	- Slider con los productos recomendados para tí
-	- Slider con los productos más económicos
-	![](https://i.gyazo.com/a456e720e93b848a44dc022d74b958d3.png)
+	- Vista principal con ofertas destacadas de diferentes ambito y motor de busqueda
+	![](https://trello-attachments.s3.amazonaws.com/5e1f2afd48fcff536d5f0134/5e2c072828afd87ca27ebe72/464b88ab9267918b05967d0d486989f3/d52c81a3205b765097693bb73b27d3d0.png)
 	
 - Búsqueda
 	- Pulsando sobre la lupa se puede hacer una búsqueda vacía, mostrando todos los productos.
 	- Filtros:
-		- Precio mínimo y/o máximo
-		- Categoría
+		- Palabra clave
+		- Rango salarial
+		- Años de experiencia
+		- Tipo de jornada
 	- Orden
-		- Precio
-		- Valoración
-	![](https://i.gyazo.com/1602a91036f6d31bdae8346720ecc714.png)
-	![](https://i.gyazo.com/e2de0a635bf0932c94798033f5aa52a4.png)
+		- Fecha
+	![](https://i.gyazo.com/0d18a9e97158e40b8626e2c730b4deff.png)
 
-- Productos
+- Ofertas
 	- Detalle
-		- Con slider de productos relacionados
-		- Hasta 4 imágenes para cada producto
-		![](https://i.gyazo.com/7647a28283368875364ee96f4598e4e2.png)
+		- Ordenadas por fecha
+		![](https://i.gyazo.com/c1a20e45ec1bc4024409dcee1fe16843.png)
 	
 - Usuarios
 	- Login
-	![](https://i.gyazo.com/37f94d1fc7cb9a88a1ebdd4d0149ff38.png)
+	![](https://i.gyazo.com/14e854eab0ceed98f52b1936a90fffe0.png)
 	
 	- Register
-	![](https://i.gyazo.com/446850db3ba5442702765894d0098e7f.png)
+		- Primer paso:
+	![](https://i.gyazo.com/929c2db7532a84df5d888b4c41b3f5c1.png)
+		- Segundo paso:
+	![](https://i.gyazo.com/ec542d80d5b288f180843136473d5c64.png)
+
+		-Tercer y ultimo paso:
+	![](https://i.gyazo.com/6fed2f25ce5c25535564e8a58fbc6a20.png)
 	
 	- Password reset
-	![](https://i.gyazo.com/c7167e393ec9af23676e77a9022c559f.png)
-	![](https://i.gyazo.com/e1f573578718a529d6309e27ede99f6f.png)
+		- Primer paso:
+	![](https://i.gyazo.com/a2bbbb531428c2c6e9408f9dc2eda959.png)
+		- Segundo paso:
+	![](https://i.gyazo.com/ef7b52b1b320ee583fbde7dcb6a21481.png)
 	
 	- Perfil
-	![](https://i.gyazo.com/f3084c34909a723e30508ad8b27faf68.png)
+	![](https://i.gyazo.com/9a64f2c3690ee5666a98ad3615c15c2f.png)
 	
 - Cesta
 	- Header
