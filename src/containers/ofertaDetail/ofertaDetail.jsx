@@ -204,7 +204,7 @@ class OfertaDetail extends React.Component {
                     await axios.post(getUrl(`/modOfertaE`), lBody);
                     
 
-                    this.props.history.push(`/`);
+                    this.props.history.push(`/ofertas`);
                 } catch (err) {
                     console.log(err);
                 }
