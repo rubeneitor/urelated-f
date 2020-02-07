@@ -178,6 +178,9 @@ Esquema DB
 	
 	- Perfil
 	![](https://i.gyazo.com/9a64f2c3690ee5666a98ad3615c15c2f.png)
+
+	- Curriculum
+	![](https://i.gyazo.com/6c359e97b45a940feaf7df75acac596b.png)
 	
 - Cesta
 	- Header

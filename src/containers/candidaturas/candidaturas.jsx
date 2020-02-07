@@ -116,7 +116,9 @@ class Candidaturas extends React.Component {
 
             //redirigimos
             setTimeout(() => {
-                this.props.history.push(`/`);
+                
+                window.location.reload(false);
+               
             }, 500);
         } catch (error) {
             console.log(error);
