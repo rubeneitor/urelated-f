@@ -93,14 +93,12 @@ class Candidaturas extends React.Component {
             estado: this.state.ofeSta
         };
 
-        let idOferta = this.state.ofertasEmpresaInfo[0].id;
-
         try {
             await axios.post(getUrl(`/modSuscripcion`), bodySusMod);
 
             //redirigimos
             setTimeout(() => {
-                this.props.history.push(`/candidaturas?idoferta=${idOferta}`);
+                window.location.reload(false);
             }, 500);
         } catch (error) {
             console.log(error);
