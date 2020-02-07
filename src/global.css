@@ -199,6 +199,13 @@ button:hover {
 	/* margin-top: 1em; */
 	color: var(--colRojCla);
 }
+
+.error_little {
+	/* margin-top: 1em; */
+	color: var(--colRojCla);
+	font-size: 0.8em;
+}
+
 .success {
 	/* margin-top: 1em; */
 	color: var(--colVer);

@@ -57,7 +57,9 @@ class RegisterC extends React.Component {
             provincia: "",
             picture: "",
             
-            errores: []
+            errores: [],
+
+            errorMuestra: "",
         });
     }
 
@@ -78,13 +80,18 @@ class RegisterC extends React.Component {
                 picture: this.state.picture,
             };
 
-            await axios.post(getUrl(`/registerU`), lBody);
-            //let data = res.data;
+            let res = await axios.post(getUrl(`/registerU`), lBody);
+            
+            if(res.data.error){
+                this.setState({errorMuestra: res.data.error})
+                return;
+            }
 
             //redirigimos
             setTimeout(() => {
                 this.props.history.push("/loginC");
             }, 500);
+
         } catch (err) {
             console.log(err);
         }
@@ -167,7 +174,8 @@ class RegisterC extends React.Component {
                 }
 
                 //picture
-                if (!(verificado = verify(this.state.picture, 1, "string"))) {
+                // eslint-disable-next-line
+                if ((this.state.picture != "") && !(verificado = verify(this.state.picture, 1, "string"))) {
                     errors.push("picture");
                 }
 
@@ -405,11 +413,11 @@ class RegisterC extends React.Component {
                                     this.pulsaRegistro(3);
                                 }}
                             >
-                                Continuar
+                                Registrar
                             </button>
                         </div>
 
-                        <p className={this.state.messageClassName}> {this.state.message} </p>
+                        <p className="error"> {this.state.errorMuestra} </p>
                     </div>
                 </div>
             );

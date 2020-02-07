@@ -29,6 +29,8 @@ class registerE extends React.Component {
             password_err: "",
             phone_err: "",
             picture_err: "",
+
+            errorMuestra: "",
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -109,9 +111,12 @@ class registerE extends React.Component {
                 picture: this.state.picture
             };
 
-            //let res = await axios.post(getUrl(`/registerE`), lBody);
-            await axios.post(getUrl(`/registerE`), lBody);
-            //let data = res.data;
+            let res = await axios.post(getUrl(`/registerE`), lBody);
+            
+            if(res.data.error){
+                this.setState({errorMuestra: res.data.error})
+                return;
+            }
 
             //redirigimos
             setTimeout(() => {
@@ -210,10 +215,10 @@ class registerE extends React.Component {
                     errors.push("sector");
                 }
 
-                //imagen de perfil
-                if (!(verificado = verify(this.state.picture, 1, "string"))) {
+                //picture
+                // eslint-disable-next-line
+                if ((this.state.picture != "") && !(verificado = verify(this.state.picture, 1, "string"))) {
                     errors.push("picture");
-                    this.setState({ picture_err: "Introduce un link válido." });
                 }
 
                 if (this.state.description === "") {
@@ -413,7 +418,7 @@ class registerE extends React.Component {
                                 Registrar
                             </button>
                         </div>
-                        <p className={this.state.messageClassName}> {this.state.message} </p>
+                        <p className="error"> {this.state.errorMuestra} </p>
                     </div>
                 </div>
             );

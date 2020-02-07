@@ -28,7 +28,9 @@ class ProfileC extends React.Component {
             
             foto: "",
 
-            errores: []
+            errores: [],
+
+            errorMuestra: "",
         };
 
         this.clickEditar = this.clickEditar.bind(this);
@@ -191,7 +193,12 @@ class ProfileC extends React.Component {
                         country: this.state.country
                     };
 
-                    await axios.post(getUrl(`/perfilUMod`), lBody);
+                    let res = await axios.post(getUrl(`/perfilUMod`), lBody);
+
+                    if(res.data.error){
+                        this.setState({errorMuestra: res.data.error})
+                        return;
+                    }
                     
 
                     this.props.history.push(`/`);
@@ -279,6 +286,7 @@ class ProfileC extends React.Component {
                                         value={this.state.email}
                                         onChange={this.handleChange}
                                     ></input>
+                                    <p className="error_little ml3"> {this.state.errorMuestra} </p>
                                 </div>
                                 <div className="mt5">
                                     <p className="cabeceraInput">Teléfono</p>

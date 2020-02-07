@@ -16,6 +16,8 @@ class LoginC extends React.Component {
             password: "",
 
             errores : [],
+
+            errorMuestra: "",
         };
     }
 
@@ -61,7 +63,7 @@ class LoginC extends React.Component {
 
             //comprobamos si ya existe un token de sesion y el usuario ya está logeado
             if(session.get()?.token){
-                console.log("ya estabas logeado...");
+                
                 login(true);
 
                 setTimeout(() => {
@@ -80,6 +82,13 @@ class LoginC extends React.Component {
 
                     let res = await axios.post(getUrl(`/loginU`),lBody);
                     let data = res.data;
+                    
+                    
+                    // eslint-disable-next-line
+                    if(data.error){
+                        this.showError(data.error);
+                        return;
+                    }
 
                     if(data[0]){
 
@@ -100,17 +109,31 @@ class LoginC extends React.Component {
                         }, 200);
 
                     }else{
-                        console.log("nombre y password incorrectos");
                         return;
                     }                
                     
-                } catch (err) {
-                    console.log("equivocacion....");
+                } catch (error) {
+                    //console.log(error);
                 }
             }
 
         }
 
+    }
+
+    showError(error){
+
+        switch (error) {
+            case "Error_1":
+                return this.setState({errorMuestra: "Dirección de e-mail no registrada"});
+            
+            case "Error_2":
+                return this.setState({errorMuestra: "Password incorrecto"});
+
+            default: 
+                console.log("problem during error check");
+
+        }
     }
 
     passwordCandidato () {
@@ -177,7 +200,7 @@ class LoginC extends React.Component {
 
                         <p className="linkPassCandidato mt1" onClick={() => this.passwordCandidato()}>Recuperar password.</p>
 
-                        <p className={this.state.messageClassName}> {this.state.message} </p>
+                        <p className="error"> {this.state.errorMuestra} </p>
                     </div>
                 </div>
                 <div className="vertical-line"></div>

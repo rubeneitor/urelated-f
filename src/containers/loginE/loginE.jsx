@@ -17,6 +17,8 @@ class LoginE extends React.Component {
             password: "",
 
             errores: [],
+
+            errorMuestra: "",
         };
 
     }
@@ -57,7 +59,7 @@ class LoginE extends React.Component {
             
             //comprobamos si ya existe un token de sesion y el usuario ya está logeado
             if(session.get()?.token){
-                console.log("ya estabas logeado...");
+                
                 login(true);
 
                 setTimeout(() => {
@@ -78,6 +80,12 @@ class LoginE extends React.Component {
 
                     let res = await axios.post(getUrl(`/loginE`),lBody);
                     let data = res.data;
+
+                    // eslint-disable-next-line
+                    if(data.error){
+                        this.showError(data.error);
+                        return;
+                    }
                     
                     if(data[0]){
                         
@@ -102,6 +110,21 @@ class LoginE extends React.Component {
                     console.log(err);
                 }
             }
+        }
+    }
+
+    showError(error){
+
+        switch (error) {
+            case "Error_1":
+                return this.setState({errorMuestra: "Dirección de e-mail no registrada"});
+            
+            case "Error_2":
+                return this.setState({errorMuestra: "Password incorrecto"});
+
+            default: 
+                console.log("problem during error check");
+
         }
     }
 
@@ -166,7 +189,7 @@ class LoginE extends React.Component {
                         </button>
 
                         <p className="linkPassEmpresa mt1" onClick={() => this.passwordEmpresa()}>Recuperar password.</p>
-
+                        <p className="error"> {this.state.errorMuestra} </p>
                     </div>
                 </div>
                 <div className="vertical-line"></div>
