@@ -261,11 +261,11 @@ class addOferta extends React.Component {
                                         name="exp_requerida"
                                         onChange={this.handleChangeDrop}
                                         options={[
-                                            { value: "", label: "" },
-                                            { value: "1", label: "1 año" },
-                                            { value: "2", label: "2 años" },
-                                            { value: "3", label: "5 años" },
-                                            { value: "4", label: "+ de 5 años" }
+                                            { value: "1", label: "No requerida" },
+                                            { value: "2", label: "1 año" },
+                                            { value: "3", label: "2 años" },
+                                            { value: "4", label: "5 años" },
+                                            { value: "5", label: "+ de 5 años" }
                                         ]}
                                     />
                                 </div>

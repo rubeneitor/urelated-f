@@ -20,6 +20,7 @@ class OfertaDetail extends React.Component {
             publicada: "",
             readOnly: true,
             button: "blueButton",
+            experiencia: "",
 
             num_vacantes: "",
             description: "",
@@ -78,11 +79,19 @@ class OfertaDetail extends React.Component {
         try {
             let id_oferta = this.props.ofertaDetail.id;
             let descripcionNull = "";
+            let experiencia = "";
 
             if (!this.props.ofertaDetail?.desc_general) {
                 descripcionNull = "Oferta sin descripción general";
             } else {
                 descripcionNull = this.props.ofertaDetail?.desc_general;
+            }
+
+            // eslint-disable-next-line
+            if (this.props.ofertaDetail?.exp_requerida == 1){
+                experiencia = "No requerida";
+            }else{
+                experiencia = this.props.ofertaDetail?.exp_requerida + " año/s";
             }
 
             let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
@@ -95,7 +104,8 @@ class OfertaDetail extends React.Component {
                 {
                     num_vacantes: this.props.ofertaDetail?.num_vacantes,
                     description: descripcionNull,
-                    publicada: publicada
+                    publicada: publicada,
+                    experiencia: experiencia
                 },
                 () => {}
             );
@@ -318,7 +328,8 @@ class OfertaDetail extends React.Component {
                                 <div className="ofertaHeadDownU">
                                     <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.ciudad}</div>
                                     <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.tipo_contrato}</div>
-                                    <div className="ofertaHeadDownUText">Experiencia mín.: {this.props.ofertaDetail?.exp_requerida} año/s</div>
+                                    {/* <div className="ofertaHeadDownUText">Experiencia mín.: {this.props.ofertaDetail?.exp_requerida} año/s</div> */}
+                                    <div className="ofertaHeadDownUText">Experiencia mín.: {this.state.experiencia}</div>
                                 </div>
                                 <div className="ofertaHeadDownD mt1">
                                     <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.sector}</div>

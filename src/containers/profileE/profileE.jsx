@@ -35,9 +35,8 @@ class ProfileE extends React.Component {
 
     resetStates() {
         this.setState({
-            userData: "",
+            userData: [],
             button: "blueButton",
-
             readOnly: true,
 
             sector: "",
@@ -45,8 +44,13 @@ class ProfileE extends React.Component {
             name: "",
             email: "",
             description: "",
+            loading: true,
+            foto: "",
 
-            errores: []
+            errores: [],
+            phone_err: "",
+
+            errorMuestra: "",
         });
     }
 
@@ -203,7 +207,18 @@ class ProfileE extends React.Component {
                         return;
                     }
                     
-                    this.props.history.push(`/`);
+                    session.set({
+                        visitor: this.state.name,
+                        visitor_id: id,
+                        token: token,
+                        userType: userType,
+                        
+                    });
+
+                    this.setState({ button: "blueButton" });
+                    this.setState({ readOnly: true });
+
+                    this.props.history.push(`/profileE?id=${id}&name=${this.state.name}`);
 
                 } catch (err) {
                     console.log(err);

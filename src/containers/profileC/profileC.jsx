@@ -201,9 +201,22 @@ class ProfileC extends React.Component {
                         this.setState({errorMuestra: res.data.error})
                         return;
                     }
+
+                    session.set({
+                        visitor: this.state.username,
+                        visitor_id: id,
+                        token: token,
+                        userType: userType,
+                        
+                    });
                     
 
-                    this.props.history.push(`/`);
+                    this.setState({ button: "blueButton" });
+                    this.setState({ readOnly: true });
+
+                    this.props.history.push(`/profileC?id=${id}&name=${this.state.username}`);
+
+
                 } catch (err) {
                     console.log(err);
                 }
