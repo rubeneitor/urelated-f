@@ -25,6 +25,7 @@ class ProfileE extends React.Component {
             foto: "",
 
             errores: [],
+            phone_err: "",
 
             errorMuestra: "",
         };
@@ -305,6 +306,7 @@ class ProfileE extends React.Component {
                                         value={this.state.phone}
                                         onChange={this.handleChange}
                                     ></input>
+                                    <p className="error_little ml3"> {this.state.phone_err} </p>
                                 </div>
                                 <div className="mt5">
                                     <p className="cabeceraInput">Sector</p>

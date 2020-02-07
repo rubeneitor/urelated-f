@@ -20,7 +20,10 @@ class addOferta extends React.Component {
             num_vacantes: "",
             description: "",
 
-            errores: []
+            errores: [],
+
+            salario_err: "",
+            num_vacantes_err: "",
         };
 
         this.pulsaRegistro = this.pulsaRegistro.bind(this);
@@ -86,11 +89,17 @@ class addOferta extends React.Component {
         //salario
         if (!(verificado = verify(this.state.salario, 1, "number"))) {
             errors.push("salario");
+            this.setState({ salario_err: "El salario debe ser solo numérico" });
+        }else{
+            this.setState({ salario_err: "" });
         }
 
         //vacantes
         if (!(verificado = verify(this.state.num_vacantes, 1, "number"))) {
             errors.push("num_vacantes");
+            this.setState({ num_vacantes_err: "Introduce un número válido." });
+        }else{
+            this.setState({ num_vacantes_err: "" });
         }
 
         //jornada
@@ -214,22 +223,22 @@ class addOferta extends React.Component {
                                 <div>
                                     <p className="cabeceraInput">Titulo</p>
                                     <input className={this.errorCheck("titulo")} maxLength="240" placeholder="" name="titulo" value={this.state.titulo} onChange={this.handleChange}></input>
-                                    {/* <p className="errorInputText">{this.state.password_err}</p> */}
+                                    
                                 </div>
                                 <div>
                                     <p className="cabeceraInput">Ciudad</p>
                                     <input className={this.errorCheck("ciudad")} maxLength="240" placeholder="" name="ciudad" value={this.state.ciudad} onChange={this.handleChange}></input>
-                                    {/* <p className="errorInputText">{this.state.password_err}</p> */}
+                                    
                                 </div>
                                 <div>
                                     <p className="cabeceraInput">Salario</p>
                                     <input className={this.errorCheck("salario")} maxLength="240" placeholder="" name="salario" value={this.state.salario} onChange={this.handleChange}></input>
-                                    {/* <p className="errorInputText">{this.state.password_err}</p> */}
+                                    <p className="error_little ml3"> {this.state.salario_err} </p>
                                 </div>
                                 <div>
                                     <p className="cabeceraInput">Sector</p>
                                     <input className={this.errorCheck("sector")} maxLength="240" placeholder="" name="sector" value={this.state.sector} onChange={this.handleChange}></input>
-                                    {/* <p className="errorInputText">{this.state.password_err}</p> */}
+                                    
                                 </div>
                                 <div>
                                     <p className="cabeceraInput">Número de vacantes</p>
@@ -241,7 +250,7 @@ class addOferta extends React.Component {
                                         value={this.state.num_vacantes}
                                         onChange={this.handleChange}
                                     ></input>
-                                    {/* <p className="errorInputText">{this.state.password_err}</p> */}
+                                    <p className="error_little ml3"> {this.state.num_vacantes_err} </p>
                                 </div>
                             </div>
                             <div className="registerOBodyMiddle">

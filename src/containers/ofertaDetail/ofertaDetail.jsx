@@ -24,7 +24,9 @@ class OfertaDetail extends React.Component {
             num_vacantes: "",
             description: "",
 
-            errores: []
+            errores: [],
+
+            num_vacantes_err: "",
         };
 
         this.clickEditar = this.clickEditar.bind(this);
@@ -149,14 +151,18 @@ class OfertaDetail extends React.Component {
             let errors = [];
 
             //vacantes
-            if (!(verificado = verify(this.state.num_vacantes, 1, "phone"))) {
+            if (!(verificado = verify(this.state.num_vacantes, 1, "number"))) {
                 errors.push("num_vacantes");
+                this.setState({ num_vacantes_err: "Introduce un número válido de vacantes" });
             } else {
-                // this.setState({ phone_err: "" });
+                this.setState({ num_vacantes_err: "" });
             }
             // eslint-disable-next-line
             if (this.state.num_vacantes == 0) {
                 errors.push("num_vacantes");
+                this.setState({ num_vacantes_err: "El número de vacantes no puede ser 0" });
+            } else {
+                this.setState({ num_vacantes_err: "" });
             }
 
             if (this.state.description === "") {
@@ -339,13 +345,15 @@ class OfertaDetail extends React.Component {
                             <div className="vacantesBox mb3">
                                 <div className="vacantesTitle mt3">Vacantes: </div>
                                 <input
-                                    className={`${this.errorCheck("InputOferta")} mt3`}
+                                    className={`${this.errorCheck("num_vacantes")} mt3`}
                                     readOnly={this.state.readOnly}
                                     placeholder={this.state?.num_vacantes}
                                     name="num_vacantes"
                                     value={this.state?.num_vacantes}
                                     onChange={this.handleChange}
                                 ></input>
+                                <p className="error_little mt5"> {this.state.num_vacantes_err} </p>
+                               
                             </div>
                             {this.showButton()}
                         </div>

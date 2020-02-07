@@ -86,7 +86,7 @@ class LoginC extends React.Component {
                     
                     // eslint-disable-next-line
                     if(data.error){
-                        this.showError(data.error);
+                        this.setState({errorMuestra: data.error})
                         return;
                     }
 
@@ -119,21 +119,6 @@ class LoginC extends React.Component {
 
         }
 
-    }
-
-    showError(error){
-
-        switch (error) {
-            case "Error_1":
-                return this.setState({errorMuestra: "Dirección de e-mail no registrada"});
-            
-            case "Error_2":
-                return this.setState({errorMuestra: "Password incorrecto"});
-
-            default: 
-                console.log("problem during error check");
-
-        }
     }
 
     passwordCandidato () {

@@ -30,6 +30,7 @@ class ProfileC extends React.Component {
 
             errores: [],
 
+            email_err: "",
             errorMuestra: "",
         };
 
@@ -51,7 +52,8 @@ class ProfileC extends React.Component {
             provincia: "",
             ciudad: "",
 
-            errores: []
+            errores: [],
+            phone_err: "",
         });
     }
 
@@ -296,7 +298,9 @@ class ProfileC extends React.Component {
                                         name="phone"
                                         value={this.state.phone}
                                         onChange={this.handleChange}
+                                        
                                     ></input>
+                                    <p className="error_little ml3"> {this.state.phone_err} </p>
                                 </div>
                                 <div className="mt5">
                                     <p className="cabeceraInput ml3">Ciudad</p>
