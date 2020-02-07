@@ -153,16 +153,16 @@ class OfertaDetail extends React.Component {
             //vacantes
             if (!(verificado = verify(this.state.num_vacantes, 1, "number"))) {
                 errors.push("num_vacantes");
-                this.setState({ num_vacantes_err: "Introduce un número válido de vacantes" });
+                this.setState({ num_vacantes: "Numero inválido" });
             } else {
-                this.setState({ num_vacantes_err: "" });
+                //this.setState({ num_vacantes_err: "" });
             }
             // eslint-disable-next-line
             if (this.state.num_vacantes == 0) {
                 errors.push("num_vacantes");
-                this.setState({ num_vacantes_err: "El número de vacantes no puede ser 0" });
+                this.setState({ num_vacantes: "El número no puede ser 0" });
             } else {
-                this.setState({ num_vacantes_err: "" });
+                //this.setState({ num_vacantes_err: "" });
             }
 
             if (this.state.description === "") {
@@ -352,7 +352,7 @@ class OfertaDetail extends React.Component {
                                     value={this.state?.num_vacantes}
                                     onChange={this.handleChange}
                                 ></input>
-                                <p className="error_little mt5"> {this.state.num_vacantes_err} </p>
+                                {/* <p className="error_little mt5"> {this.state.num_vacantes_err} </p> */}
                                
                             </div>
                             {this.showButton()}
