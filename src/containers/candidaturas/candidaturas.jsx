@@ -409,7 +409,7 @@ class Candidaturas extends React.Component {
                                             </div>
                                         );
                                     })}
-                                    <div className="cardCandidaturaFinal mt5">
+                                    <div className="cardCandidaturaFinal mt5 mb5">
                                         <button
                                             onClick={() => {
                                                 this.clickVolver();
