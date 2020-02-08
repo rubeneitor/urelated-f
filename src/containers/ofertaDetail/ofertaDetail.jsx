@@ -315,24 +315,24 @@ class OfertaDetail extends React.Component {
                                 <div>
                                     <img className="ofertaHeadImg ml5 mt1" src={this.props.ofertaDetail?.picture ? this.props.ofertaDetail?.picture : "img/placeOffer.png"} alt="logoEmpresa" />
                                 </div>
-                                <div className="ofertaHeadUpText ml3">
-                                    <div className="ofertaHeadUpTitulo">{this.props.ofertaDetail?.titulo}</div>
+                                <div className="ofertaHeadUpText ml5">
+                                    <div className="ofertaHeadUpTitulo mt3">{this.props.ofertaDetail?.titulo}</div>
                                     <div className="ofertaHeadUpEmpresa">{this.props.ofertaDetail?.name}</div>
                                     <div className="ofertaHeadUpTiempo">
-                                        <p className="ofertaHeadUpTiempoText">Publicada hace {this.state.publicada} horas.</p>
-                                        <p className="mt1">Suscritos a esta oferta: {this.state?.numSuscritos}</p>
+                                        <p className="ofertaHeadUpTiempoText mt3">Publicada hace {this.state.publicada} horas.</p>
+                                        <p className="ofertaSuscritosText mt3">Suscritos a esta oferta: {this.state?.numSuscritos}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="ofertaHeadDown">
                                 <div className="ofertaHeadDownU">
-                                    <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.ciudad}</div>
-                                    <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.tipo_contrato}</div>
-                                    <div className="ofertaHeadDownUText">Experiencia mín.: {this.state.experiencia}</div>
+                                    <div className="ofertaHeadDownUText ml3">{this.props.ofertaDetail?.ciudad}</div>
+                                    <div className="ofertaHeadDownUText ml3">{this.props.ofertaDetail?.tipo_contrato}</div>
+                                    <div className="ofertaHeadDownUText2 ml3">Experiencia mín.: {this.state.experiencia}</div>
                                 </div>
-                                <div className="ofertaHeadDownD mt1">
-                                    <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.sector}</div>
-                                    <div className="ofertaHeadDownDText">{this.props.ofertaDetail?.salario}€</div>
+                                <div className="ofertaHeadDownD">
+                                    <div className="ofertaHeadDownDText ml3">{this.props.ofertaDetail?.sector}</div>
+                                    <div className="ofertaHeadDownDText ml3">{this.props.ofertaDetail?.salario}€</div>
                                 </div>
                             </div>
                         </div>

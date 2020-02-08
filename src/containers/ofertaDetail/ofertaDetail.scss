@@ -49,7 +49,11 @@
                     color: var(--pri8);
 
                     .ofertaHeadUpTiempoText{
-                        margin-right: 4em;
+                        margin-right: 11.6em;
+                    }
+
+                    .ofertaSuscritosText{
+                        width: 15em;
                     }
                 }
 
@@ -69,7 +73,12 @@
                 margin-left: 12.9em;
 
                 .ofertaHeadDownUText {
-                    width: 14em;
+                    width: 10em;
+                    color: var(--pri9);
+                }
+
+                .ofertaHeadDownUText2 {
+                    width: 15em;
                     color: var(--pri9);
                 }
             }
@@ -80,7 +89,7 @@
                 margin-left: 12.9em;
 
                 .ofertaHeadDownDText {
-                    width: 14em;
+                    width: 10em;
                     color: var(--pri9);
                 }
             }
