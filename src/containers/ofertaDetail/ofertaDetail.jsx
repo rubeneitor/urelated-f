@@ -315,7 +315,7 @@ class OfertaDetail extends React.Component {
                                 <div>
                                     <img className="ofertaHeadImg ml5 mt1" src={this.props.ofertaDetail?.picture ? this.props.ofertaDetail?.picture : "img/placeOffer.png"} alt="logoEmpresa" />
                                 </div>
-                                <div className="ofertaHeadUpText mt5 ml3">
+                                <div className="ofertaHeadUpText ml3">
                                     <div className="ofertaHeadUpTitulo">{this.props.ofertaDetail?.titulo}</div>
                                     <div className="ofertaHeadUpEmpresa">{this.props.ofertaDetail?.name}</div>
                                     <div className="ofertaHeadUpTiempo">
@@ -328,7 +328,6 @@ class OfertaDetail extends React.Component {
                                 <div className="ofertaHeadDownU">
                                     <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.ciudad}</div>
                                     <div className="ofertaHeadDownUText">{this.props.ofertaDetail?.tipo_contrato}</div>
-                                    {/* <div className="ofertaHeadDownUText">Experiencia mín.: {this.props.ofertaDetail?.exp_requerida} año/s</div> */}
                                     <div className="ofertaHeadDownUText">Experiencia mín.: {this.state.experiencia}</div>
                                 </div>
                                 <div className="ofertaHeadDownD mt1">
