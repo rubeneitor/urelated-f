@@ -215,8 +215,13 @@ class ProfileE extends React.Component {
                         
                     });
 
-                    this.setState({ button: "blueButton" });
-                    this.setState({ readOnly: true });
+                    this.setState({ 
+                        
+                        button: "blueButton",
+                        readOnly: true,
+                        errores: ""
+                
+                    });
 
                     this.props.history.push(`/profileE?id=${id}&name=${this.state.name}`);
 

@@ -202,6 +202,8 @@ class ProfileC extends React.Component {
                         return;
                     }
 
+
+
                     session.set({
                         visitor: this.state.username,
                         visitor_id: id,
@@ -211,9 +213,14 @@ class ProfileC extends React.Component {
                     });
                     
 
-                    this.setState({ button: "blueButton" });
-                    this.setState({ readOnly: true });
-
+                    this.setState({ 
+                        
+                        button: "blueButton",
+                        readOnly: true,
+                        errores: ""
+                
+                    });
+                    
                     this.props.history.push(`/profileC?id=${id}&name=${this.state.username}`);
 
 
@@ -227,7 +234,7 @@ class ProfileC extends React.Component {
     }
 
     errorCheck(arg) {
-        let estiloError = "";
+        let estiloError = "inputProfile";
 
         if (this.state.button === "blueButton") {
             estiloError = "inputProfile";
