@@ -143,7 +143,7 @@ class OfertaDetail extends React.Component {
 
             if (days > 0) {
 
-                if (days > 1){
+                if (days === 1){
                     res = days + " día.";
                     return res;
                 }
@@ -153,7 +153,7 @@ class OfertaDetail extends React.Component {
 
             if (hours < 24) {
 
-                if (hours > 1){
+                if (hours === 1){
                     res = hours + " hora.";
                     return res;
                 }
@@ -163,7 +163,7 @@ class OfertaDetail extends React.Component {
 
             if (mins < 60) {
 
-                if (mins > 1){
+                if (mins === 1){
                     res = mins + " minuto.";
                     return res;
                 }
