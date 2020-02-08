@@ -94,11 +94,15 @@ class OfertaDetail extends React.Component {
                 experiencia = this.props.ofertaDetail?.exp_requerida + " año/s";
             }
 
-            let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
-            let now = moment().format('YYYY-MM-DD HH:mm:ss')
+            // let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
+            // let now = moment().format('YYYY-MM-DD HH:mm:ss')
             
 
-            let publicada = moment(now).diff(before, "hours");
+            // let publicada = moment(now).diff(before, "days");
+
+            let publicada = this.calculo();
+
+            
 
             this.setState(
                 {
@@ -124,6 +128,48 @@ class OfertaDetail extends React.Component {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    calculo(){
+            
+            let res = "";
+            let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
+            let now = moment().format('YYYY-MM-DD HH:mm:ss')
+            
+
+            let days = moment(now).diff(before, "days");
+            let hours = moment(now).diff(before, "hours");
+            let mins = moment(now).diff(before, "mins");
+
+            if (days > 0) {
+
+                if (days > 1){
+                    res = days + " día.";
+                    return res;
+                }
+                res = days + " días.";
+                return res;
+            }
+
+            if (hours < 24) {
+
+                if (hours > 1){
+                    res = hours + " hora.";
+                    return res;
+                }
+                res = hours + " horas.";
+                return res;
+            }
+
+            if (mins < 60) {
+
+                if (mins > 1){
+                    res = mins + " minuto.";
+                    return res;
+                }
+                res = mins + " minutos.";
+                return res;
+            }
     }
 
     async suscribirse() {
@@ -319,7 +365,7 @@ class OfertaDetail extends React.Component {
                                     <div className="ofertaHeadUpTitulo mt3">{this.props.ofertaDetail?.titulo}</div>
                                     <div className="ofertaHeadUpEmpresa">{this.props.ofertaDetail?.name}</div>
                                     <div className="ofertaHeadUpTiempo">
-                                        <p className="ofertaHeadUpTiempoText mt3">Publicada hace {this.state.publicada} horas.</p>
+                                        <p className="ofertaHeadUpTiempoText mt3">Publicada hace {this.state.publicada}</p>
                                         <p className="ofertaSuscritosText mt3">Suscritos a esta oferta: {this.state?.numSuscritos}</p>
                                     </div>
                                 </div>
@@ -362,8 +408,6 @@ class OfertaDetail extends React.Component {
                                     value={this.state?.num_vacantes}
                                     onChange={this.handleChange}
                                 ></input>
-                                {/* <p className="error_little mt5"> {this.state.num_vacantes_err} </p> */}
-                               
                             </div>
                             {this.showButton()}
                         </div>
