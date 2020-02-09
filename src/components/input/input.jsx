@@ -14,9 +14,6 @@ class Input extends React.Component {
                 onChange={this.props.handleChange}
                 value={this.props.value}
                 name={this.props.name}
-                // onChange={ev => {
-                //     this.pulsaTecla(ev);
-                // }}
             />
         );
     };

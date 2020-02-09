@@ -65,9 +65,10 @@ class Ofertas extends React.Component {
 
         
 
-        //llamada a axios con la query 
+        //llamada a axios con la query de valores dinámicos (posibles null)
         const res = await axios.get(getUrl(`/ofertasPorEmp?id=${id}&activas=${activas}&orden=${orden}&estado=${estado}&keyword=${keyword}`));
         
+        //guardamos en redux el resultado de nuestra búsqueda filtrada
         rdx_ofertasResultadoEmpresa({
             data: res.data
         });
@@ -79,13 +80,13 @@ class Ofertas extends React.Component {
 
         try {
 
-            //axios incoming...
+            //axios incoming...búsqueda de ofertas por id de empresa
 
             let id = session.get()?.visitor_id;
 
             const res = await axios.get(getUrl(`/ofertasPorE/${id}`));
 
-            //rdx almacenando... 
+            //rdx almacenando...los resultados de ofertas por esta empresa actual 
 
             rdx_ofertasResultadoEmpresa({
                 data: res.data
@@ -102,7 +103,7 @@ class Ofertas extends React.Component {
 
     pulsaResultado(ofertaData) {
 
-        // Guardo en redux
+        // Guardo en redux los datos de la oferta clickada
         store.dispatch({
             type: 'OFERTA_DETAIL',
             payload: ofertaData
@@ -118,6 +119,7 @@ class Ofertas extends React.Component {
 
     muestraResultados() {
         if (!this.props.ofertasResultadoEmpresa?.data || this.props.ofertasResultadoEmpresa?.data?.length === 0) {
+            //no hay resultados de ofertas por esta empresa, o el resultado es 0
             return (
                 <Fragment>
                     <div className="cardOfertaNr mb3 mt5 ml5">
@@ -228,7 +230,7 @@ class Ofertas extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
-        //ofertasResultado: state.ofertasResultado,
+        
         ofertasResultadoEmpresa: state.ofertasResultadoEmpresa,
 
     };

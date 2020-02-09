@@ -30,12 +30,15 @@ class SearchResults extends React.Component {
     };
 
     handleChangeDrop = (ev, action) => {
+        //handleChange del drop select custom con argumento action
         this.setState({ [action.name]: ev.value }, () => {
+            //buscamos por el filtro recién activado con el drop select
             this.buscaFiltro();
         });
     };
 
     pulsaKeyword (){
+        //llamada a la búsqueda por filtro
         this.buscaFiltro();
     }
 
@@ -50,6 +53,8 @@ class SearchResults extends React.Component {
         let jornada = this.state.selJor;
         let keyWord = this.state.keyWord;
 
+        //llamada a la función redux con todas las variables (null o no) que seteara en redux el resultado dinámico del motor de búsqueda
+
         getOfertasFiltradas(puesto, lugar, salario, experiencia, jornada, keyWord).catch(error => console.error(error));
     }
 
@@ -58,13 +63,13 @@ class SearchResults extends React.Component {
     }
 
     pulsaResultado(ofertaData) {
-        // Guardo en redux
+        // Guardo en redux los datos de la oferta elegida
         store.dispatch({
             type: "OFERTA_DETAIL",
             payload: ofertaData
         });
 
-        // Redirijo
+        // Redirijo al detalle de oferta con los datos del visitante
 
         let id_visitor = session.get()?.visitor_id;
         let profileName = session.get()?.visitor;
@@ -75,6 +80,7 @@ class SearchResults extends React.Component {
     muestraResultados() {
 
         if (!this.props.ofertasResultado[0]) {
+            //en caso de que por redux no hayamos recibido ningún resultado con ofertas
             return (
                 <Fragment>
                     <div className="cardOfertaNr mb3">
@@ -90,7 +96,7 @@ class SearchResults extends React.Component {
         }
 
         
-
+        //caso contrario, hay ofertas, map de ellas 
         return (
             <Fragment>
                 {this.props?.ofertasResultado.map(_x => {
@@ -104,6 +110,7 @@ class SearchResults extends React.Component {
                             }}
                         >
                             <div className="cardOfertaSide">
+                                {/* ternaria en caso de que no haya imagen de empresa */}
                                 <img className="cardImage mt5" src={_x.picture ? _x.picture : "img/placeOffer.png"} alt="oferta" />
                             </div>
 
@@ -198,7 +205,11 @@ const mapStateToProps = state => {
     // ese state es de redux
 
     return {
+
+        //resultados de búsqueda desde redux
         ofertasResultado: state.ofertas,
+
+        //filtros de búsqueda a tener en cuenta en la siguiente búsqueda
         filtros: state.filtros
     };
 };

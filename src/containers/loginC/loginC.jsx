@@ -33,7 +33,7 @@ class LoginC extends React.Component {
     }
 
     async pulsaLogin() {
-        // Validación
+        // Validación, declaración de variables de validación y almacenamiento de errores con precisión
         let verificado = true;
         let errors = [];
 
@@ -46,15 +46,10 @@ class LoginC extends React.Component {
         }
 
         if(errors.length) {
+            //hay errores, damos valor false a verificado y seteamos los errores en el contenedor
             verificado = false;
             this.setState({errores: errors});
             
-            return;
-        }
-
-        if(errors.length) {
-            verificado = false;
-            this.setState({errores: errors});
             return;
         }
 
@@ -64,6 +59,7 @@ class LoginC extends React.Component {
             //comprobamos si ya existe un token de sesion y el usuario ya está logeado
             if(session.get()?.token){
                 
+                //rdx variable login a true
                 login(true);
 
                 setTimeout(() => {
@@ -86,6 +82,7 @@ class LoginC extends React.Component {
                     
                     // eslint-disable-next-line
                     if(data.error){
+                        //ha habido un error en la identificación, mostramos por pantalla
                         this.setState({errorMuestra: data.error})
                         return;
                     }
@@ -130,7 +127,7 @@ class LoginC extends React.Component {
         });
 
 
-        //Redirección a registro de Empresas
+        //Redirección a recuperación de password con redux de candidato almacenado
         this.props.history.push("/passwordRecovery");
     }
 

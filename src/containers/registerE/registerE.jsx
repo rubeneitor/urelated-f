@@ -96,7 +96,7 @@ class registerE extends React.Component {
     async registraDatos() {
 
         try {
-            //llamada a la DB para registrar la empresa
+            //axios call incoming...construcción del body para registrar los datos
             let lBody = {
                 username: this.state.username,
                 surname: this.state.surname,
@@ -114,6 +114,7 @@ class registerE extends React.Component {
             let res = await axios.post(getUrl(`/registerE`), lBody);
             
             if(res.data.error){
+                //ha habido un error y por consiguiente se muestra en pantalla
                 this.setState({errorMuestra: res.data.error})
                 return;
             }
@@ -131,6 +132,7 @@ class registerE extends React.Component {
 
     nextStep(next, actual, isBack) {
         if (isBack === 1) {
+            //paso previo
             this.setState({ step: actual });
             return;
         }
@@ -139,6 +141,7 @@ class registerE extends React.Component {
             //último paso del registro, en este caso llamamos a la función que llama a la API
             this.registraDatos();
         } else {
+            //paso siguiente
             this.setState({ step: next });
         }
 
@@ -146,6 +149,8 @@ class registerE extends React.Component {
     }
 
     pulsaRegistro(actual) {
+        
+        //variables de verificación y contenedor de errores concretos
         let verificado = true;
         let errors = [];
 
@@ -232,6 +237,7 @@ class registerE extends React.Component {
         }
 
         if (errors.length) {
+            //se han producido errores, se corta el flujo del registro y se da valor al array de errores del state con precisión
             verificado = false;
             this.setState({ errores: errors });
             return;
@@ -241,6 +247,7 @@ class registerE extends React.Component {
             //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
             this.setState({ errores: "" });
             let siguiente = actual + 1;
+            //función que setea el siguiente paso del registro
             this.nextStep(siguiente, actual, 0);
         }
 

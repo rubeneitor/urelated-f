@@ -65,7 +65,7 @@ class RegisterC extends React.Component {
 
     async registraDatos() {
         try {
-            //llamada a la DB para registrar la empresa
+            //axios call incoming ... construcción del cuerpo con los datos de candidato desde el state para registro
             let lBody = {
                 name: this.state.username,
                 surname: this.state.surname,
@@ -83,6 +83,7 @@ class RegisterC extends React.Component {
             let res = await axios.post(getUrl(`/registerU`), lBody);
             
             if(res.data.error){
+                //ha habido un error en el proceso de registro y se muestra por pantalla
                 this.setState({errorMuestra: res.data.error})
                 return;
             }
@@ -98,7 +99,11 @@ class RegisterC extends React.Component {
     }
 
     nextStep(next, actual, isBack) {
+
+        //funcion que controla el status de los pasos del registro 
+
         if (isBack === 1) {
+            //volver atrás
             this.setState({ step: actual });
             return;
         }
@@ -107,6 +112,7 @@ class RegisterC extends React.Component {
             //último paso del registro, en este caso llamamos a la función que llama a la API
             this.registraDatos();
         } else {
+            //siguiente paso
             this.setState({ step: next });
         }
 
@@ -114,6 +120,8 @@ class RegisterC extends React.Component {
     }
 
     pulsaRegistro(actual) {
+
+        //variables de verificación y contenedor de errores concretos
         let verificado = true;
         let errors = [];
 
@@ -204,6 +212,7 @@ class RegisterC extends React.Component {
         }
 
         if (errors.length) {
+            //se han producido errores, se corta el flujo del registro y se da valor al array de errores del state con precisión
             verificado = false;
             this.setState({ errores: errors });
             return;
@@ -213,6 +222,7 @@ class RegisterC extends React.Component {
             //no han habido errores en la introducción de datos, cambiamos al siguiente estado.
             this.setState({ errores: "" });
             let siguiente = actual + 1;
+            //función que setea el siguiente paso del registro
             this.nextStep(siguiente, actual, 0);
         }
 
@@ -220,11 +230,13 @@ class RegisterC extends React.Component {
     }
 
     errorCheck(arg) {
+        //valor className para los inputs por defecto en status ok
         let estiloError = "inputRegister";
 
         for (let _y of this.state.errores) {
             // eslint-disable-next-line
             if (arg == [_y]) {
+                //error encontrado, input className a valor inputRegister2 (borde rojo)
                 estiloError = "inputRegister2";
                 return estiloError;
             }

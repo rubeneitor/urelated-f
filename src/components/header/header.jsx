@@ -1,10 +1,8 @@
+
 import React, { Fragment } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-// import axios from "axios";
 import { connect } from "react-redux";
-// import { session, getUrl } from "../../utils/uti";
 import { session } from "../../utils/uti";
-// import { login } from "../../redux/actions/users";
 import Menunav from "../../components/menuNav/menuNav";
 import "./header.scss";
 
@@ -12,17 +10,14 @@ class Header extends React.Component {
     // constructor(props) {
     //     super(props);
 
-    //     // this.state = {
-    //     //     keywords: "",
-    //     //     debounce_timeout: null
-    //     // };
     // }
 
     BotonesHeader() {
-        const userType = session.get()?.userType;
-        //const visitor = session.get()?.visitor;
 
-        //const isLoggedIn = session.get()?.logged;
+        //funcion encargada de mostar las zonas interactivas del header que nos conducirán entre secciones
+
+        //primero obtenemos el userType (empresa / candidato)
+        const userType = session.get()?.userType;
 
         if (this.props.isLoggedIn && userType) {
             // si estoy logeado...
@@ -33,7 +28,7 @@ class Header extends React.Component {
                     return (
                         <Fragment>
                             <div className="menuHeader mr5">
-                                {/* <a>{visitor}</a> */}
+                                {/* Carga del componente menuNav (tooltip a secciones de candidato) */}
                                 <Menunav />
                             </div>
                         </Fragment>
@@ -44,7 +39,8 @@ class Header extends React.Component {
                     return (
                         <Fragment>
                             <div className="menuHeader mr5">
-                                {/* <a>{visitor}</a> */}
+                                {/* Carga del componente menuNav (tooltip a secciones de empresa) */}
+
                                 <Menunav />
                             </div>
                         </Fragment>
@@ -54,8 +50,8 @@ class Header extends React.Component {
                     console.log("USERTYPE ERROR - not candidate, not business");
             }
         } else {
-            //visito la página de forma anónima..
-
+            
+            //visito la página de forma anónima.. links a login/registro tanto de candidato como de empresa
             return (
                 <Fragment>
                     <button>
@@ -82,9 +78,7 @@ class Header extends React.Component {
                             <img src="img/logouRelated_1lit.png" alt="logo" />
                         </NavLink>
                     </div>
-                    <div className="slogan ml3">
-                        _Hiring Time
-                    </div>
+                    <div className="slogan ml3">_Hiring Time</div>
 
                     <div className="nav">{this.BotonesHeader()}</div>
                 </header>
@@ -97,6 +91,7 @@ class Header extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
+        //recogemos la variable rdx isLoggedIn para saber si está logeado o no
         isLoggedIn: state.isLoggedIn
     };
 };

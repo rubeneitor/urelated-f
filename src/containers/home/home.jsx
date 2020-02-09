@@ -38,11 +38,13 @@ class Home extends Component {
             res = "error";
         }
 
+        //guardamos el resultado de las ofertas filtradas en el store de redux
         store.dispatch({
             type:'GET_OFERTAS_FILTRADAS',
             payload: res.data
         })
 
+        //declaración de las variables puesto y lugar
         let puesto = "";
         let lugar = "";
 
@@ -56,12 +58,13 @@ class Home extends Component {
             lugar = "Valencia";
         }
 
+        //declaración del objeto filtroBusca con el state de puesto y lugar
         let filtroBusca = {
             puesto: puesto,
             lugar: lugar
         }
 
-        //guardamos en redux la última búsqueda desde la barra
+        //guardamos en redux la última búsqueda desde la barra, registrada previamente en el objeto filtroBusca
         store.dispatch({
             type: 'SEARCH_BARRA',
             payload: filtroBusca

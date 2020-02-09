@@ -73,13 +73,15 @@ class Curriculum extends React.Component {
     async componentDidMount() {
         this.resetStates();
 
+        //obtención de la id de usuario por url para buscar sus datos de currículum en la db
         const queries = queryString.parse(this.props.location.search);
-        try {
-            // let token = session.get()?.token;
-            //let id = session.get()?.visitor_id;
 
+        try {
+            
+            //llamada axios y almacenamiento en res
             const res = await axios.get(getUrl(`/curriculum?idusuario=${queries.id}`));
 
+            //la consulta devuelve datos favorables, seteamos el estado de las variables, especial atencion a los checks con ternaria de true o false
             if (res.data[0]) {
                 this.setState(
                     {
@@ -116,14 +118,17 @@ class Curriculum extends React.Component {
 
     handleChangeCheck = ev => {
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.checked : ev.target.checked }, () => {
-            // this.buscaFiltro();
+            //setstate dinámico para los checks
         });
     };
 
     showButton() {
+
+        //obtenemos el userType , empresa / candidato
         let userType = session.get().userType;
         // eslint-disable-next-line
         if (this.state.curriculumU[0] && userType == "Candidato") {
+            //al ser candidato, mostramos el boton de editar
             return (
                 <Fragment>
                     <button
@@ -139,6 +144,7 @@ class Curriculum extends React.Component {
         }
         // eslint-disable-next-line
         if (!this.state.curriculumU[0] && userType == "Candidato") {
+            //la consulta no devuelve datos favorables y si se es candidato, mostramos el boton de Guardar para añadir curriculum por primera vez
             return (
                 <Fragment>
                     <button
@@ -156,7 +162,8 @@ class Curriculum extends React.Component {
 
     async editaDatos() {
         try {
-            //let idusuario = session.get()?.visitor_id;
+            
+            //obtenemos token y usertype
             let token = session.get()?.token;
             let userType = session.get()?.userType;
 
@@ -172,10 +179,12 @@ class Curriculum extends React.Component {
                 isEstudios: this.state.check3
             };
 
+            //axios call para modificar el currículum
             await axios.post(getUrl(`/modCurriculum`), eBody);
 
             let id_visitor = session.get()?.visitor_id;
             let profileName = session.get()?.visitor;
+
             //redirigimos
             setTimeout(() => {
                 this.props.history.push(`/profileC?id=${id_visitor}&name=${profileName}`);
@@ -187,11 +196,13 @@ class Curriculum extends React.Component {
 
     async registraDatos() {
         try {
+
+            //obtención de id, token y usertype para registar un currículum a un usuario con precisión
             let idusuario = session.get()?.visitor_id;
             let token = session.get()?.token;
             let userType = session.get()?.userType;
 
-            //llamada a la DB para registrar el curriculum
+            //llamada a la db para registrar el currículum, previa creación de body a enviar por axios
             let lBody = {
                 token: token,
                 userType: userType,
@@ -204,9 +215,10 @@ class Curriculum extends React.Component {
             };
             // eslint-disable-next-line
             let res = await axios.post(getUrl(`/nuevoCurriculum`), lBody);
-            //let data = res.data;
+            
             let id_visitor = session.get()?.visitor_id;
             let profileName = session.get()?.visitor;
+
             //redirigimos
             setTimeout(() => {
                 this.props.history.push(`/profileC?id=${id_visitor}&name=${profileName}`);

@@ -30,6 +30,7 @@ class addOferta extends React.Component {
     }
 
     handleChangeDrop = (ev, action) => {
+        //handlechange de los selectdrop custom, con el parámetro action
         this.setState({ [action.name]: ev.value }, () => {});
     };
 
@@ -43,6 +44,7 @@ class addOferta extends React.Component {
     };
 
     handleChangeCheck = ev => {
+        //handlechange para los check 
         this.setState({ [ev.target.name]: ev.target.type === "number" ? +ev.target.checked : ev.target.checked });
     };
 
@@ -68,6 +70,7 @@ class addOferta extends React.Component {
 
     pulsaRegistro() {
         
+        //variable verificado que cortará el flujo de registro en caso de error, array errors donde almacenar los errores concretos
         let verificado = true;
         let errors = [];
 
@@ -129,8 +132,10 @@ class addOferta extends React.Component {
 
     async registraDatos() {
 
+        //recogemos los valores de id de empresa, fecha actual en formato ISO YYYY/MM/DD, token y userType
+
         let idEmpresa = session.get()?.visitor_id;
-        let date = new Date().toISOString().slice(0,10);      //fecha actual
+        let date = new Date().toISOString().slice(0,10);      
         let token = session.get()?.token;                
         let userType = session.get()?.userType;
         
@@ -157,7 +162,7 @@ class addOferta extends React.Component {
             //axios para añadir una nueva oferta
             await axios.post(getUrl(`/nuevaOferta`), lBody);
            
-            //redirigimos a ofertas
+            //redirigimos a ofertas con delay de 1 segundo
             setTimeout(() => {
                 this.props.history.push("/ofertas");
             }, 1000);
@@ -170,6 +175,7 @@ class addOferta extends React.Component {
 
     errorCheck(arg) {
         
+        //estilo inputRegister por defecto
         let estiloError = "inputRegister";
 
         for (let _y of this.state.errores) {
@@ -190,6 +196,7 @@ class addOferta extends React.Component {
                     return estiloError;
                 }
 
+                //al encontrarse error, en el campo correspondiente se cambia a la clase inputRegiser2 (rojo)
                 estiloError = "inputRegister2";
                 return estiloError;
             }

@@ -83,6 +83,7 @@ class LoginE extends React.Component {
 
                     // eslint-disable-next-line
                     if(data.error){
+                        //recepción de datos incorrecta, mostramos error en pantalla
                         this.setState({errorMuestra: data.error})
                         return;
                     }
@@ -122,7 +123,7 @@ class LoginE extends React.Component {
         });
 
 
-        //Redirección a registro de Empresas
+        //Redirección a recuperación de password en modalidad empresa
         this.props.history.push("/passwordRecovery");
     }
 

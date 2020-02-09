@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import axios from "axios";
-// import { withRouter } from "react-router-dom";
 import Moment from "react-moment";
 import "moment-timezone";
 import queryString from "query-string";
@@ -85,13 +84,13 @@ class ProfileE extends React.Component {
 
     async componentDidMount() {
         this.resetStates();
-
+        //obtención de los datos de queries url
         const queries = queryString.parse(this.props.location.search);
 
         try {
-            // let token = session.get()?.token;
+            
             let id = queries.id;
-
+            //búsqueda de datos de empresa por id concreto, foto con ternaria y posible placeholder a mostrar en perfil por ausencia de foto en la db
             const res = await axios.get(getUrl(`/perfilE/${queries.id}`));
 
             this.setState({
@@ -113,6 +112,8 @@ class ProfileE extends React.Component {
     }
 
     showButton() {
+
+
         let visitor_id = session.get()?.visitor_id;
         let visitor_name = session.get()?.visitor;
         let userType = session.get()?.userType;
@@ -120,6 +121,7 @@ class ProfileE extends React.Component {
 
         // eslint-disable-next-line
         if ((visitor_id == queries.id && visitor_name == queries.name) && userType == "Empresa") {
+            //en caso de que sea la empresa propia la que visite su perfil, habilitamos el boton editar 
             return (
                 <Fragment>
                     <button
@@ -184,7 +186,7 @@ class ProfileE extends React.Component {
             if (verificado) {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
                 try {
-                    //llamada a la DB para registrar la empresa
+                    //axios call incoming para modificar el perfil de empresa
                     let id = session.get()?.visitor_id;
                     let token = session.get()?.token;
                     let userType = session.get()?.userType;
@@ -203,10 +205,12 @@ class ProfileE extends React.Component {
                     let res = await axios.post(getUrl(`/perfilEMod`), lBody);
 
                     if(res.data.error){
+                        //ha habido un error modificando el perfil de empresa y se muestra en pantalla
                         this.setState({errorMuestra: res.data.error})
                         return;
                     }
                     
+                    //seteamos los datos de sesion
                     session.set({
                         visitor: this.state.name,
                         visitor_id: id,
@@ -215,6 +219,7 @@ class ProfileE extends React.Component {
                         
                     });
 
+                    //reset status de botones 
                     this.setState({ 
                         
                         button: "blueButton",
@@ -223,6 +228,8 @@ class ProfileE extends React.Component {
                 
                     });
 
+
+                    //redirección de nuevo al perfil con los datos ya actualizados
                     this.props.history.push(`/profileE?id=${id}&name=${this.state.name}`);
 
                 } catch (err) {
@@ -270,6 +277,7 @@ class ProfileE extends React.Component {
     render() {
         // eslint-disable-next-line
         if(this.state.loading == true){
+            //en proceso de carga...
             return (
                 
                     <div>

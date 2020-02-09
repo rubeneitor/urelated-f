@@ -9,7 +9,8 @@ import "./menuNav.scss";
 class Menunav extends React.Component {
 
     async pulsaLogout() {
-        // let token = session.get().token;
+        
+        //obtenemos la id del visitante y su userType para determinar si es empresa / candidato
         let id = session.get()?.visitor_id;
         let userType = session.get()?.userType;
         let lBody = {
@@ -20,11 +21,10 @@ class Menunav extends React.Component {
         try {
 
             if(userType === "Candidato"){
-
-                // let res = await axios.post(getUrl(`/logOutU`),lBody);
+                //es candidato...llamada por axios a la función que borra el token de la db
                 await axios.post(getUrl(`/logOutU`),lBody);
             }else{
-                // let res = await axios.post(getUrl(`/logOutE`),lBody);
+                //es empresa...llamada por axios a la función que borra el token de la db
                 await axios.post(getUrl(`/logOutE`),lBody);
             }
 
@@ -38,16 +38,18 @@ class Menunav extends React.Component {
         //rdx no logeado
         login(false);
 
-        // Redirección
+        // Redirección a home
         this.props.history.push("/");
     }
 
     redirect(arg){
-        // Redirección
+        // Función de redirección a la sección deseada, se pasa parte de la url por parámetro
         this.props.history.push(`/${arg}`);
     }
 
     showMenuNav() {
+
+        //obtenemos userType, nombre e id desde session para una identificación más precisa
         let userType = session.get()?.userType;
         let profileName = session.get()?.visitor;
         let id_visitor = session.get()?.visitor_id;
@@ -58,6 +60,7 @@ class Menunav extends React.Component {
                         <img src="img/profileIcon.png" alt="logo" />
                         <ul className="dd-list">
                             <li className="dd-list-item-head">{profileName}</li>
+                            {/* menu tipo tooltip de secciones (candidato), pasamos parámetro de id y nombre por url para obtener datos fidedignos */}
                             <li onClick={() => {this.redirect(`profileC?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item">Perfil</li>
                             <li onClick={() => {this.redirect(`curriculum?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item">Currículum</li>
                             <li onClick={() => {this.redirect(`candidaturas?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item">Candidaturas</li>
@@ -72,9 +75,9 @@ class Menunav extends React.Component {
                         <img src="img/profileIcon.png" alt="logo" />
                         <ul className="dd-list2">
                             <li className="dd-list-item-head">{profileName}</li>
+                            {/* menu tipo tooltip de secciones (empresa), pasamos parámetro de id y nombre por url para obtener datos fidedignos */}
                             <li onClick={() => {this.redirect(`profileE?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item2">Perfil</li>
                             <li onClick={() => {this.redirect("ofertas")}} className="dd-list-item2">Ofertas</li>
-                            {/* <li onClick={() => {this.redirect(`candidaturas?id=${id_visitor}&name=${profileName}`)}} className="dd-list-item2">Candidaturas</li> */}
                             <li onClick={() => {this.pulsaLogout()}} className="dd-list-item2">Log out</li>
                         </ul>
                     </div>

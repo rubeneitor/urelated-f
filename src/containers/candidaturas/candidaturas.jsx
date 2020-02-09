@@ -38,7 +38,7 @@ class Candidaturas extends React.Component {
     async componentDidMount() {
         //comprobamos si se trata de una empresa o un candidato
         if (this.state.userType === "Empresa") {
-            //buscamos las candidaturas por empresa y la id de oferta
+            //siendo empresa, buscamos las candidaturas por ofera y la id de oferta recogida en querie de url
             const queries = queryString.parse(this.props.location.search);
 
             try {
@@ -52,7 +52,7 @@ class Candidaturas extends React.Component {
             }
             //axios...
         } else {
-            //buscamos las candidaturas por candidato
+            //buscamos las candidaturas por candidato y la id recogida en la sesión
             const id_usuario = session.get()?.visitor_id;
 
             //axios...
@@ -74,8 +74,9 @@ class Candidaturas extends React.Component {
     }
 
     async buscaFiltro() {
-        //activas orden estado palabra clave
+        //busqueda de ofertas por usuario con filtro, en este caso de estado
 
+        //recogemos el valor del select de estado (filtro desde candidato)
         let estado = this.state.ofeStaU;
 
         let id_usuario = session.get()?.visitor_id;
@@ -87,7 +88,8 @@ class Candidaturas extends React.Component {
     }
 
     async editarEstado(id) {
-        //axios edicion de estado en la suscripción
+
+        //axios edicion de estado en la suscripción, construcción del body con id de suscripción y estado de ella
         let bodySusMod = {
             id_suscripcion: id,
             estado: this.state.ofeSta
@@ -96,7 +98,7 @@ class Candidaturas extends React.Component {
         try {
             await axios.post(getUrl(`/modSuscripcion`), bodySusMod);
 
-            //redirigimos
+            //redirigimos con un reload a la misma página
             setTimeout(() => {
                 window.location.reload(false);
             }, 500);
@@ -106,6 +108,8 @@ class Candidaturas extends React.Component {
     }
 
     async clickEliminar(id) {
+
+        //recogemos la id, con la cual identificaremos en el back la suscripcion a eliminar
         let idSuscripcion = id;
 
         try {
@@ -114,7 +118,7 @@ class Candidaturas extends React.Component {
 
             //redirigimos
             setTimeout(() => {
-                
+                //refresco de la página post eliminación de la suscripción
                 window.location.reload(false);
                
             }, 500);
@@ -124,6 +128,7 @@ class Candidaturas extends React.Component {
     }
 
     clickVolver() {
+        //pulsado volver... opcion de empresa a ofertas y de candidato a home
         if (this.state.userType === "Empresa") {
             this.props.history.push(`/ofertas`);
         } else {
@@ -132,6 +137,8 @@ class Candidaturas extends React.Component {
     }
 
     linkEmpresa(datosEmpresa) {
+
+        //redirección a perfil de empresa desde el punto de vista del candidato
         let empresa_name = datosEmpresa.name;
         let id_empresa = datosEmpresa.idempresa;
 
@@ -140,7 +147,7 @@ class Candidaturas extends React.Component {
 
     perfilCandidato(datosCandidato){
         
-
+        //redirección al perfil de candidato desde el punto de vista de empresa
         let id_visitor = datosCandidato.id;
         let profileName = datosCandidato.name;
 
@@ -149,6 +156,8 @@ class Candidaturas extends React.Component {
     }
 
     async linkOferta(datosOferta) {
+
+        //guardamos la id concreta de la oferta recibida por parámetro
         let idoferta = datosOferta.idoferta;
 
         try {
@@ -157,7 +166,7 @@ class Candidaturas extends React.Component {
             const res = await axios.get(getUrl(`/ofertaId/${idoferta}`));
             const busqueda = res.data[0];
 
-            // Guardo en redux
+            // Guardo en redux los datos de búsqueda para que los recoja automáticamente ofertaDetail
             store.dispatch({
                 type: "OFERTA_DETAIL",
                 payload: busqueda
@@ -167,6 +176,7 @@ class Candidaturas extends React.Component {
             console.log(error);
         }
 
+        //datos del visitante desde sesión para acceder a la oferta con las opciones correspondientes
         let id_visitor = session.get()?.visitor_id;
         let profileName = session.get()?.visitor;
 
@@ -175,7 +185,7 @@ class Candidaturas extends React.Component {
 
     colorEstado(argColor) {
 
-        //asignacion de estilo (scss) según estado de la candidatura
+        //asignacion de estilo (scss) según estado de la candidatura N negro V verde R rojo
         switch (argColor) {
             case 1:
                 return "colorDelEstadoN";
@@ -192,6 +202,7 @@ class Candidaturas extends React.Component {
     muestraResultadoE() {
         // eslint-disable-next-line
         if (this.state.loading == true) {
+            //en proceso de carga
             return (
                 <Fragment>
                     <div>
@@ -206,6 +217,7 @@ class Candidaturas extends React.Component {
         }
         // eslint-disable-next-line
         if (!this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
+            //no hay una devolucion de datos satisfactoria y si se ha cumplido el estado de carga
             return (
                 <Fragment>
                     <div>
@@ -230,6 +242,7 @@ class Candidaturas extends React.Component {
         }
         // eslint-disable-next-line
         if (this.state.ofertasEmpresaInfo[0] && this.state.loading == false) {
+            //en caso de que la consulta a la db haya devuelto resultado y el estado de carga se haya cumplido
             return (
                 <Fragment>
                     <div>
@@ -259,7 +272,6 @@ class Candidaturas extends React.Component {
                                             <div className="cardCandidatura mb5" key={_x.id + "," + _x.titulo}>
                                                 <div className="datosCardCandidatura">
                                         <p onClick={()=>{this.perfilCandidato(_x)}} className="datosCandidatoELink mr5">{_x.name} {_x.surname}</p>
-                                                    {/* <p className="datosCandidato mr7">{_x.surname}</p> */}
                                                     <p className="datosCandidato mr5">{_x.usuciudad}</p>
                                                     <p className="datosCandidato mr9">{_x.fecha_sus}</p>
                                                 </div>
@@ -311,6 +323,7 @@ class Candidaturas extends React.Component {
     muestraResultadoU() {
         // eslint-disable-next-line
         if (this.state.loading == true) {
+            //en proceso de carga
             return (
                 <Fragment>
                     <div>
@@ -325,6 +338,7 @@ class Candidaturas extends React.Component {
         }
         // eslint-disable-next-line
         if (!this.state.suscripcionesCandidato[0] && this.state.loading == false) {
+            //no hay una devolucion de datos satisfactoria y si se ha cumplido el estado de carga
             return (
                 <Fragment>
                     <div>
@@ -349,6 +363,8 @@ class Candidaturas extends React.Component {
         }
         // eslint-disable-next-line
         if (this.state.suscripcionesCandidato[0] && this.state.loading == false) {
+        //en caso de que la consulta a la db haya devuelto resultado y el estado de carga se haya cumplido
+
             return (
                 <Fragment>
                     <div>

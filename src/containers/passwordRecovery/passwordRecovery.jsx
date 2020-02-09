@@ -47,7 +47,7 @@ class PasswordRecovery extends React.Component {
         if (verificado === true) {
             this.setState({ errores: "" });
 
-            //si es un usuario o empresa...buscamos en la base de datos de una forma
+            //si es un usuario o empresa...buscamos en la base de datos de una forma al enviarle userType en el body por axios
 
             let token = session.get()?.token;
             
@@ -61,11 +61,13 @@ class PasswordRecovery extends React.Component {
             try {
                 const res = await axios.post(getUrl(`/recoverP`),Body);
                 
+                //recojemos la pregunta secreta y seteamos el estado de la variable secretQuestion correspondiente
                 this.setState({ secretQuestion: res.data }, () => {});
             } catch (err) {
                 console.log(err);
             }
-             
+            
+            //seteamos la variable de step a 2
             this.setState({ step: 2 });
         }
         return;
@@ -98,6 +100,8 @@ class PasswordRecovery extends React.Component {
         }
 
         if (verificado === true) {
+
+            //todo verificado, pasos finales
             
             let token = session.get()?.token;
             
@@ -118,6 +122,7 @@ class PasswordRecovery extends React.Component {
                     console.log(err);
                 }
             
+            //paso 3, redirección inminente a loginE o loginC según sea el caso empresa / candidato
             this.setState({ step: 3 });
 
             // Redirección si es candidato o empresa
@@ -269,6 +274,7 @@ class PasswordRecovery extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
+        //recibimos por redux si se trata de candidato o de empresa
         lostPass: state.lostPass
     };
 };

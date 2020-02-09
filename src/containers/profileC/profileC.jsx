@@ -67,11 +67,12 @@ class ProfileC extends React.Component {
         const queries = queryString.parse(this.props.location.search);
 
         try {
-            // let token = session.get()?.token;
+            //búsqueda de datos de perfil por candidato con id concreta
             let id = queries.id;
 
             const res = await axios.get(getUrl(`/perfilU/${queries.id}`));
             
+            //resultados obtenidos, seteamos el state de sus variables correspondientes con placeholder posible tras ternaria en la variable foto
             this.setState({ 
 
                 userData: res.data[id],
@@ -102,6 +103,7 @@ class ProfileC extends React.Component {
         const queries = queryString.parse(this.props.location.search);
         // eslint-disable-next-line
         if ((visitor_id == queries.id && visitor_name == queries.name) && userType == "Candidato") {
+            //en caso de que la id del visitante coincida con la id del perfil a ver y también sea asi con el nombre, mostramos el boton de editar
             return (
                 <Fragment>
                     <button
@@ -177,7 +179,7 @@ class ProfileC extends React.Component {
             if (verificado) {
                 //no hay errores,...llamamos a la base de datos y actualizamos los datos
                 try {
-                    //llamada a la DB para registrar la empresa
+                    //axios call incoming para editar el candidato
                     let id = session.get()?.visitor_id;
                     let token = session.get()?.token;
                     let userType = session.get()?.userType;
@@ -198,11 +200,12 @@ class ProfileC extends React.Component {
                     let res = await axios.post(getUrl(`/perfilUMod`), lBody);
 
                     if(res.data.error){
+                        //ha habido un error modificando el perfil de candidato y se muestra en pantalla
                         this.setState({errorMuestra: res.data.error})
                         return;
                     }
 
-
+                    //seteo de las variables de sesion
 
                     session.set({
                         visitor: this.state.username,
@@ -212,7 +215,7 @@ class ProfileC extends React.Component {
                         
                     });
                     
-
+                    //restart de los botones de a blueButton (edición)
                     this.setState({ 
                         
                         button: "blueButton",
@@ -221,6 +224,7 @@ class ProfileC extends React.Component {
                 
                     });
                     
+                    //redirección al mismo perfil una vez editado
                     this.props.history.push(`/profileC?id=${id}&name=${this.state.username}`);
 
 
@@ -256,6 +260,7 @@ class ProfileC extends React.Component {
     render() {
         // eslint-disable-next-line
         if(this.state.loading == true){
+            //en estado de carga...
             return (
                 
                     <div>
@@ -363,6 +368,7 @@ class ProfileC extends React.Component {
                             <div className="cardEditProfileBody mt3">
                                 <div className="editInfoRight">
                                     <p className="nameMod mt3">{this.state.name}</p>
+                                    {/* uso del componente custom Moment para formatear la fecha a DD/MM/YYYY  */}
                                     <p className="dateMod mt3"><Moment format="DD/MM/YYYY">{this.state.userData?.updated_at}</Moment></p>
                                     <p className="dateMod2">Última fecha de modificación.</p>
                                     {this.showButton()}

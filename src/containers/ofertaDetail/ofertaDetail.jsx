@@ -77,13 +77,18 @@ class OfertaDetail extends React.Component {
         //obtenemos el número de suscritos a la oferta
 
         try {
+
+            //almacenamos la id de oferta desde redux
             let id_oferta = this.props.ofertaDetail.id;
             let descripcionNull = "";
             let experiencia = "";
 
+
+            //La oferta no contiene descripción general, en su lugar mostraremos el siguiente valor dummy
             if (!this.props.ofertaDetail?.desc_general) {
                 descripcionNull = "Oferta sin descripción general";
             } else {
+                //si tiene descripción general, mostraremos el valor obtenido de redux
                 descripcionNull = this.props.ofertaDetail?.desc_general;
             }
 
@@ -94,12 +99,7 @@ class OfertaDetail extends React.Component {
                 experiencia = this.props.ofertaDetail?.exp_requerida + " año/s";
             }
 
-            // let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
-            // let now = moment().format('YYYY-MM-DD HH:mm:ss')
-            
-
-            // let publicada = moment(now).diff(before, "days");
-
+            //almacenamos en la variable publicada el valor que nos retorna la funcion calculo 
             let publicada = this.calculo();
 
             
@@ -113,13 +113,17 @@ class OfertaDetail extends React.Component {
                 },
                 () => {}
             );
-
+            
+            //llamada a axios para saber el número exacto de suscritos a la oferta a mostrar detalladamente
             const res = await axios.get(getUrl(`/numSuscritos?id_oferta=${id_oferta}`));
+
             // eslint-disable-next-line
             if (userType == "Candidato") {
+                //en caso de que el usuario sea candidato, comprobaremos si el candidato ya se ha suscrito anteriormente a la oferta
                 const res2 = await axios.get(getUrl(`/isCandidato?id_candidato=${this.state.visitor_id}&id_oferta=${id_oferta}`));
 
                 if (!res2.data[0]) {
+                    //devolución de datos vacía, por lo tanto no hay suscripción previa y si mostramos el boton de suscribirse
                     this.setState({ botonCandidato: true }, () => {});
                 }
             }
@@ -131,16 +135,20 @@ class OfertaDetail extends React.Component {
     }
 
     calculo(){
+
+            //almacenamos en before la el valor de created_at proveniente de la base de datos
+            //almacenamos en now la fecha actual
             
             let res = "";
             let before = moment(this.props.ofertaDetail?.created_at).format('YYYY-MM-DD HH:mm:ss')
             let now = moment().format('YYYY-MM-DD HH:mm:ss')
             
-
+            //calculamos la diferencia en 3 variables distintas , dias horas y minutos con el método moment().diff
             let days = moment(now).diff(before, "days");
             let hours = moment(now).diff(before, "hours");
             let mins = moment(now).diff(before, "mins");
 
+            //si se trata de dias...devolveremos dias
             if (days > 0) {
 
                 if (days === 1){
@@ -151,6 +159,7 @@ class OfertaDetail extends React.Component {
                 return res;
             }
 
+            //horas
             if (hours < 24) {
 
                 if (hours === 1){
@@ -161,6 +170,7 @@ class OfertaDetail extends React.Component {
                 return res;
             }
 
+            //minutos
             if (mins < 60) {
 
                 if (mins === 1){
@@ -173,10 +183,13 @@ class OfertaDetail extends React.Component {
     }
 
     async suscribirse() {
+
+        //recojemos id de oferta y usuario además de fecha actual para suscribirnos a una oferta
         let id_oferta = this.props.ofertaDetail.id;
         let id_usuario = this.state.visitor_id;
         let date = new Date().toISOString().slice(0, 10);
 
+        //objeto a enviar por axios
         let bodySus = {
             id_oferta: id_oferta,
             id_usuario: id_usuario,
@@ -186,10 +199,12 @@ class OfertaDetail extends React.Component {
         try {
             await axios.post(getUrl(`/nuevaSuscripcion`), bodySus);
 
-            //redirigimos
+            
             setTimeout(() => {
+                //redirección a candidaturas con 1 segundo de delay
                 this.props.history.push("/candidaturas");
             }, 1000);
+
         } catch (error) {
             console.log(error);
         }
@@ -299,13 +314,15 @@ class OfertaDetail extends React.Component {
     }
 
     showButton() {
-        // let visitor_name = session.get()?.visitor;
+        
+        //función encargada de decidir que botones se muestra según candidato u empresa 
+
         const queries = queryString.parse(this.props.location.search);
         let id_empresa = this.props.ofertaDetail.idempresa;
 
         // eslint-disable-next-line
         if (id_empresa == queries.id && this.state.userType == "Empresa") {
-            
+        //es empresa y además es la que ha publicado la oferta
 
             return (
                 <Fragment>
@@ -334,6 +351,7 @@ class OfertaDetail extends React.Component {
         }
         // eslint-disable-next-line
         if (this.state.botonCandidato == true) {
+            //es candidato
             return (
                 <Fragment>
                     <button
@@ -421,6 +439,7 @@ class OfertaDetail extends React.Component {
 const mapStateToProps = state => {
     // ese state es de redux
     return {
+        //datos del detalle de la oferta
         ofertaDetail: state.ofertaDetail
     };
 };

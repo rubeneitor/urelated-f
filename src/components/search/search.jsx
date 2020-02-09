@@ -1,9 +1,6 @@
 import React from "react";
 import Input from "../input/input";
-// import axios from "axios";
-// import { getUrl } from "../../utils/uti";
 import "./search.scss";
-// import { rdx_ofertasResultado, rdx_homeSearch, getOfertasFiltradas } from "../../redux/actions/ofertas";
 import { getOfertasFiltradas } from "../../redux/actions/ofertas";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -19,26 +16,42 @@ class Search extends React.Component {
     };
 
     handleChange=(event)=> {
-        // this.setState({[event.target.name]:event.target.value},()=> console.log(this.state))
+        //setstate de evento de búsqueda para setear las variables puesto y lugar según valor de input
         this.setState({[event.target.name]:event.target.value})
     }
 
     pulsaSearch() {
 
+        //primero creamos un objeto con el contenido de las variables state de puesto y lugar
         let filtroBusca = {
             puesto: this.state.puesto,
             lugar: this.state.lugar
         }
 
-        //guardamos en redux la última búsqueda desde la barra
+        //guardamos en redux la última búsqueda desde la barra (el objeto filtroBusca), para disponer de ella
         store.dispatch({
             type: 'SEARCH_BARRA',
             payload: filtroBusca
         });
 
+
+        //llamada a la función redux getOfertasFiltradas con los parámetros puesto y lugar (desde home)
         getOfertasFiltradas(this.state.puesto, this.state.lugar).catch(error =>console.error(error));
         
+        //redirijimos a los resultados
         this.props.history.push("/searchResults");
+
+        /*Function explain:
+        
+        1-Guardar los filtros desde home en un objeto(solo 2 posibles)
+
+        2-Almacenar el objeto en el store de redux
+
+        3-Función redux de búsqueda por filtros
+
+        4-Redirección a searchResults
+        
+        */
 
     }
 
@@ -77,7 +90,6 @@ class Search extends React.Component {
 const mapStateToProps = (state) => { // ese state es de redux
 	return ({
         ofertasResultado: state.ofertasResultado,
-        //filtros: state.homeSearch?.filtros
     })
 }
 
