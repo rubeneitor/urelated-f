@@ -1,0 +1,152 @@
+
+header {
+	
+	display: flex;
+	flex-direction: row;
+	
+	align-items: center;
+	
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	flex: 0;
+	
+    // background: var(--pri0);
+    background: var(--colAzu);
+    color: var(--sec6);
+}
+
+
+
+/* --------------------------
+	IMG
+-------------------------- */
+
+header .logo {
+	padding: 0 0.5em;
+}
+
+header .logo img {
+	height: 5em;
+	border: 0.1em solid;
+	border-color: white;
+	min-height: 5em;
+	min-width: 5em;
+	
+	cursor: pointer;
+}
+
+.slogan {
+
+	width: 16em;
+	font-size: 1.5em;
+	color: var(--colBla);
+}
+
+/* --------------------------
+	SEARCH
+-------------------------- */
+
+header .search {
+	display: flex;
+	flex-direction: row;
+	
+	padding-left: 1em;
+}
+
+header .search input {
+	font-size: 1.1em;
+	
+	border: none;
+	border-radius: 3px 0px 0px 3px;
+	
+	padding: 3px;
+	height: 1.4em;
+	
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	box-sizing: border-box;
+	
+}
+
+header .search i {
+	border-radius: 0px 3px 3px 0px;
+	padding: 0 5px;
+	color: rgb(24, 24, 24);
+	background-color: rgb(245, 167, 0);
+	
+	cursor: pointer;
+}
+
+
+
+
+/* --------------------------
+	NAV
+-------------------------- */
+
+header .nav {
+	
+	display: flex;
+	justify-content: flex-end;
+	
+	width: 100%;
+	padding-right: 1em;
+	
+	
+}
+
+header .nav a {
+	padding: 0.3em 0.3em;
+	
+}
+
+header button {
+	
+	font-size: 1em;
+	margin-right: 0.75em;
+	color: var(--colBla);
+	background-color: var(--colAzu);
+    
+} 
+
+header a {
+	all:unset;
+}
+
+
+
+header .logoutButton {
+	background-color: var(--colRojCla);
+}
+
+
+
+.menuHeader{
+	
+	img {
+		height: 2.5em;
+	}
+		
+}
+
+.menuHeader:hover{
+	.dd-list{
+		display:block;
+		opacity: 1;
+		border-radius: 2px;
+		margin-top:  -2.2em;
+		margin-bottom: -7.8em;
+		margin-left: -9em;
+		
+	}
+
+	.dd-list2{
+		display:block;
+		opacity: 1;
+		border-radius: 2px;
+		margin-top:  -2em;
+		margin-bottom: -6em;
+		margin-left: -9em;
+		
+	}
+}

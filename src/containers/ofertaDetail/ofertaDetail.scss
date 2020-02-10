@@ -1,0 +1,235 @@
+.mainOfertaDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40.8em;
+
+    .cardODetailHead {
+        display: flex;
+		flex-direction: column;
+		width: 55em;
+		height: 14em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-top: 2em;
+
+        .ofertaHeadUp {
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+
+
+            .ofertaHeadImg {
+                max-width: 10em;
+                height: 8em;
+                cursor: default;
+            }
+
+            .ofertaHeadUpText {
+                display: flex;
+                flex-direction: column;
+                
+                .ofertaHeadUpTitulo {
+                    color: var(pri--9);
+                    font-size: 1.4em;
+                    font-weight: bold;
+                }
+
+                .ofertaHeadUpEmpresa {
+                    color: var(--pri6);
+                    font-size: 1.2em;
+                    
+                }
+
+                .ofertaHeadUpTiempo {
+                    display: flex;
+                    flex-direction: row;
+                    font-style: italic;
+                    color: var(--pri8);
+
+                    .ofertaHeadUpTiempoText{
+                        margin-right: 12.5em;
+                    }
+
+                    .ofertaSuscritosText{
+                        width: 15em;
+                    }
+                }
+
+            }
+
+        }
+
+        .ofertaHeadDown {
+
+            display: flex;
+            flex-direction: column;
+            //margin-top: 1em;
+
+            .ofertaHeadDownU {
+                display: flex;
+                flex-direction: row;
+                margin-left: 12.9em;
+
+                .ofertaHeadDownUText {
+                    width: 10em;
+                    color: var(--pri9);
+                }
+
+                .ofertaHeadDownUText2 {
+                    width: 15em;
+                    color: var(--pri9);
+                }
+            }
+
+            .ofertaHeadDownD {
+                display: flex;
+                flex-direction: row;
+                margin-left: 12.9em;
+
+                .ofertaHeadDownDText {
+                    width: 10em;
+                    color: var(--pri9);
+                }
+            }
+
+        }
+    }
+
+    .cardODetailBody {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+		width: 55em;
+		height: 23em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+        transition: 0.3s;
+        margin-bottom: 0.8em;
+
+        .cabeceraInput {
+            font-weight: bold;
+        }
+
+        .botonesEditarEmpresa {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .blueButton {
+            background: var(--colAzuDos);
+            margin-left: 2em;
+        }
+
+        .blueButton:hover{
+            background: var(--colAzu);
+        }
+
+        .redButton {
+            background: var(--colRojCla);
+            margin-left: 2em;
+        }
+
+        .redButton:hover {
+            background: var(--colRoj);
+        }
+
+        .blueButton2 {
+            background: var(--colAzuDos);
+        }
+
+        .blueButton2:hover {
+            background: var(--colAzu);
+        }
+
+        .descripcionOferta {
+            display: flex;
+                flex-direction: column;
+                
+
+                .textAddInfo {
+                    width: 38em;
+                    background: var(--colBla);
+                    resize: none;
+                    font-size: 1em;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: var(--colBla);
+                    
+                }
+
+                .textAddInfo:focus {
+                    outline-color: var(--colBla);
+                }
+
+                .textAddInfo2 {
+                    width: 38em;
+                    background: var(--colBla);
+                    resize: none;
+                    font-size: 1em;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: var(--colAzuDos);
+                    
+                }
+
+                .textAddInfo3 {
+                    width: 38em;
+                    background: var(--colBla);
+                    resize: none;
+                    font-size: 1em;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: var(--colRoj);
+                    
+                }
+        }
+
+        .vacantesBox {
+
+            display: flex;
+            flex-direction: row;
+
+            .vacantesTitle {
+                color: var(--pri9);
+                font-weight: bold;
+                margin-left: -19.8em;
+            }
+
+            .inputProfile {
+                background: var(--colBla);
+                font-size: 1em;
+                width: 15em;
+                height: 1.8em;
+            }
+
+            .inputOferta:focus{
+                outline: none;
+            }
+
+            .inputOferta2 {
+                background: var(--colBla);
+                border-style: solid;
+                font-size: 1em;
+                width: 15em;
+                height: 1.8em;
+                border-width: 1px;
+                border-color: var(--colAzuDos);
+            }
+        
+            .inputOferta3 {
+                background: var(--colBla);
+                border-style: solid;
+                font-size: 1em;
+                width: 15em;
+                height: 1.8em;
+                border-width: 1px;
+                border-color: var(--colRoj);
+            }
+        }
+        
+    }
+
+}

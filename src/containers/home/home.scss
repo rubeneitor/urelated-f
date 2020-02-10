@@ -1,0 +1,259 @@
+/* ----------------------
+
+		HOME & HEADER
+
+-------------------------*/
+
+* {
+	box-sizing: border-box;
+}
+
+.home {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+
+	.mainHome {
+		// flex: 1;
+		padding: 0 0;
+		background: var(--bac);
+		// background: red;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+
+		.busquedaOfertas {
+
+			background: var(--colAzuOsc);
+			height: 25em;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items:center;
+
+			.bloqueSelectHome {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.imgHomeSelect {
+
+				height: 15em;
+				border-radius: 0.3em;
+				transition: 0.5s;
+				opacity:0.7;
+				
+			}
+
+			.imgHomeSelect:hover {
+				opacity: 1.2;
+				
+			}
+
+			.textImageHome {
+				color: var(--colBla);
+				font-size: 1.2em;
+			}
+
+		}
+
+		.userRegisterHome {
+			height: 28em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			
+			.userRegisterContent {
+				width: 70em;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.puzzleContainer .puzzle {
+				width: 20em;
+				height: 20em;
+			}
+
+			.userTextRegistro {
+				width: 30em;
+				margin-left: 10em;
+
+				.iconsHomeReg {
+
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+
+					.iconBlock {
+						display: flex;
+						flex-direction: column;
+						align-items:center;
+						height: 4em;
+					}
+
+					.iconH {
+
+						height: 3.5em;
+
+					}
+				}
+
+				.userRegisterTextOne {
+					color: var(--pri9);
+					font-size: 1.7em;
+					font-weight: bold;
+				}
+
+				.userRegisterTextTwo {
+					color: var(--pri9);
+					font-size: 1.1em;
+					font-weight: bold;
+				}
+
+				.botonRegistroUsuarios {
+					margin-top: 3em;
+					background: var(--colAzuDos);
+					transition: 0.3s;
+
+					.textoBoton {
+						
+						color: var(--colBla);
+					}
+
+				}
+
+				.botonRegistroUsuarios:hover {
+					background: var(--colAzu);
+					
+				}
+			}
+		}
+
+		.empresaRegisterHome {
+			height: 35em;
+			background: var(--colAzuTre);
+			display: flex;
+			justify-content: center;
+			// color: var(--colAma);
+
+			.empresaRegisterContent {
+				width: 70em;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				.business{
+					border-radius: 0.5em;
+				}
+
+				.empresaTextRegistro {
+					display: flex;
+					flex-direction: column;
+					align-items:center;
+
+					.empresaTextRegistroOne {
+						color: var(--colBla);
+						font-weight: bold;
+						font-size: 1.7em;
+						
+					}
+
+					.empresaTextRegistroTwo {
+						color: var(--colBla);
+						font-weight: bold;
+						font-size: 1.1em;
+					}
+
+					.botonRegistroEmpresas {
+						background-color: var(--colAma);
+						transition: 0.3s;
+
+						.textoBoton {
+							color: var(--pri9);
+							
+						}
+
+					
+					}
+
+					.botonRegistroEmpresas:hover {
+						background-color: var(--colAmaDar);
+					}
+				}
+			}
+		}
+
+		.motivationalHome {
+			height: 25em;
+			background: var(--colBla);
+			background-image: url("../../images/corporate.png");
+			display: flex;
+			justify-content:center;
+
+			.motivationalContent {
+				width: 70em;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			
+			.motivationalText {
+				margin-top: 2em;
+				color: var(--pri9);
+				font-weight: bold;
+				font-style: italic;
+				font-size: 1.4em;
+				
+			}
+
+			.motivationalRow {
+
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				width: 30em;
+				
+
+				.imgDown {
+					height: 6em;
+					margin-top: 2.5em;
+				}
+
+				.motto {
+
+					display: flex;
+					flex-direction: column;
+
+					.motto1 {
+						margin-top: 1em;
+						color: var(--pri9);
+						font-size: 1.2em;
+						
+					}
+	
+					.motto2 {
+						margin-top: 1em;
+						color: var(--pri9);
+						font-size: 1.4em;
+					}
+
+				}
+				
+
+			}
+
+		}
+
+		.blankHome {
+			height: 1.7em;
+			background: var(--colBla);
+		}
+	}
+
+	
+}

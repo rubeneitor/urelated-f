@@ -1,0 +1,88 @@
+.dropMenu {
+
+    
+
+    .profileText {
+        color: var(--colBla);
+        font-size: 1.1em;
+        cursor: pointer;
+        
+    }
+
+    .dd-list{
+        display: none;
+        list-style-type: none;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        width: 11em;
+        position: relative;
+        z-index: 1;
+
+        .dd-list-item-head{
+            cursor: auto;
+            display: flex;
+            justify-content: center;
+            color: var(--colBla);
+            background: var(--colAzuDos);
+            height: 2em;
+            opacity: 1;
+            font-weight: bold;
+            border-bottom:solid var(--colDarGri) 0.1em;
+        }
+
+        .dd-list-item{
+            display: flex;
+            justify-content: center;
+            width: 11em;
+            height: 2em;
+            background: var(--colBla);
+            color: var(--pri9);
+            opacity: 1;
+            font-weight: bold;
+            
+        }
+        .dd-list-item:hover{
+            background: var(--colGri);
+            
+        }
+    }   
+    
+    .dd-list2{
+        display: none;
+        list-style-type: none;
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        width: 11em;
+        position: relative;
+        z-index: 1;
+
+        .dd-list-item-head{
+            cursor: auto;
+            display: flex;
+            justify-content: center;
+            color: var(--colBla);
+            background: var(--colAzuDos);
+            height: 2em;
+            opacity: 1;
+            font-weight: bold;
+            border-bottom:solid var(--colDarGri) 0.1em;
+        }
+
+        .dd-list-item2{
+            display: flex;
+            justify-content: center;
+            width: 11em;
+            height: 2em;
+            background: var(--colBla);
+            color: var(--pri9);
+            opacity: 1;
+            font-weight: bold;
+            
+        }
+        .dd-list-item2:hover{
+            background: var(--colGri);
+            
+        }
+    }
+}
+

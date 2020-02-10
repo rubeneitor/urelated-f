@@ -1,0 +1,153 @@
+
+.mainSearch {
+	display: flex;
+	flex-direction: row;
+	
+	.searchColumn {
+		display: flex;
+		flex-direction: column;
+		width: 20em;
+		height: 30em;
+		background-color: var(--colBla);
+		border-radius: 1em;
+		margin-bottom: 5em;
+		margin-left: 2.7em;
+
+		.radios {
+			height: 18em;
+		}
+
+		.estadoText {
+			margin-top: 2.5em;
+			font-size: 1em;
+			font-weight: bold;
+			color: var(--pri9);
+		}
+
+		.sel {
+			margin-left: 2em;
+			width: 12em;
+		}
+
+		.ofertasDashInput {
+			background: var(--colBla);
+        	border-style: solid;
+        	font-size: 1em;
+        	width: 12em;
+        	height: 2.5em;
+        	border-width: 0.1em;
+        	border-color: var(--colGri);
+		}
+	}
+
+	.resultsColumn {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 5em;
+
+		.cardOfertaNr {
+
+			display: flex;
+			flex-direction: row;
+			width: 60em;
+			height: 15em;
+			background-color: var(--colBla);
+			border-radius: 1em;
+			transition: 0.3s;
+
+			.noResults {
+				display: flex;
+				width: 100%;
+				flex-direction: column;
+				align-items: center;
+				color: var(--pri9);
+				font-size: 1.2em;
+				margin-top: 2.5em;
+
+				.imgNoResults {
+
+					height: 3em;
+					opacity: 0.7;
+
+				}
+			}
+		}
+
+		.cardOferta {
+			display: flex;
+			flex-direction: row;
+			width: 60em;
+			height: 15em;
+			background-color: var(--colBla);
+			border-radius: 1em;
+			transition: 0.3s;
+			
+			.cardOfertaSide {
+				width: 10em;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				.cardImage {
+					height: 5em;
+					border-radius: 0.5em;
+				}
+			}
+
+			.cardOfertaBody {
+				display: flex;
+				flex-direction: column;
+				width: 45em;
+
+				.cardTitulo1 {
+					font-size: 1.3em;
+					color: var(--pri7);
+					margin-bottom: -0.3em;
+				}
+
+				.cardTitulo2 {
+					font-size: 1em;
+					color: var(--pri5);
+				}
+
+				.salarioContrato {
+					display: flex;
+					flex-direction: row;
+
+					.cardTitulo3 {
+						font-weight: lighter;
+						color: var(--pri5);
+						font-size: 1em;
+					}
+				}
+
+				.placeDate {
+					display: flex;
+					flex-direction: row;
+
+					.placeDateText {
+						color: var(--pri7);
+						font-size: 1em;
+					}
+				}
+
+				
+
+				.cardDescription {
+					text-align: left;
+					color: var(--pri6);
+					display: -webkit-box;
+					-webkit-line-clamp: 5;
+					-webkit-box-orient: vertical;  
+					overflow: hidden;
+				}
+			}
+		}
+
+		.cardOferta:hover{
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+		}
+	}
+
+}
