@@ -97,6 +97,8 @@ class Curriculum extends React.Component {
                         //console.log(this.state);
                     }
                 );
+            }else{
+                this.setState({loading: false});
             }
         } catch (err) {
             console.error(err);
