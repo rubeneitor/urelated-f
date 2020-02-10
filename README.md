@@ -175,13 +175,44 @@ Esquema DB
 	![](https://i.gyazo.com/a2bbbb531428c2c6e9408f9dc2eda959.png)
 		- Segundo paso:
 	![](https://i.gyazo.com/ef7b52b1b320ee583fbde7dcb6a21481.png)
+
+
 	
 	- Perfil
 	![](https://i.gyazo.com/9a64f2c3690ee5666a98ad3615c15c2f.png)
 
 	- Curriculum
 	![](https://i.gyazo.com/6c359e97b45a940feaf7df75acac596b.png)
-	
+
+	- Candidaturas
+	![](https://i.gyazo.com/e775572a93d8ca391e6257f2e6700a31.png)
+
+- Empresas 
+	- Login
+	![](https://i.gyazo.com/f81c70fb94198a97fa1beae710068cec.png)
+
+	- Register 
+		- Primer paso
+		![](https://i.gyazo.com/2f28108ed57e614aaa05583eb7ea02a2.png)
+
+		- Segundo y ultimo paso 
+		![](https://i.gyazo.com/0c33734b0bedce71ea31f70eaafe0941.png)
+
+	- Password reset
+		- Primer paso
+	    ![](https://i.gyazo.com/a21e693c558bb1753a55c6753cbf21f1.png)
+
+		- Segundo paso
+		![](https://i.gyazo.com/657dea32b8afbe51e28d66347ace16ef.png)
+
+	- Perfil 
+	![](https://i.gyazo.com/72ede28e53a282d46f932eebdf62481a.png)
+
+	- Ofertas
+	![](https://i.gyazo.com/4db2167e1ad36b29cf134077b670fb23.png)
+
+	- Camabiar candidatura
+	![](https://i.gyazo.com/bf6b80a16471f918f356f943d93dddfc.png)
 - Cesta
 	- Header
 	![](https://i.gyazo.com/fe2aa02770880de44ec2cdc942d8cef2.png)
